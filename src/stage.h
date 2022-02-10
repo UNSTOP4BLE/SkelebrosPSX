@@ -236,8 +236,10 @@ typedef struct
 	u16 step_base;
 	Section *section_base;
 	
-	s16 song_step;
+	s16 noteshakex;
+	s16 noteshakey;
 
+	s16 song_step;
 	s16 botplay;
 	
 	u8 gf_speed; //Typically 4 steps, changes in Fresh
