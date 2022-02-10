@@ -68,8 +68,10 @@ static const u8 note_anims[4][3] = {
 
 
 //Stage definitions
-int arrowposx,middleswitch;
-boolean noteshake = 0;
+//middlescroll
+u32 arrowposx,middleswitch;
+//shake stuff
+boolean noteshake;
 
 #include "character/bf.h"
 #include "character/bfweeb.h"
@@ -504,7 +506,7 @@ static void Stage_SustainCheck(PlayerState *this, u8 type)
 static void Stage_ProcessPlayer(PlayerState *this, Pad *pad, boolean playing)
 {
 	//Handle player note presses
-	if (stage.botplay == 0) {
+	if (!(stage.botplay)) {
 		if (playing)
 		{
 			u8 i = (this->character == stage.opponent) ? NOTE_FLAG_OPPONENT : 0;
@@ -537,7 +539,7 @@ static void Stage_ProcessPlayer(PlayerState *this, Pad *pad, boolean playing)
 		}
 	}
 	
-	if (stage.botplay == 1) {
+	if (stage.botplay) {
 		//Do perfect note checks
 		if (playing)
 		{
@@ -1525,18 +1527,45 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			//debug shit 
+			FntPrint("Step %d", stage.song_step);
 			//shake notes
-			if (noteshake == 1) 
+			if (noteshake) 
 			{
 				stage.noteshakex = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
 				stage.noteshakey = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
 			}
 
-			noteshake = 1;
+			noteshake = true;
 
 
-
-
+        //camera like sonic.exe
+            if (stage.movecamera)
+	      {
+			if (stage.cur_section->flag & SECTION_FLAG_OPPFOCUS)
+			{
+			if (stage.opponent->animatable.anim == CharAnim_Left || stage.opponent->animatable.anim == CharAnim_LeftAlt)
+			stage.camera.x -= FIXED_DEC(5,10);
+			if (stage.opponent->animatable.anim == CharAnim_Down || stage.opponent->animatable.anim == CharAnim_DownAlt)
+			stage.camera.y += FIXED_DEC(5,10);
+			if (stage.opponent->animatable.anim == CharAnim_Up || stage.opponent->animatable.anim == CharAnim_UpAlt)
+			stage.camera.y -= FIXED_DEC(5,10);
+			if (stage.opponent->animatable.anim == CharAnim_Right || stage.opponent->animatable.anim == CharAnim_RightAlt)
+			stage.camera.x += FIXED_DEC(5,10);
+			}
+			
+			else
+			{
+			if (stage.player->animatable.anim == CharAnim_Left)
+			stage.camera.x -= FIXED_DEC(5,10);
+			if (stage.player->animatable.anim == CharAnim_Down)
+			stage.camera.y += FIXED_DEC(5,10);
+			if (stage.player->animatable.anim == CharAnim_Up)
+			stage.camera.y -= FIXED_DEC(5,10);
+			if (stage.player->animatable.anim == CharAnim_Right)
+			stage.camera.x += FIXED_DEC(5,10);
+			}
+	 }
 
 
 			if (stage.middlescroll)
@@ -1545,7 +1574,7 @@ void Stage_Tick(void)
 				arrowposx = 0;
 			
 
-			if (stage.botplay == 1)
+			if (stage.botplay)
 			{
 				//Draw botplay
 				RECT bot_fill = {174, 225, 67, 16};
@@ -1827,7 +1856,7 @@ void Stage_Tick(void)
 				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				
 				//Opponent
-				if (stage.middlescroll == 0)
+				if (!(stage.middlescroll))
 				{
 					note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) +  note_x[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
 					Stage_DrawStrum(i | 4, &note_src, &note_dst);

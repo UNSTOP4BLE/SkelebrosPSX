@@ -1062,6 +1062,7 @@ void Menu_Tick(void)
 				{OptType_Boolean, "GHOST TAP", &stage.ghost, {.spec_boolean = {0}}},
 				{OptType_Boolean, "DOWNSCROLL", &stage.downscroll, {.spec_boolean = {0}}},
 				{OptType_Boolean, "MIDDLESCROLL", &stage.middlescroll, {.spec_boolean = {0}}},
+				{OptType_Boolean, "MOVING CAMERA", &stage.movecamera, {.spec_boolean = {0}}},
 				{OptType_Boolean, "BOTPLAY", &stage.botplay, {.spec_boolean = {0}}},
 			};
 
