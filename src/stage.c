@@ -1529,6 +1529,7 @@ void Stage_Tick(void)
 		{
 			//debug shit 
 			FntPrint("Step %d", stage.song_step);
+			
 			//shake hud
 			if (noteshake) 
 			{
@@ -1539,34 +1540,34 @@ void Stage_Tick(void)
 			noteshake = true;
 
 
-        //camera like sonic.exe
-        if (stage.movecamera)
-	    {
-			if (stage.cur_section->flag & SECTION_FLAG_OPPFOCUS)
+        	//camera like sonic.exe
+    		if (stage.movecamera)
 			{
-			if (stage.opponent->animatable.anim == CharAnim_Left || stage.opponent->animatable.anim == CharAnim_LeftAlt)
-			stage.camera.x -= FIXED_DEC(5,10);
-			if (stage.opponent->animatable.anim == CharAnim_Down || stage.opponent->animatable.anim == CharAnim_DownAlt)
-			stage.camera.y += FIXED_DEC(5,10);
-			if (stage.opponent->animatable.anim == CharAnim_Up || stage.opponent->animatable.anim == CharAnim_UpAlt)
-			stage.camera.y -= FIXED_DEC(5,10);
-			if (stage.opponent->animatable.anim == CharAnim_Right || stage.opponent->animatable.anim == CharAnim_RightAlt)
-			stage.camera.x += FIXED_DEC(5,10);
+				if (stage.cur_section->flag & SECTION_FLAG_OPPFOCUS)
+				{
+				if (stage.opponent->animatable.anim == CharAnim_Left || stage.opponent->animatable.anim == CharAnim_LeftAlt)
+					stage.camera.x -= FIXED_DEC(5,10);
+				if (stage.opponent->animatable.anim == CharAnim_Down || stage.opponent->animatable.anim == CharAnim_DownAlt)
+					stage.camera.y += FIXED_DEC(5,10);
+				if (stage.opponent->animatable.anim == CharAnim_Up || stage.opponent->animatable.anim == CharAnim_UpAlt)
+					stage.camera.y -= FIXED_DEC(5,10);
+				if (stage.opponent->animatable.anim == CharAnim_Right || stage.opponent->animatable.anim == CharAnim_RightAlt)
+					stage.camera.x += FIXED_DEC(5,10);
+				}
+				else
+				{
+				if (stage.player->animatable.anim == CharAnim_Left)
+					stage.camera.x -= FIXED_DEC(5,10);
+				if (stage.player->animatable.anim == CharAnim_Down)
+					stage.camera.y += FIXED_DEC(5,10);
+				if (stage.player->animatable.anim == CharAnim_Up)
+					stage.camera.y -= FIXED_DEC(5,10);
+				if (stage.player->animatable.anim == CharAnim_Right)
+					stage.camera.x += FIXED_DEC(5,10);
+				}
 			}
-			else
-			{
-			if (stage.player->animatable.anim == CharAnim_Left)
-			stage.camera.x -= FIXED_DEC(5,10);
-			if (stage.player->animatable.anim == CharAnim_Down)
-			stage.camera.y += FIXED_DEC(5,10);
-			if (stage.player->animatable.anim == CharAnim_Up)
-			stage.camera.y -= FIXED_DEC(5,10);
-			if (stage.player->animatable.anim == CharAnim_Right)
-			stage.camera.x += FIXED_DEC(5,10);
-			}
-		}
 
-
+	
 			if (stage.middlescroll)
 				arrowposx = -78;
 			else
