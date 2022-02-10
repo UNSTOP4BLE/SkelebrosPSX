@@ -1529,19 +1529,19 @@ void Stage_Tick(void)
 		{
 			//debug shit 
 			FntPrint("Step %d", stage.song_step);
-			//shake notes
+			//shake hud
 			if (noteshake) 
 			{
-				stage.noteshakex = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
-				stage.noteshakey = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
+				stage.noteshakex = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
+				stage.noteshakey = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
 			}
 
 			noteshake = true;
 
 
         //camera like sonic.exe
-            if (stage.movecamera)
-	      {
+        if (stage.movecamera)
+	    {
 			if (stage.cur_section->flag & SECTION_FLAG_OPPFOCUS)
 			{
 			if (stage.opponent->animatable.anim == CharAnim_Left || stage.opponent->animatable.anim == CharAnim_LeftAlt)
@@ -1553,7 +1553,6 @@ void Stage_Tick(void)
 			if (stage.opponent->animatable.anim == CharAnim_Right || stage.opponent->animatable.anim == CharAnim_RightAlt)
 			stage.camera.x += FIXED_DEC(5,10);
 			}
-			
 			else
 			{
 			if (stage.player->animatable.anim == CharAnim_Left)
@@ -1565,7 +1564,7 @@ void Stage_Tick(void)
 			if (stage.player->animatable.anim == CharAnim_Right)
 			stage.camera.x += FIXED_DEC(5,10);
 			}
-	 }
+		}
 
 
 			if (stage.middlescroll)
