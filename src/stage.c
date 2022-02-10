@@ -1526,7 +1526,7 @@ void Stage_Tick(void)
 		case StageState_Play:
 		{
 			//shake notes
-			if (noteshake == 1) 
+			if (noteshake) 
 			{
 				stage.noteshakex = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
 				stage.noteshakey = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
