@@ -58,9 +58,9 @@
 				<file name = "1.3n.cht" type = "data" source = "iso/chart/not-enough.json.cht"/>
 				<file name = "1.3h.cht" type = "data" source = "iso/chart/not-enough.json.cht"/>
 				<!-- Tutorial charts -->
-				<!-- <file name = "1.4e.cht" type = "data" source = "iso/chart/no-more-deals.json.cht"/> -->
-				<!-- <file name = "1.4n.cht" type = "data" source = "iso/chart/no-more-deals.json.cht"/> -->
-				<!-- <file name = "1.4h.cht" type = "data" source = "iso/chart/no-more-deals.json.cht"/> -->
+				 <file name = "1.4e.cht" type = "data" source = "iso/chart/no-more-deals.json.cht"/>
+				 <file name = "1.4n.cht" type = "data" source = "iso/chart/no-more-deals.json.cht"/>
+				 <file name = "1.4h.cht" type = "data" source = "iso/chart/no-more-deals.json.cht"/>
 			</dir>
 			
 			<!-- Week 2 assets -->
