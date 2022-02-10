@@ -67,7 +67,8 @@ static const u8 note_anims[4][3] = {
 
 //middlescroll
 int arrowposx,middleswitch;
-
+int noteshakex;
+int noteshakey;
 //Stage definitions
 #include "character/bf.h"
 #include "character/bfweeb.h"
@@ -156,12 +157,6 @@ static void Stage_ScrollCamera(void)
 		stage.camera.y += FIXED_MUL(dy, stage.camera.td);
 		stage.camera.zoom += FIXED_MUL(dz, stage.camera.td);
 		
-		//Shake in Week 4
-		if (stage.stage_id >= StageId_4_1 && stage.stage_id <= StageId_4_3)
-		{
-			stage.camera.x += RandomRange(FIXED_DEC(-1,10),FIXED_DEC(1,10));
-			stage.camera.y += RandomRange(FIXED_DEC(-25,100),FIXED_DEC(25,100));
-		}
 	#endif
 	
 	//Update other camera stuff
@@ -741,6 +736,10 @@ static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
 	if (stage.downscroll)
 		dst.y = -dst.y - dst.h;
 	
+	//shake icons
+	dst.y += noteshakey;
+	dst.x += noteshakex;
+
 	//Draw health icon
 	Stage_DrawTex(&stage.tex_hud1, &src, &dst, FIXED_MUL(stage.bump, stage.sbump));
 }
@@ -909,7 +908,7 @@ static void Stage_DrawNotes(void)
 						note_src.w = 32;
 						note_src.h = 28 - (clip >> FIXED_SHIFT);
 						
-						note_dst.x = FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
+						note_dst.x = noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
 						note_dst.y =  y + clip;
 						note_dst.w = note_src.w << FIXED_SHIFT;
 						note_dst.h = (note_src.h << FIXED_SHIFT);
@@ -936,7 +935,7 @@ static void Stage_DrawNotes(void)
 						note_src.w = 32;
 						note_src.h = 16;
 						
-						note_dst.x = FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
+						note_dst.x = noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
 						note_dst.y = y + clip;
 						note_dst.w = note_src.w << FIXED_SHIFT;
 						note_dst.h = (next_y - y) - clip;
@@ -959,7 +958,7 @@ static void Stage_DrawNotes(void)
 				note_src.w = 32;
 				note_src.h = 32;
 				
-				note_dst.x = FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
+				note_dst.x = noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
 				note_dst.y = y - FIXED_DEC(16,1);
 				note_dst.w = note_src.w << FIXED_SHIFT;
 				note_dst.h = note_src.h << FIXED_SHIFT;
@@ -1013,7 +1012,7 @@ static void Stage_DrawNotes(void)
 				note_src.w = 32;
 				note_src.h = 32;
 				
-				note_dst.x = FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
+				note_dst.x = noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
 				note_dst.y = y - FIXED_DEC(16,1);
 				note_dst.w = note_src.w << FIXED_SHIFT;
 				note_dst.h = note_src.h << FIXED_SHIFT;
@@ -1525,7 +1524,10 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
-
+			//shake notes
+			noteshakex = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
+			noteshakey = RandomRange(FIXED_DEC(0,1),FIXED_DEC(10,1));
+	
 			if (stage.middlescroll)
 				arrowposx = -78;
 			else
@@ -1792,27 +1794,26 @@ void Stage_Tick(void)
 			
 			//Tick note splashes
 			ObjectList_Tick(&stage.objlist_splash);
-			
 			//Draw stage notes
 			Stage_DrawNotes();
 			
 			//Draw note HUD
 			RECT note_src = {0, 0, 32, 32};
-			RECT_FIXED note_dst = {0, note_y - FIXED_DEC(16,1), FIXED_DEC(32,1), FIXED_DEC(32,1)};
+			RECT_FIXED note_dst = {0, note_y + noteshakey - FIXED_DEC(16,1), FIXED_DEC(32,1), FIXED_DEC(32,1)};
 			if (stage.downscroll)
 				note_dst.y = -note_dst.y - note_dst.h;
 			
 			for (u8 i = 0; i < 4; i++)
 			{
 				//BF
-				note_dst.x = FIXED_DEC(arrowposx,1) + note_x[i ^ stage.note_swap] - FIXED_DEC(16,1);
+				note_dst.x = noteshakex + FIXED_DEC(arrowposx,1) + note_x[i ^ stage.note_swap] - FIXED_DEC(16,1);
 				Stage_DrawStrum(i, &note_src, &note_dst);
 				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				
 				//Opponent
 				if (stage.middlescroll == 0)
 				{
-					note_dst.x = FIXED_DEC(arrowposx,1) +  note_x[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
+					note_dst.x = noteshakex + FIXED_DEC(arrowposx,1) +  note_x[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
 					Stage_DrawStrum(i | 4, &note_src, &note_dst);
 					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				}
@@ -1890,34 +1891,14 @@ void Stage_Tick(void)
 				if (stage.downscroll)
 					health_dst.y = -health_dst.y - health_dst.h;
 				
+				//shake hud
+				health_dst.y += noteshakey;
+				health_dst.x += noteshakex;
+
 				health_dst.w = health_fill.w << FIXED_SHIFT;
 				Stage_DrawTex(&stage.tex_hud1, &health_fill, &health_dst, stage.bump);
 				health_dst.w = health_back.w << FIXED_SHIFT;
 				Stage_DrawTex(&stage.tex_hud1, &health_back, &health_dst, stage.bump);
-			}
-			
-			//Hardcoded stage stuff
-			switch (stage.stage_id)
-			{
-				case StageId_1_2: //Fresh GF bop
-					switch (stage.song_step)
-					{
-						case 16 << 2:
-							stage.gf_speed = 2 << 2;
-							break;
-						case 48 << 2:
-							stage.gf_speed = 1 << 2;
-							break;
-						case 80 << 2:
-							stage.gf_speed = 2 << 2;
-							break;
-						case 112 << 2:
-							stage.gf_speed = 1 << 2;
-							break;
-					}
-					break;
-				default:
-					break;
 			}
 			
 			//Draw stage foreground
