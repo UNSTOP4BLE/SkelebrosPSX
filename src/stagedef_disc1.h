@@ -2,7 +2,7 @@
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
 		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
-		{NULL,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
+		{NULL},
 		
 		//Stage background
 		Back_Week1_New,
@@ -18,7 +18,7 @@
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
 		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
-		{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
+		{NULL},
 		
 		//Stage background
 		Back_Week1_New,
@@ -34,7 +34,7 @@
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
 		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
-		{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
+		{NULL},
 		
 		//Stage background
 		Back_Week1_New,
@@ -48,9 +48,9 @@
 	},
 	{ //StageId_1_4 (Tutorial)
 		//Characters
-		{Char_BF_New, FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_GF_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
-		{NULL,           FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
+		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
+		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{NULL},
 		
 		//Stage background
 		Back_Week1_New,
@@ -65,12 +65,12 @@
 	
 	{ //StageId_2_1 (Spookeez)
 		//Characters
-		{Char_BF_New,      FIXED_DEC(56,1),   FIXED_DEC(85,1)},
-		{Char_Spook_New,  FIXED_DEC(-90,1),   FIXED_DEC(85,1)},
-		{Char_GF_New,       FIXED_DEC(0,1),  FIXED_DEC(-15,1)},
+		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
+		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{NULL},
 		
 		//Stage background
-		Back_Week2_New,
+		Back_Week1_New,
 		
 		//Song info
 		{FIXED_DEC(24,10),FIXED_DEC(24,10),FIXED_DEC(24,10)},
@@ -81,12 +81,12 @@
 	},
 	{ //StageId_2_2 (South)
 		//Characters
-		{Char_BF_New,      FIXED_DEC(56,1),   FIXED_DEC(85,1)},
-		{Char_Spook_New,  FIXED_DEC(-90,1),   FIXED_DEC(85,1)},
-		{Char_GF_New,       FIXED_DEC(0,1),  FIXED_DEC(-15,1)},
+		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
+		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{NULL},
 		
 		//Stage background
-		Back_Week2_New,
+		Back_Week1_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},
@@ -97,12 +97,12 @@
 	},
 	{ //StageId_2_3 (Monster)
 		//Characters
-		{Char_BF_New,      FIXED_DEC(56,1),   FIXED_DEC(85,1)},
-		{Char_Spook_New,  FIXED_DEC(-90,1),   FIXED_DEC(85,1)},
-		{Char_GF_New,       FIXED_DEC(0,1),  FIXED_DEC(-15,1)},
+		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
+		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{NULL},
 		
 		//Stage background
-		Back_Week2_New,
+		Back_Week1_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},
@@ -114,12 +114,12 @@
 	
 	{ //StageId_3_1 (Pico)
 		//Characters
-		{Char_BF_New,     FIXED_DEC(56,1),   FIXED_DEC(85,1)},
-		{Char_Pico_New, FIXED_DEC(-105,1),   FIXED_DEC(85,1)},
-		{Char_GF_New,      FIXED_DEC(0,1),  FIXED_DEC(-15,1)},
+		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
+		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{NULL},
 		
 		//Stage background
-		Back_Week3_New,
+		Back_Week1_New,
 		
 		//Song info
 		{FIXED_DEC(27,10),FIXED_DEC(27,10),FIXED_DEC(27,10)},
@@ -130,12 +130,12 @@
 	},
 	{ //StageId_3_2 (Philly)
 		//Characters
-		{Char_BF_New,     FIXED_DEC(56,1),   FIXED_DEC(85,1)},
-		{Char_Pico_New, FIXED_DEC(-105,1),   FIXED_DEC(85,1)},
-		{Char_GF_New,      FIXED_DEC(0,1),  FIXED_DEC(-15,1)},
+		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
+		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{NULL},
 		
 		//Stage background
-		Back_Week3_New,
+		Back_Week1_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},

@@ -20,7 +20,7 @@ typedef u8 CharSpec;
 //Character enums
 typedef enum
 {
-	CharAnim_Idle,
+	CharAnim_Idle,  CharAnim_Special,
 	CharAnim_Left,  CharAnim_LeftAlt,
 	CharAnim_Down,  CharAnim_DownAlt,
 	CharAnim_Up,    CharAnim_UpAlt,
@@ -54,6 +54,7 @@ typedef struct Character
 	
 	//Animation state
 	Animatable animatable;
+	Animatable animatableb;
 	fixed_t sing_end;
 	u16 pad_held;
 } Character;

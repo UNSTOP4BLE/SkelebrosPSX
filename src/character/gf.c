@@ -13,8 +13,6 @@
 
 #include "speaker.h"
 
-#include "../stage/week7.h"
-
 //GF character structure
 enum
 {
@@ -43,8 +41,6 @@ typedef struct
 	//Speaker
 	Speaker speaker;
 	
-	//Pico test
-	u16 *pico_p;
 } Char_GF;
 
 //GF character definitions
@@ -87,6 +83,7 @@ static const CharFrame char_gf_frame[] = {
 
 static const Animation char_gf_anim[CharAnim_Max] = {
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_LeftAlt}},                        //CharAnim_Idle
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_LeftAlt}},                        //CharAnim_Special
 	{2, (const u8[]){17, 18, ASCR_BACK, 1}},                                 //CharAnim_Left
 	{1, (const u8[]){ 0,  0,  1,  1,  2,  2,  3,  4,  4,  5, ASCR_BACK, 1}}, //CharAnim_LeftAlt
 	{2, (const u8[]){19, 20, ASCR_BACK, 1}},                                 //CharAnim_Down
@@ -115,28 +112,8 @@ void Char_GF_SetFrame(void *user, u8 frame)
 void Char_GF_Tick(Character *character)
 {
 	Char_GF *this = (Char_GF*)character;
+
 	
-	//Initialize Pico test
-	if (stage.stage_id == StageId_7_3 && stage.back != NULL && this->pico_p == NULL)
-		this->pico_p = ((Back_Week7*)stage.back)->pico_chart;
-	
-	if (this->pico_p != NULL)
-	{
-		if (stage.note_scroll >= 0)
-		{
-			//Scroll through Pico chart
-			u16 substep = stage.note_scroll >> FIXED_SHIFT;
-			while (substep >= ((*this->pico_p) & 0x7FFF))
-			{
-				//Play animation and bump speakers
-				character->set_anim(character, ((*this->pico_p) & 0x8000) ? CharAnim_RightAlt : CharAnim_LeftAlt);
-				Speaker_Bump(&this->speaker);
-				this->pico_p++;
-			}
-		}
-	}
-	else
-	{
 		if (stage.flag & STAGE_FLAG_JUST_STEP)
 		{
 			//Stage specific animations
@@ -166,7 +143,7 @@ void Char_GF_Tick(Character *character)
 				Speaker_Bump(&this->speaker);
 			}
 		}
-	}
+	
 	
 	//Get parallax
 	fixed_t parallax;
@@ -268,12 +245,6 @@ Character *Char_GF_New(fixed_t x, fixed_t y)
 	
 	//Initialize speaker
 	Speaker_Init(&this->speaker);
-	
-	//Initialize Pico test
-	if (stage.stage_id == StageId_7_3 && stage.back != NULL)
-		this->pico_p = ((Back_Week7*)stage.back)->pico_chart;
-	else
-		this->pico_p = NULL;
 	
 	return (Character*)this;
 }
