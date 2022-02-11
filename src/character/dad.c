@@ -28,6 +28,11 @@ enum
 	Dad_ArcMain_Up1,
 	Dad_ArcMain_Right0,
 	Dad_ArcMain_Right1,
+
+	Dad_ArcMain_Special0,
+	Dad_ArcMain_Special1,
+	Dad_ArcMain_Special2,
+	Dad_ArcMain_Special3,
 	
 	//alt
 	Dad_ArcMain_Idleb0,
@@ -45,6 +50,11 @@ enum
 	Dad_ArcMain_Rightb0,
 	Dad_ArcMain_Rightb1,
 
+	Dad_ArcMain_Specialb0,
+	Dad_ArcMain_Specialb1,
+	Dad_ArcMain_Specialb2,
+	Dad_ArcMain_Specialb3,
+	
 	Dad_Arc_Max,
 };
 
@@ -82,6 +92,11 @@ static const CharFrame char_dad_frame[] = {
 	{Dad_ArcMain_Right0, {  0,   0, 233, 231}, {114, 230}}, //10 right 1
 	{Dad_ArcMain_Right1, {  0,   0, 244, 228}, {115, 227}}, //11 right 2
 
+	{Dad_ArcMain_Special0, {  0,   0, 163, 183}, {57, 182}},
+	{Dad_ArcMain_Special1, {  0,   0, 156, 198}, {55, 197}},
+	{Dad_ArcMain_Special2, {  0,   0, 171, 181}, {55, 180}},
+	{Dad_ArcMain_Special3, {  0,   0, 192, 212}, {88, 211}},
+
 	//alts
 	{Dad_ArcMain_Idleb0, {  0,   0, 190, 212}, {127, 211}}, //22 idle 1
 	{Dad_ArcMain_Idleb1, {  0,   0, 198, 209}, {135, 208}}, //1 idle 2
@@ -101,11 +116,16 @@ static const CharFrame char_dad_frame[] = {
 	
 	{Dad_ArcMain_Rightb0, {  0,   0, 233, 231}, {113, 230}}, //10 right 1
 	{Dad_ArcMain_Rightb1, {  0,   0, 243, 228}, {113, 228}}, //11 right 2
+
+	{Dad_ArcMain_Specialb0, {  0,   0, 195, 240}, {118, 239}},
+	{Dad_ArcMain_Specialb1, {  0,   0, 204, 236}, {132, 239}},
+	{Dad_ArcMain_Specialb2, {  0,   0, 197, 240}, {118, 239}},
+	{Dad_ArcMain_Specialb3, {  0,   0, 187, 240}, {100, 239}},
 };
 
 static const Animation char_dad_anim[CharAnim_Max] = {
 	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
+	{2, (const u8[]){ 14, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, ASCR_BACK, 0}}, //CharAnim_Special
 	{2, (const u8[]){ 6, 7, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 8, 9, ASCR_BACK, 0}},         //CharAnim_Down
@@ -117,15 +137,15 @@ static const Animation char_dad_anim[CharAnim_Max] = {
 };
 
 static const Animation char_dad_animb[CharAnim_Max] = {
-	{2, (const u8[]){ 14, 15, 16, 17, 18, 19, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
-	{2, (const u8[]){ 20, 21, ASCR_BACK, 0}},         //CharAnim_Left
+	{2, (const u8[]){ 18, 19, 20, 21, 22, 23, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
+	{2, (const u8[]){ 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35, ASCR_BACK, 0}}, //CharAnim_Special
+	{2, (const u8[]){ 24, 25, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
-	{2, (const u8[]){ 22, 23, ASCR_BACK, 0}},         //CharAnim_Down
+	{2, (const u8[]){ 26, 27, ASCR_BACK, 0}},         //CharAnim_Down
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
-	{2, (const u8[]){ 24, 25, ASCR_BACK, 0}},         //CharAnim_Up
+	{2, (const u8[]){ 28, 29, ASCR_BACK, 0}},         //CharAnim_Up
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
-	{2, (const u8[]){ 26, 27, ASCR_BACK, 0}},         //CharAnim_Right
+	{2, (const u8[]){ 30, 31, ASCR_BACK, 0}},         //CharAnim_Right
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_RightAlt
 };
 
@@ -153,9 +173,13 @@ void Char_Dad_Tick(Character *character)
 		Character_PerformIdle(character);
 	
 	//Animate and draw
+	if (stage.song_step == 324)
+		character->set_anim(character, CharAnim_Special);
 
-
-	if (stage.song_step >= 100)
+	if (stage.song_step == 763)
+		character->set_anim(character, CharAnim_Special);
+	
+	if (stage.song_step >= 336)
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Dad_SetFrame);
 	else
 		Animatable_Animate(&character->animatable, (void*)this, Char_Dad_SetFrame);
@@ -227,6 +251,11 @@ Character *Char_Dad_New(fixed_t x, fixed_t y)
 		"right0.tim", //Dad_ArcMain_Right
 		"right1.tim", //Dad_ArcMain_Right
 
+		"spec0.tim", //Dad_ArcMain_Right
+		"spec1.tim", //Dad_ArcMain_Right
+		"spec2.tim", //Dad_ArcMain_Right
+		"spec3.tim", //Dad_ArcMain_Right
+
 		//alt
 		"idleb0.tim", //Dad_ArcMain_Idle0
 		"idleb1.tim", //Dad_ArcMain_Idle1
@@ -242,6 +271,11 @@ Character *Char_Dad_New(fixed_t x, fixed_t y)
 		"upb1.tim",    //Dad_ArcMain_Up
 		"rightb0.tim", //Dad_ArcMain_Right
 		"rightb1.tim", //Dad_ArcMain_Right
+
+		"specb0.tim", //Dad_ArcMain_Right
+		"specb1.tim", //Dad_ArcMain_Right
+		"specb2.tim", //Dad_ArcMain_Right
+		"specb3.tim", //Dad_ArcMain_Right
 
 		NULL
 	};
