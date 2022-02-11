@@ -37,6 +37,30 @@ enum
 	Dad_ArcMain_Right2,
 	Dad_ArcMain_Right3,
 	
+	//alt
+	Dad_ArcMain_Idleb0,
+	Dad_ArcMain_Idleb1,
+	Dad_ArcMain_Idleb2,
+	Dad_ArcMain_Idleb3,
+	Dad_ArcMain_Idleb4,
+	Dad_ArcMain_Idleb5,
+	Dad_ArcMain_Leftb0,
+	Dad_ArcMain_Leftb1,
+	Dad_ArcMain_Leftb2,
+	Dad_ArcMain_Leftb3,
+	Dad_ArcMain_Downb0,
+	Dad_ArcMain_Downb1,
+	Dad_ArcMain_Downb2,
+	Dad_ArcMain_Downb3,
+	Dad_ArcMain_Upb0,
+	Dad_ArcMain_Upb1,
+	Dad_ArcMain_Upb2,
+	Dad_ArcMain_Upb3,
+	Dad_ArcMain_Rightb0,
+	Dad_ArcMain_Rightb1,
+	Dad_ArcMain_Rightb2,
+	Dad_ArcMain_Rightb3,
+
 	Dad_Arc_Max,
 };
 
@@ -55,36 +79,36 @@ typedef struct
 
 //Dad character definitions
 static const CharFrame char_dad_frame[] = {
-	{Dad_ArcMain_Idle0, {  0,   0, 191, 213}, { 0, 0}}, //0 idle 1
-	{Dad_ArcMain_Idle1, {  0,   0, 198, 209}, { 0, 0}}, //1 idle 2
-	{Dad_ArcMain_Idle2, {  0,   0, 189, 214}, { 0, 0}}, //2 idle 3
-	{Dad_ArcMain_Idle3, {  0,   0, 191, 215}, { 0, 0}}, //3 idle 4
-	{Dad_ArcMain_Idle4, {  0,   0, 188, 215}, { 0, 0}}, //2 idle 3
-	{Dad_ArcMain_Idle5, {  0,   0, 191, 215}, { 0, 0}}, //3 idle 4
+	{Dad_ArcMain_Idle0, {  0,   0, 191, 213}, {127, 212}}, //0 idle 1
+	{Dad_ArcMain_Idle1, {  0,   0, 198, 209}, {135, 208}}, //1 idle 2
+	{Dad_ArcMain_Idle2, {  0,   0, 189, 214}, {125, 213}}, //2 idle 3
+	{Dad_ArcMain_Idle3, {  0,   0, 191, 215}, {124, 214}}, //3 idle 4
+	{Dad_ArcMain_Idle4, {  0,   0, 188, 215}, {122, 214}}, //2 idle 3
+	{Dad_ArcMain_Idle5, {  0,   0, 191, 215}, {124, 214}}, //3 idle 4
 	
-	{Dad_ArcMain_Left0, {  0,   0, 223, 193}, { 0, 0}}, //4 left 1
-	{Dad_ArcMain_Left1, {  0,   0, 211, 197}, { 0, 0}}, //5 left 2
-	{Dad_ArcMain_Left2, {  0,   0, 219, 194}, { 0, 0}}, //4 left 1
-	{Dad_ArcMain_Left3, {  0,   0, 211, 194}, { 0, 0}}, //5 left 2
+	{Dad_ArcMain_Left0, {  0,   0, 223, 193}, { 85, 192}}, //4 left 1
+	{Dad_ArcMain_Left1, {  0,   0, 211, 197}, { 81, 196}}, //5 left 2
+	{Dad_ArcMain_Left2, {  0,   0, 219, 194}, { 81, 193}}, //4 left 1
+	{Dad_ArcMain_Left3, {  0,   0, 211, 194}, { 81, 193}}, //5 left 2
 	
-	{Dad_ArcMain_Down0, {  0,   0, 208, 209}, { 0, 0}}, //6 down 1
-	{Dad_ArcMain_Down1, {  0,   0, 208, 205}, { 0, 0}}, //7 down 2
-	{Dad_ArcMain_Down2, {  0,   0, 209, 209}, { 0, 0}}, //6 down 1
-	{Dad_ArcMain_Down3, {  0,   0, 206, 209}, { 0, 0}}, //7 down 2
+	{Dad_ArcMain_Down0, {  0,   0, 208, 209}, {118, 208}}, //6 down 1
+	{Dad_ArcMain_Down1, {  0,   0, 208, 205}, {116, 205}}, //7 down 2
+	{Dad_ArcMain_Down2, {  0,   0, 209, 209}, {120, 208}}, //6 down 1
+	{Dad_ArcMain_Down3, {  0,   0, 206, 209}, {115, 208}}, //7 down 2
 	
-	{Dad_ArcMain_Up0, {  0,   0, 197, 233}, { 0, 0}}, //8 up 1
-	{Dad_ArcMain_Up1, {  0,   0, 195, 227}, { 0, 0}}, //9 up 2
-	{Dad_ArcMain_Up2, {  0,   0, 197, 230}, { 0, 0}}, //8 up 1
-	{Dad_ArcMain_Up3, {  0,   0, 194, 230}, { 0, 0}}, //9 up 2
+	{Dad_ArcMain_Up0, {  0,   0, 197, 233}, {133, 232}}, //8 up 1
+	{Dad_ArcMain_Up1, {  0,   0, 195, 227}, {131, 226}}, //9 up 2
+	{Dad_ArcMain_Up2, {  0,   0, 197, 230}, {133, 229}}, //8 up 1
+	{Dad_ArcMain_Up3, {  0,   0, 194, 230}, {130, 229}}, //9 up 2
 	
-	{Dad_ArcMain_Right0, {  0,   0, 233, 231}, { 0, 0}}, //10 right 1
-	{Dad_ArcMain_Right1, {  0,   0, 244, 228}, { 0, 0}}, //11 right 2
-	{Dad_ArcMain_Right2, {  0,   0, 246, 230}, { 0, 0}}, //10 right 1
-	{Dad_ArcMain_Right3, {  0,   0, 236, 230}, { 0, 0}}, //11 right 2
+	{Dad_ArcMain_Right0, {  0,   0, 233, 231}, {114, 230}}, //10 right 1
+	{Dad_ArcMain_Right1, {  0,   0, 244, 228}, {115, 227}}, //11 right 2
+	{Dad_ArcMain_Right2, {  0,   0, 246, 230}, {114, 230}}, //10 right 1
+	{Dad_ArcMain_Right3, {  0,   0, 236, 230}, {107, 230}}, //11 right 2
 };
 
 static const Animation char_dad_anim[CharAnim_Max] = {
-	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, ASCR_BACK, 0}}, //CharAnim_Idle
+	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
 	{2, (const u8[]){ 6, 7, 8, 9, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 10, 11, 12, 13, ASCR_BACK, 0}},         //CharAnim_Down

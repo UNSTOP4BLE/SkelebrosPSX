@@ -53,6 +53,9 @@ int main(int argc, char **argv)
 	//botplay
 	stage.botplay = 1;
 
+	//camera
+	stage.movecamera = 1;
+
 	//Remember arguments
 	my_argc = argc;
 	my_argv = argv;
