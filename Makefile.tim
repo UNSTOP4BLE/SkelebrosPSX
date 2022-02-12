@@ -39,4 +39,4 @@ iso/gf/main.arc: iso/gf/gf0.tim iso/gf/gf1.tim iso/gf/gf2.tim
 iso/gf/tut.arc: iso/gf/tut0.tim iso/gf/tut1.tim
 
 # Week 1
-iso/week1/back.arc: iso/week1/back0.tim iso/week1/back1.tim
+iso/week1/back.arc: iso/week1/back0.tim iso/week1/mon0.tim iso/week1/mon1.tim

@@ -17,9 +17,64 @@ typedef struct
 	StageBack back;
 	
 	//Textures
-	Gfx_Tex tex_back0; //Stage and back
-	Gfx_Tex tex_back1; //Curtains
+	IO_Data arc_hench, arc_hench_ptr[2];
+
+	Gfx_Tex tex_back0; //bg
+
+	//Henchmen state
+	Gfx_Tex tex_hench;
+	u8 hench_frame, hench_tex_id;
+	
+	Animatable hench_animatable;
 } Back_Week1;
+
+//Henchmen animation and rects
+static const CharFrame henchmen_frame[] = {
+	{0, {  0,   0,  99,  99}, { 71,  98}}, //0 left 1
+	{0, { 99,   0,  99,  98}, { 71,  97}}, //1 left 2
+	{0, {  0,  99,  98,  97}, { 69,  95}}, //2 left 3
+	{0, { 98,  98,  62,  89}, { 42,  88}}, //3 left 4
+	{0, {160,  98,  62,  89}, { 42,  88}}, //4 left 5
+	
+	{1, {  0,   0, 101, 103}, { 35, 101}}, //5 right 1
+	{1, {101,   0,  99, 101}, { 33, 100}}, //6 right 2
+	{1, {  0, 103,  99, 101}, { 33,  99}}, //7 right 3
+	{1, { 99, 101,  64,  90}, { 26,  89}}, //8 right 4
+	{1, {163, 101,  64,  90}, { 26,  89}}, //9 right 5
+};
+
+static const Animation henchmen_anim[] = {
+	{1, (const u8[]){0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, ASCR_BACK, 1}}, //Left
+	{1, (const u8[]){5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 9, ASCR_BACK, 1}}, //Right
+};
+
+//Henchmen functions
+void Week1_Henchmen_SetFrame(void *user, u8 frame)
+{
+	Back_Week1 *this = (Back_Week1*)user;
+	
+	//Check if this is a new frame
+	if (frame != this->hench_frame)
+	{
+		//Check if new art shall be loaded
+		const CharFrame *cframe = &henchmen_frame[this->hench_frame = frame];
+		if (cframe->tex != this->hench_tex_id)
+			Gfx_LoadTex(&this->tex_hench, this->arc_hench_ptr[this->hench_tex_id = cframe->tex], 0);
+	}
+}
+
+void Week1_Henchmen_Draw(Back_Week1 *this, fixed_t x, fixed_t y)
+{
+	//Draw character
+	const CharFrame *cframe = &henchmen_frame[this->hench_frame];
+	
+	fixed_t ox = x - ((fixed_t)cframe->off[0] << FIXED_SHIFT);
+	fixed_t oy = y - ((fixed_t)cframe->off[1] << FIXED_SHIFT);
+	
+	RECT src = {cframe->src[0], cframe->src[1], cframe->src[2], cframe->src[3]};
+	RECT_FIXED dst = {ox, oy, src.w << FIXED_SHIFT, src.h << FIXED_SHIFT};
+	Stage_DrawTex(&this->tex_hench, &src, &dst, stage.camera.bzoom);
+}
 
 //Week 1 background functions
 void Back_Week1_DrawBG(StageBack *back)
@@ -27,92 +82,46 @@ void Back_Week1_DrawBG(StageBack *back)
 	Back_Week1 *this = (Back_Week1*)back;
 	
 	fixed_t fx, fy;
+
+
+	//Animate and draw henchmen
+	fx = stage.camera.x;
+	fy = stage.camera.y;
 	
-	//Draw curtains
-	fx = (stage.camera.x * 5) >> 2;
-	fy = (stage.camera.y * 5) >> 2;
+	if (stage.flag & STAGE_FLAG_JUST_STEP)
+	{
+		switch (stage.song_step & 7)
+		{
+			case 0:
+				Animatable_SetAnim(&this->hench_animatable, 0);
+				break;
+			case 4:
+				Animatable_SetAnim(&this->hench_animatable, 1);
+				break;
+		}
+	}
+	Animatable_Animate(&this->hench_animatable, (void*)this, Week1_Henchmen_SetFrame);
 	
-	RECT curtainl_src = {0, 0, 107, 221};
-	RECT_FIXED curtainl_dst = {
-		FIXED_DEC(-250,1) - FIXED_DEC(SCREEN_WIDEOADD,2) - fx,
-		FIXED_DEC(-150,1) - fy,
-		FIXED_DEC(107,1),
-		FIXED_DEC(221,1)
-	};
-	RECT curtainr_src = {122, 0, 134, 256};
-	RECT_FIXED curtainr_dst = {
-		FIXED_DEC(110,1) + FIXED_DEC(SCREEN_WIDEOADD,2) - fx,
-		FIXED_DEC(-150,1) - fy,
-		FIXED_DEC(134,1),
-		FIXED_DEC(256,1)
-	};
-	
-	Stage_DrawTex(&this->tex_back1, &curtainl_src, &curtainl_dst, stage.camera.bzoom);
-	Stage_DrawTex(&this->tex_back1, &curtainr_src, &curtainr_dst, stage.camera.bzoom);
-	
-	//Draw stage
-	fx = stage.camera.x * 3 / 2;
-	fy = stage.camera.y * 3 / 2;
-	
-	POINT_FIXED stage_d2 = {
-		FIXED_DEC(-230,1) - fx,
-		FIXED_DEC(50,1) + FIXED_DEC(123,1) - fy,
-	};
-	POINT_FIXED stage_d3 = {
-		FIXED_DEC(-230,1) + FIXED_DEC(410,1) - fx,
-		FIXED_DEC(50,1) + FIXED_DEC(123,1) - fy,
-	};
-	
-	fx = stage.camera.x >> 1;
-	fy = stage.camera.y >> 1;
-	
-	POINT_FIXED stage_d0 = {
-		FIXED_DEC(-230,1) - fx,
-		FIXED_DEC(50,1) - fy,
-	};
-	POINT_FIXED stage_d1 = {
-		FIXED_DEC(-230,1) + FIXED_DEC(410,1) - fx,
-		FIXED_DEC(50,1) - fy,
-	};
-	
-	RECT stage_src = {0, 0, 255, 59};
-	
-	Stage_DrawTexArb(&this->tex_back0, &stage_src, &stage_d0, &stage_d1, &stage_d2, &stage_d3, stage.camera.bzoom);
-	
+	Week1_Henchmen_Draw(this, FIXED_DEC(-50,1) - fx, FIXED_DEC(30,1) - fy);
+
 	//Draw back
-	//fx = stage.camera.x * 2 / 3;
-	//fy = stage.camera.y * 2 / 3;
-	
-	RECT backl_src = {0, 59, 121, 105};
-	RECT_FIXED backl_dst = {
+	RECT back_src = {0, 0, 256, 256};
+	RECT_FIXED back_dst = {
 		FIXED_DEC(-190,1) - fx,
 		FIXED_DEC(-100,1) - fy,
-		FIXED_DEC(121,1),
-		FIXED_DEC(105,1)
-	};
-	RECT backr_src = {121, 59, 136, 120};
-	RECT_FIXED backr_dst = {
-		FIXED_DEC(60,1) - fx,
-		FIXED_DEC(-110,1) - fy,
-		FIXED_DEC(136,1),
-		FIXED_DEC(120,1)
-	};
-	RECT backf_src = {0, 59, 1, 1};
-	RECT backf_dst = {
-		0,
-		0,
-		SCREEN_WIDTH,
-		SCREEN_HEIGHT,
+		FIXED_DEC(640,1),
+		FIXED_DEC(350,1)
 	};
 	
-	Stage_DrawTex(&this->tex_back0, &backl_src, &backl_dst, stage.camera.bzoom);
-	Stage_DrawTex(&this->tex_back0, &backr_src, &backr_dst, stage.camera.bzoom);
-	Gfx_DrawTex(&this->tex_back0, &backf_src, &backf_dst);
+	Stage_DrawTex(&this->tex_back0, &back_src, &back_dst, stage.camera.bzoom);
 }
 
 void Back_Week1_Free(StageBack *back)
 {
 	Back_Week1 *this = (Back_Week1*)back;
+	
+	//Free henchmen archive
+	Mem_Free(this->arc_hench);
 	
 	//Free structure
 	Mem_Free(this);
@@ -134,8 +143,17 @@ StageBack *Back_Week1_New(void)
 	//Load background textures
 	IO_Data arc_back = IO_Read("\\WEEK1\\BACK.ARC;1");
 	Gfx_LoadTex(&this->tex_back0, Archive_Find(arc_back, "back0.tim"), 0);
-	Gfx_LoadTex(&this->tex_back1, Archive_Find(arc_back, "back1.tim"), 0);
 	Mem_Free(arc_back);
 	
+	//Load henchmen textures
+	this->arc_hench = IO_Read("\\WEEK1\\BACK.ARC;1");
+	this->arc_hench_ptr[0] = Archive_Find(this->arc_hench, "mon0.tim");
+	this->arc_hench_ptr[1] = Archive_Find(this->arc_hench, "mon1.tim");
+
+	//Initialize henchmen state
+	Animatable_Init(&this->hench_animatable, henchmen_anim);
+	Animatable_SetAnim(&this->hench_animatable, 0);
+	this->hench_frame = this->hench_tex_id = 0xFF; //Force art load
+
 	return (StageBack*)this;
 }
