@@ -221,7 +221,8 @@ Character *Char_GF_New(fixed_t x, fixed_t y)
 	//Load scene specific art
 	switch (stage.stage_id)
 	{
-		case StageId_1_4: //Tutorial
+		case StageId_1_2: //Tutorial
+		case StageId_1_3:
 		{
 			this->arc_scene = IO_Read("\\CHAR\\GFTUT.ARC;1");
 			

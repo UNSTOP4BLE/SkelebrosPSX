@@ -78,6 +78,7 @@ boolean noteshake;
 #include "character/gf.h"
 
 #include "stage/week1.h"
+#include "stage/dummy.h"
 
 static const StageDef stage_defs[StageId_Max] = {
 	#include "stagedef_disc1.h"

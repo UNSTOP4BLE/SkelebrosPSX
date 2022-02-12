@@ -17,11 +17,11 @@
 	{ //StageId_1_2 (Fresh)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_GF_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
 		{NULL},
 		
 		//Stage background
-		Back_Week1_New,
+		Back_Dummy_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},
@@ -33,7 +33,7 @@
 	{ //StageId_1_3 (Dadbattle)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_GF_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
 		{NULL},
 		
 		//Stage background
