@@ -1518,9 +1518,7 @@ void Stage_Tick(void)
 				stage.noteshakex = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
 				stage.noteshakey = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
 			}
-
-			noteshake = 1;
-
+			
         	//camera like sonic.exe
     		if (stage.movecamera)
 			{
