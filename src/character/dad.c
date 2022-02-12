@@ -173,15 +173,15 @@ void Char_Dad_Tick(Character *character)
 		Character_PerformIdle(character);
 	
 	//Animate and draw
-	if ((stage.stage_id == StageId_1_1 && stage.song_step == 324) || (stage.stage_id == StageId_2_1 && stage.song_step == 324))
+	if ((stage.stage_id == StageId_1_1 && stage.song_step == 324) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 324))
 		character->set_anim(character, CharAnim_Special);
 
 
-	if ((stage.stage_id == StageId_1_1 && stage.song_step == 763) || (stage.stage_id == StageId_2_1 && stage.song_step == 763))
+	if ((stage.stage_id == StageId_1_1 && stage.song_step == 763) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 763))
 		character->set_anim(character, CharAnim_Special);
 	
 
-	if ((stage.stage_id == StageId_1_1 && stage.song_step >= 336) || (stage.stage_id == StageId_2_1 && stage.song_step >= 336))
+	if ((stage.stage_id == StageId_1_1 && stage.song_step >= 336) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 336))
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Dad_SetFrame);
 	else
 		Animatable_Animate(&character->animatable, (void*)this, Char_Dad_SetFrame);

@@ -42,9 +42,9 @@ typedef enum
 	StageId_1_3, //Dadbattle
 	StageId_1_4, //Tutorial
 	
-	StageId_2_1, //Spookeez
-	StageId_2_2, //South
-	StageId_2_3, //Monster
+	StageId_1_1Chara, //Spookeez
+	StageId_1_2Chara, //South
+	StageId_1_3Chara, //Monster
 	
 	StageId_3_1, //Pico
 	StageId_3_2, //Philly
@@ -87,9 +87,8 @@ typedef enum
 
 typedef enum
 {
-	StageDiff_Easy,
-	StageDiff_Normal,
-	StageDiff_Hard,
+	StageDiff_BF,
+	StageDiff_Chara,
 } StageDiff;
 
 typedef enum

@@ -1738,7 +1738,7 @@ void Stage_Tick(void)
 				boolean is_bump_step = (stage.song_step & 0xF) == 0;
 				
 				//papyrus bumps
-				if ((stage.stage_id == StageId_1_1  && stage.song_step >= 643 && stage.song_step <= 830) || (stage.stage_id == StageId_2_1 && stage.song_step >= 643 && stage.song_step <= 830))
+				if ((stage.stage_id == StageId_1_1  && stage.song_step >= 643 && stage.song_step <= 830) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 643 && stage.song_step <= 830))
 					is_bump_step = (stage.song_step & 0x3) == 0;
 				
 				//Bump screen

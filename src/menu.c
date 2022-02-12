@@ -223,17 +223,17 @@ static void Menu_DifficultySelector(s32 x, s32 y)
 	{
 		if (pad_state.press & PAD_LEFT)
 		{
-			if (menu.page_param.stage.diff > StageDiff_Easy)
+			if (menu.page_param.stage.diff > StageDiff_BF)
 				menu.page_param.stage.diff--;
 			else
-				menu.page_param.stage.diff = StageDiff_Hard;
+				menu.page_param.stage.diff = StageDiff_Chara;
 		}
 		if (pad_state.press & PAD_RIGHT)
 		{
-			if (menu.page_param.stage.diff < StageDiff_Hard)
+			if (menu.page_param.stage.diff < StageDiff_BF)
 				menu.page_param.stage.diff++;
 			else
-				menu.page_param.stage.diff = StageDiff_Easy;
+				menu.page_param.stage.diff = StageDiff_Chara;
 		}
 	}
 	
@@ -243,14 +243,13 @@ static void Menu_DifficultySelector(s32 x, s32 y)
 		{{240, 64, 16, 32}, {240, 96, 16, 32}}, //right
 	};
 	
-	Gfx_BlitTex(&menu.tex_story, &arrow_src[0][(pad_state.held & PAD_LEFT) != 0], x - 40 - 16, y - 16);
-	Gfx_BlitTex(&menu.tex_story, &arrow_src[1][(pad_state.held & PAD_RIGHT) != 0], x + 40, y - 16);
+	Gfx_BlitTex(&menu.tex_story, &arrow_src[0][(pad_state.held & PAD_LEFT) != 0], x - 50 - 16, y - 13);
+	Gfx_BlitTex(&menu.tex_story, &arrow_src[1][(pad_state.held & PAD_RIGHT) != 0], x + 50, y - 13);
 	
 	//Draw difficulty
 	static const RECT diff_srcs[] = {
-		{  0, 96, 64, 18},
-		{ 64, 96, 80, 18},
-		{144, 96, 64, 18},
+		{ 86, 92, 33, 35},
+		{  0, 63,100, 25},
 	};
 	
 	const RECT *diff_src = &diff_srcs[menu.page_param.stage.diff];
@@ -263,7 +262,7 @@ static void Menu_DrawWeek(const char *week, s32 x, s32 y)
 	if (week == NULL)
 	{
 		//Tutorial
-		RECT label_src = {0, 0, 112, 32};
+		RECT label_src = {0, 0, 120, 32};
 		Gfx_BlitTex(&menu.tex_story, &label_src, x, y);
 	}
 	else
@@ -675,21 +674,14 @@ void Menu_Tick(void)
 				const char *name;
 				const char *tracks[3];
 			} menu_options[] = {
-				{NULL, StageId_1_4, "TUTORIAL", {"TUTORIAL", NULL, NULL}},
-				{"1", StageId_1_1, "DADDY DEAREST", {"BOPEEBO", "FRESH", "DADBATTLE"}},
-				{"2", StageId_2_1, "SPOOKY MONTH", {"SPOOKEEZ", "SOUTH", "MONSTER"}},
-				{"3", StageId_3_1, "PICO", {"PICO", "PHILLY NICE", "BLAMMED"}},
-				{"4", StageId_4_1, "MOMMY MUST MURDER", {"SATIN PANTIES", "HIGH", "MILF"}},
-				{"5", StageId_5_1, "RED SNOW", {"COCOA", "EGGNOG", "WINTER HORRORLAND"}},
-				{"6", StageId_6_1, "HATING SIMULATOR", {"SENPAI", "ROSES", "THORNS"}},
-				{"7", StageId_7_1, "TANKMAN", {"UGH", "GUNS", "STRESS"}},
+				{NULL, StageId_1_1, "UNDERTALE UNIVERSE", {"NYEH HEH HEH", "BONELY ONE", "NOT ENOUGH"}},
 			};
 			
 			//Initialize page
 			if (menu.page_swap)
 			{
 				menu.scroll = 0;
-				menu.page_param.stage.diff = StageDiff_Normal;
+				menu.page_param.stage.diff = StageDiff_BF;
 				menu.page_state.title.fade = FIXED_DEC(0,1);
 				menu.page_state.title.fadespd = FIXED_DEC(0,1);
 			}
@@ -810,9 +802,6 @@ void Menu_Tick(void)
 				{StageId_1_1, 0xFF9271FD, "BOPEEBO"},
 				{StageId_1_2, 0xFF9271FD, "FRESH"},
 				{StageId_1_3, 0xFF9271FD, "DADBATTLE"},
-				{StageId_2_1, 0xFF223344, "SPOOKEEZ"},
-				{StageId_2_2, 0xFF223344, "SOUTH"},
-				{StageId_2_3, 0xFF223344, "MONSTER"},
 				{StageId_3_1, 0xFF941653, "PICO"},
 				{StageId_3_2, 0xFF941653, "PHILLY NICE"},
 				{StageId_3_3, 0xFF941653, "BLAMMED"},
@@ -834,7 +823,7 @@ void Menu_Tick(void)
 			if (menu.page_swap)
 			{
 				menu.scroll = COUNT_OF(menu_options) * FIXED_DEC(24 + SCREEN_HEIGHT2,1);
-				menu.page_param.stage.diff = StageDiff_Normal;
+				menu.page_param.stage.diff = StageDiff_BF;
 				menu.page_state.freeplay.back_r = FIXED_DEC(255,1);
 				menu.page_state.freeplay.back_g = FIXED_DEC(255,1);
 				menu.page_state.freeplay.back_b = FIXED_DEC(255,1);
@@ -947,7 +936,7 @@ void Menu_Tick(void)
 			if (menu.page_swap)
 			{
 				menu.scroll = COUNT_OF(menu_options) * FIXED_DEC(24 + SCREEN_HEIGHT2,1);
-				menu.page_param.stage.diff = StageDiff_Normal;
+				menu.page_param.stage.diff = StageDiff_BF;
 			}
 			
 			//Draw page label
@@ -988,7 +977,7 @@ void Menu_Tick(void)
 					menu.page_param.stage.id = menu_options[menu.select].stage;
 					menu.page_param.stage.story = true;
 					if (!menu_options[menu.select].difficulty)
-						menu.page_param.stage.diff = StageDiff_Hard;
+						menu.page_param.stage.diff = StageDiff_Chara;
 					Trans_Start();
 				}
 				
