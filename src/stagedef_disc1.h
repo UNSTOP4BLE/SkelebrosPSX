@@ -17,7 +17,7 @@
 	{ //StageId_1_2 (Fresh)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_GF_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
+		{Char_sans_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
 		{NULL},
 		
 		//Stage background

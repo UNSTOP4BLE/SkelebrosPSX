@@ -25,7 +25,7 @@
 //Stage constants
 //#define STAGE_NOHUD //Disable the HUD
 
-//#define STAGE_FREECAM //Freecam
+#define STAGE_FREECAM //Freecam
 
 //normal note x
 static const fixed_t note_x[8] = {
@@ -75,6 +75,7 @@ boolean noteshake;
 
 #include "character/bf.h"
 #include "character/dad.h"
+#include "character/sans.h"
 #include "character/gf.h"
 
 #include "stage/week1.h"

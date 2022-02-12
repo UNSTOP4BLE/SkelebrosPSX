@@ -9,6 +9,7 @@ all: \
 	iso/bf/main.arc \
 	iso/bf/dead.arc \
 	iso/dad/main.arc \
+	iso/sans/main.arc \
 	iso/gf/main.arc \
 	iso/gf/tut.arc \
 	iso/gf/speaker.tim \
@@ -29,6 +30,9 @@ iso/bf/dead.arc: iso/bf/dead1.tim iso/bf/dead2.tim iso/bf/retry.tim
 
 # Dad
 iso/dad/main.arc: iso/dad/idle0.tim iso/dad/idle1.tim iso/dad/idle2.tim iso/dad/idle3.tim iso/dad/idle4.tim iso/dad/idle5.tim iso/dad/left0.tim iso/dad/left1.tim iso/dad/down0.tim iso/dad/down1.tim iso/dad/up0.tim iso/dad/up1.tim iso/dad/right0.tim iso/dad/right1.tim iso/dad/idleb0.tim iso/dad/idleb1.tim iso/dad/idleb2.tim iso/dad/idleb3.tim iso/dad/idleb4.tim iso/dad/idleb5.tim iso/dad/leftb0.tim iso/dad/leftb1.tim iso/dad/downb0.tim iso/dad/downb1.tim iso/dad/upb0.tim iso/dad/upb1.tim iso/dad/rightb0.tim iso/dad/rightb1.tim iso/dad/spec0.tim iso/dad/spec1.tim iso/dad/spec2.tim iso/dad/spec3.tim iso/dad/specb0.tim iso/dad/specb1.tim iso/dad/specb2.tim iso/dad/specb3.tim
+
+# sansz
+iso/sans/main.arc: iso/sans/idle0.tim iso/sans/idle1.tim iso/sans/down.tim iso/sans/left0.tim iso/sans/left1.tim iso/sans/right.tim iso/sans/up0.tim iso/sans/up1.tim
 
 # GF
 iso/gf/main.arc: iso/gf/gf0.tim iso/gf/gf1.tim iso/gf/gf2.tim
