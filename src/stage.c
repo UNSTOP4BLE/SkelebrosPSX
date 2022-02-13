@@ -25,7 +25,7 @@
 //Stage constants
 //#define STAGE_NOHUD //Disable the HUD
 
-//#define STAGE_FREECAM //Freecam
+#define STAGE_FREECAM //Freecam
 
 //normal note x
 static const fixed_t note_x[8] = {

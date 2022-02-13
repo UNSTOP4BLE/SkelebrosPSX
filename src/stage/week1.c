@@ -63,15 +63,16 @@ static const CharFrame henchmen_frame[] = {
 	{1, { 68,   0,  68, 51}, { 0,  0}}, //5 right 1
 	{1, {136,   0,  68, 51}, { 0,  0}}, //6 right 2
 	{1, {  0,  51,  68, 51}, { 0,  0}}, //7 right 3
-	{1, { 99,  51,  68, 51}, { 0,  0}}, //8 right 4
-	{1, {163,  51,  68, 51}, { 0,  0}}, //9 right 5
+
+	{1, { 68,  51,  68, 51}, { 0,  0}}, //8 right 4
+	{1, {136,  51,  68, 51}, { 0,  0}}, //9 right 5
 	{1, {  0, 102,  68, 51}, { 0,  0}}, //9 right 5
 };
 
 static const Animation henchmen_anim[] = {
 	{1, (const u8[]){5, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8,  ASCR_BACK, 1}}, //static
 	{2, (const u8[]){0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, ASCR_BACK, 1}}, //Left
-	{2, (const u8[]){9,10,11,9,10,11,9,10,11,9,10,11, 9, ASCR_BACK, 1}}, //spamton
+	{2, (const u8[]){9,10,11,9,10,11,9,10,11,9,10,11, 9, ASCR_BACK, 1}}, //fake fish spamton
 	{2, (const u8[]){12,13,14,15,12,13,14,15,12,13,14,15,12,13,14,15,12, ASCR_BACK, 1}}, //Sans
 	{2, (const u8[]){16,17,18,19,20,21,20,21,20,21, ASCR_BACK, 1}}, //Undyne
 };
@@ -110,7 +111,7 @@ void Back_Week1_DrawBG(StageBack *back)
 	Back_Week1 *this = (Back_Week1*)back;
 	
 	fixed_t fx, fy;
-
+ 
 	//Animate and draw henchmen
 	fx = stage.camera.x;
 	fy = stage.camera.y;
@@ -141,7 +142,7 @@ void Back_Week1_DrawBG(StageBack *back)
 	}
 	Animatable_Animate(&this->hench_animatable, (void*)this, Week1_Henchmen_SetFrame);
 	
-	Week1_Henchmen_Draw(this, FIXED_DEC(-50,1) - fx, FIXED_DEC(30,1) - fy);
+	Week1_Henchmen_Draw(this, FIXED_DEC(287,1) - fx, FIXED_DEC(0,1) - fy);
 
 	//Draw back
 	RECT back_src = {0, 0, 256, 256};
