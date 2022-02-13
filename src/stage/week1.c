@@ -9,13 +9,14 @@
 #include "../archive.h"
 #include "../mem.h"
 #include "../stage.h"
+#include "../random.h"
 
 //Week 1 background structure
 typedef struct
 {
 	//Stage background base structure
 	StageBack back;
-	
+
 	//Textures
 	IO_Data arc_hench, arc_hench_ptr[2];
 
@@ -27,6 +28,11 @@ typedef struct
 	
 	Animatable hench_animatable;
 } Back_Week1;
+
+//swaptv animation
+u8 swaptv = 1;
+// TODO make sure to just increase one time the swaptv
+boolean avoidproblem;
 
 //Henchmen animation and rects
 static const CharFrame henchmen_frame[] = {
@@ -63,8 +69,11 @@ static const CharFrame henchmen_frame[] = {
 };
 
 static const Animation henchmen_anim[] = {
-	{1, (const u8[]){0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, ASCR_BACK, 1}}, //Left
-	{1, (const u8[]){5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 9, ASCR_BACK, 1}}, //Right
+	{1, (const u8[]){5, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8,  ASCR_BACK, 1}}, //static
+	{2, (const u8[]){0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, ASCR_BACK, 1}}, //Left
+	{2, (const u8[]){9,10,11,9,10,11,9,10,11,9,10,11, 9, ASCR_BACK, 1}}, //spamton
+	{2, (const u8[]){12,13,14,15,12,13,14,15,12,13,14,15,12,13,14,15,12, ASCR_BACK, 1}}, //Sans
+	{2, (const u8[]){16,17,18,19,20,21,20,21,20,21, ASCR_BACK, 1}}, //Undyne
 };
 
 //Henchmen functions
@@ -102,20 +111,31 @@ void Back_Week1_DrawBG(StageBack *back)
 	
 	fixed_t fx, fy;
 
-
 	//Animate and draw henchmen
 	fx = stage.camera.x;
 	fy = stage.camera.y;
+
+	if (this->hench_animatable.anim == 0 && avoidproblem == true)
+	{
+	    swaptv += 1;
+		avoidproblem = false;
+	}
+	else if (this->hench_animatable.anim != 0)
+	avoidproblem = true;
+    
+	//reset swaptv
+	if (swaptv > 4)
+	   swaptv = 1;
 	
 	if (stage.flag & STAGE_FLAG_JUST_STEP)
 	{
-		switch (stage.song_step & 7)
+		switch (stage.song_step % 10)
 		{
 			case 0:
+                if (this->hench_animatable.anim == 0)
+				Animatable_SetAnim(&this->hench_animatable, swaptv);
+				else if (this->hench_animatable.anim >= 1)
 				Animatable_SetAnim(&this->hench_animatable, 0);
-				break;
-			case 4:
-				Animatable_SetAnim(&this->hench_animatable, 1);
 				break;
 		}
 	}

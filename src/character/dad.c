@@ -125,27 +125,27 @@ static const CharFrame char_dad_frame[] = {
 
 static const Animation char_dad_anim[CharAnim_Max] = {
 	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{2, (const u8[]){ 14, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, ASCR_BACK, 0}}, //CharAnim_Special
-	{2, (const u8[]){ 6, 7, ASCR_BACK, 0}},         //CharAnim_Left
+	{2, (const u8[]){ 14, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, ASCR_BACK, 1}}, //CharAnim_Special
+	{2, (const u8[]){ 6, 7, ASCR_BACK, 2}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
-	{2, (const u8[]){ 8, 9, ASCR_BACK, 0}},         //CharAnim_Down
+	{2, (const u8[]){ 8, 9, ASCR_BACK, 2}},         //CharAnim_Down
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
-	{2, (const u8[]){ 10, 11, ASCR_BACK, 0}},         //CharAnim_Up
+	{2, (const u8[]){ 10, 11, ASCR_BACK, 2}},         //CharAnim_Up
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
-	{2, (const u8[]){ 12, 13, ASCR_BACK, 0}},         //CharAnim_Right
+	{2, (const u8[]){ 12, 13, ASCR_BACK, 2}},         //CharAnim_Right
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_RightAlt
 };
 
 static const Animation char_dad_animb[CharAnim_Max] = {
 	{2, (const u8[]){ 18, 19, 20, 21, 22, 23, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{2, (const u8[]){ 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35, ASCR_BACK, 0}}, //CharAnim_Special
-	{2, (const u8[]){ 24, 25, ASCR_BACK, 0}},         //CharAnim_Left
+	{2, (const u8[]){ 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35, ASCR_BACK, 1}}, //CharAnim_Special
+	{2, (const u8[]){ 24, 25, ASCR_BACK, 2}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
-	{2, (const u8[]){ 26, 27, ASCR_BACK, 0}},         //CharAnim_Down
+	{2, (const u8[]){ 26, 27, ASCR_BACK, 2}},         //CharAnim_Down
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
-	{2, (const u8[]){ 28, 29, ASCR_BACK, 0}},         //CharAnim_Up
+	{2, (const u8[]){ 28, 29, ASCR_BACK, 2}},         //CharAnim_Up
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
-	{2, (const u8[]){ 30, 31, ASCR_BACK, 0}},         //CharAnim_Right
+	{2, (const u8[]){ 30, 31, ASCR_BACK, 2}},         //CharAnim_Right
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_RightAlt
 };
 

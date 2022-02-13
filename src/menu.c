@@ -23,6 +23,7 @@
 
 #include "stage.h"
 #include "character/gf.h"
+u32 moveuptitle;
 
 //Menu messages
 static const char *funny_messages[][2] = {
@@ -134,7 +135,7 @@ static struct
 	} page_param;
 	
 	//Menu assets
-	Gfx_Tex tex_back, tex_ng, tex_story, tex_title;
+	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_title, tex_titlebg;
 	FontData font_bold, font_arial;
 	
 	Character *gf; //Title Girlfriend
@@ -205,12 +206,12 @@ static const char *Menu_LowerIf(const char *text, boolean lower)
 	return menu_text_buffer;
 }
 
-static void Menu_DrawBack(boolean flash, s32 scroll, u8 r0, u8 g0, u8 b0, u8 r1, u8 g1, u8 b1)
+static void Menu_DrawBack(boolean flash, u8 r0, u8 g0, u8 b0, u8 r1, u8 g1, u8 b1)
 {
 	RECT back_src = {0, 0, 255, 255};
-	RECT back_dst = {0, -scroll - SCREEN_WIDEADD2, SCREEN_WIDTH, SCREEN_WIDTH * 4 / 5};
+	RECT back_dst = {0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 4 / 5};
 	
-	if (flash || (animf_count & 4) == 0)
+		if (flash || (animf_count & 4) == 0)
 		Gfx_DrawTexCol(&menu.tex_back, &back_src, &back_dst, r0, g0, b0);
 	else
 		Gfx_DrawTexCol(&menu.tex_back, &back_src, &back_dst, r1, g1, b1);
@@ -230,10 +231,10 @@ static void Menu_DifficultySelector(s32 x, s32 y)
 		}
 		if (pad_state.press & PAD_RIGHT)
 		{
-			if (menu.page_param.stage.diff < StageDiff_BF)
+			if (menu.page_param.stage.diff < StageDiff_Chara)
 				menu.page_param.stage.diff++;
 			else
-				menu.page_param.stage.diff = StageDiff_Chara;
+				menu.page_param.stage.diff = StageDiff_BF;
 		}
 	}
 	
@@ -291,9 +292,11 @@ void Menu_Load(MenuPage page)
 	//Load menu assets
 	IO_Data menu_arc = IO_Read("\\MENU\\MENU.ARC;1");
 	Gfx_LoadTex(&menu.tex_back,  Archive_Find(menu_arc, "back.tim"),  0);
+	Gfx_LoadTex(&menu.tex_cooleffect,  Archive_Find(menu_arc, "coolfx.tim"),  0);
 	Gfx_LoadTex(&menu.tex_ng,    Archive_Find(menu_arc, "ng.tim"),    0);
 	Gfx_LoadTex(&menu.tex_story, Archive_Find(menu_arc, "story.tim"), 0);
 	Gfx_LoadTex(&menu.tex_title, Archive_Find(menu_arc, "title.tim"), 0);
+	Gfx_LoadTex(&menu.tex_titlebg, Archive_Find(menu_arc, "titlebg.tim"), 0);
 	Mem_Free(menu_arc);
 	
 	FontData_Load(&menu.font_bold, Font_Bold);
@@ -445,7 +448,7 @@ void Menu_Tick(void)
 		}
 	//Fallthrough
 		case MenuPage_Title:
-		{
+		{  
 			//Initialize page
 			if (menu.page_swap)
 			{
@@ -465,7 +468,7 @@ void Menu_Tick(void)
 			
 			//Go to main menu when start is pressed
 			if (menu.trans_time > 0 && (menu.trans_time -= timer_dt) <= 0)
-				Trans_Start();
+		      Trans_Start();
 			
 			if ((pad_state.press & PAD_START) && menu.next_page == menu.page && Trans_Idle())
 			{
@@ -490,13 +493,13 @@ void Menu_Tick(void)
 				FIXED_DEC(97,100),
 			};
 			fixed_t logo_scale = logo_scales[(menu.page_state.title.logo_bump * 24) >> FIXED_SHIFT];
-			u32 x_rad = (logo_scale * (176 >> 1)) >> FIXED_SHIFT;
-			u32 y_rad = (logo_scale * (112 >> 1)) >> FIXED_SHIFT;
+			u32 x_rad = (logo_scale * (192 >> 1)) >> FIXED_SHIFT;
+			u32 y_rad = (logo_scale * (116 >> 1)) >> FIXED_SHIFT;
 			
-			RECT logo_src = {0, 0, 176, 112};
+			RECT logo_src = {0, 0, 192, 116};
 			RECT logo_dst = {
-				100 - x_rad + (SCREEN_WIDEADD2 >> 1),
-				68 - y_rad,
+				160 - x_rad + (SCREEN_WIDEADD2 >> 1),
+				98 - moveuptitle - y_rad,
 				x_rad << 1,
 				y_rad << 1
 			};
@@ -515,22 +518,28 @@ void Menu_Tick(void)
 				u8 press_g = (58  + ((press_lerp * (255 - 58))  >> 8)) >> 1;
 				u8 press_b = (206 + ((press_lerp * (255 - 206)) >> 8)) >> 1;
 				
-				RECT press_src = {0, 112, 256, 32};
+				RECT press_src = {0, 117, 256, 32};
 				Gfx_BlitTexCol(&menu.tex_title, &press_src, (SCREEN_WIDTH - 256) / 2, SCREEN_HEIGHT - 48, press_r, press_g, press_b);
 			}
 			else
 			{
 				//Flash white
-				RECT press_src = {0, (animf_count & 1) ? 144 : 112, 256, 32};
+				moveuptitle += 3;
+				RECT press_src = {0, (animf_count & 1) ? 149 : 117, 256, 32};
 				Gfx_BlitTex(&menu.tex_title, &press_src, (SCREEN_WIDTH - 256) / 2, SCREEN_HEIGHT - 48);
 			}
+            //draw titlebg
+			RECT titlebg_src = {0, 0, 256, 144};
+	        RECT titlebg_dst = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+	
+		    Gfx_DrawTex(&menu.tex_titlebg, &titlebg_src, &titlebg_dst);
 			
 			//Draw Girlfriend
-			menu.gf->tick(menu.gf);
 			break;
 		}
 		case MenuPage_Main:
 		{
+			moveuptitle = 0;
 			static const char *menu_options[] = {
 				"STORY MODE",
 				"FREEPLAY",
@@ -651,17 +660,17 @@ void Menu_Tick(void)
 					FontAlign_Center
 				);
 			}
+
+			RECT coolfx_src = {0, 0, 255, 255};
+	        RECT coolfx_dst = {0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 4 / 5};
+	
+		    Gfx_DrawTex(&menu.tex_cooleffect, &coolfx_src, &coolfx_dst);
 			
 			//Draw background
 			Menu_DrawBack(
 				menu.next_page == menu.page || menu.next_page == MenuPage_Title,
-			#ifndef PSXF_NETWORK
-				menu.scroll >> (FIXED_SHIFT + 1),
-			#else
-				menu.scroll >> (FIXED_SHIFT + 3),
-			#endif
 				253 >> 1, 231 >> 1, 113 >> 1,
-				253 >> 1, 113 >> 1, 155 >> 1
+				253 >> 1, 231 >> 1, 113 >> 1
 			);
 			break;
 		}
@@ -671,10 +680,11 @@ void Menu_Tick(void)
 			{
 				const char *week;
 				StageId stage;
+				StageId stagealt;
 				const char *name;
 				const char *tracks[3];
 			} menu_options[] = {
-				{NULL, StageId_1_1, "UNDERTALE UNIVERSE", {"NYEH HEH HEH", "BONELY ONE", "NOT ENOUGH"}},
+				{NULL, StageId_1_1,StageId_1_1Chara,"UNDERTALE UNIVERSE", {"NYEH HEH HEH", "BONELY ONE", "NOT ENOUGH"}},
 			};
 			
 			//Initialize page
@@ -724,6 +734,9 @@ void Menu_Tick(void)
 				if (pad_state.press & (PAD_START | PAD_CROSS))
 				{
 					menu.next_page = MenuPage_Stage;
+					if (menu.page_param.stage.diff == StageDiff_Chara)
+	                menu.page_param.stage.id = menu_options[menu.select].stagealt;
+					else
 					menu.page_param.stage.id = menu_options[menu.select].stage;
 					menu.page_param.stage.story = true;
 					menu.trans_time = FIXED_UNIT;
@@ -794,29 +807,17 @@ void Menu_Tick(void)
 			static const struct
 			{
 				StageId stage;
+				StageId stagealt;
 				u32 col;
 				const char *text;
 			} menu_options[] = {
 				//{StageId_4_4, 0xFFFC96D7, "TEST"},
-				{StageId_1_4, 0xFF9271FD, "TUTORIAL"},
-				{StageId_1_1, 0xFF9271FD, "BOPEEBO"},
-				{StageId_1_2, 0xFF9271FD, "FRESH"},
-				{StageId_1_3, 0xFF9271FD, "DADBATTLE"},
-				{StageId_3_1, 0xFF941653, "PICO"},
-				{StageId_3_2, 0xFF941653, "PHILLY NICE"},
-				{StageId_3_3, 0xFF941653, "BLAMMED"},
-				{StageId_4_1, 0xFFFC96D7, "SATIN PANTIES"},
-				{StageId_4_2, 0xFFFC96D7, "HIGH"},
-				{StageId_4_3, 0xFFFC96D7, "MILF"},
-				{StageId_5_1, 0xFFA0D1FF, "COCOA"},
-				{StageId_5_2, 0xFFA0D1FF, "EGGNOG"},
-				{StageId_5_3, 0xFFA0D1FF, "WINTER HORRORLAND"},
-				{StageId_6_1, 0xFFFF78BF, "SENPAI"},
-				{StageId_6_2, 0xFFFF78BF, "ROSES"},
-				{StageId_6_3, 0xFFFF78BF, "THORNS"},
-				{StageId_7_1, 0xFFF6B604, "UGH"},
-				{StageId_7_2, 0xFFF6B604, "GUNS"},
-				{StageId_7_3, 0xFFF6B604, "STRESS"},
+				{StageId_1_1,StageId_1_1Chara, 0xFF9271FD, "NYEH HEH HEH"},
+				{StageId_1_2,StageId_1_2Chara, 0xFF9271FD, "BONELY ONE"},
+				{StageId_1_3,StageId_1_3Chara, 0xFF9271FD, "NOT ENOUGH"},
+				{StageId_1_4,StageId_1_4, 0xFF9271FD, "NO MORE DEAL"},
+				{StageId_3_1,StageId_3_1, 0xFF941653, "EEEECHROME"},
+				{StageId_3_2,StageId_3_2, 0xFF941653, "PARASITE SANS"},
 			};
 			
 			//Initialize page
@@ -863,10 +864,15 @@ void Menu_Tick(void)
 				if (pad_state.press & (PAD_START | PAD_CROSS))
 				{
 					menu.next_page = MenuPage_Stage;
+					if (menu.page_param.stage.diff == StageDiff_Chara)
+	                menu.page_param.stage.id = menu_options[menu.select].stagealt;
+					else
 					menu.page_param.stage.id = menu_options[menu.select].stage;
 					menu.page_param.stage.story = false;
 					Trans_Start();
 				}
+				if (menu.select > 2)
+				menu.page_param.stage.diff = StageDiff_BF;
 				
 				//Return to main menu if circle is pressed
 				if (pad_state.press & PAD_CIRCLE)
@@ -910,7 +916,6 @@ void Menu_Tick(void)
 			
 			Menu_DrawBack(
 				true,
-				8,
 				menu.page_state.freeplay.back_r >> (FIXED_SHIFT + 1),
 				menu.page_state.freeplay.back_g >> (FIXED_SHIFT + 1),
 				menu.page_state.freeplay.back_b >> (FIXED_SHIFT + 1),
@@ -1015,7 +1020,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				197 >> 1, 240 >> 1, 95 >> 1,
 				0, 0, 0
 			);
@@ -1150,7 +1154,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				253 >> 1, 113 >> 1, 155 >> 1,
 				0, 0, 0
 			);
@@ -1250,7 +1253,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				146 >> 1, 113 >> 1, 253 >> 1,
 				0, 0, 0
 			);
@@ -1353,7 +1355,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				146 >> 1, 113 >> 1, 253 >> 1,
 				0, 0, 0
 			);
@@ -1391,7 +1392,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				113 >> 1, 146 >> 1, 253 >> 1,
 				0, 0, 0
 			);
@@ -1429,7 +1429,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				113 >> 1, 146 >> 1, 253 >> 1,
 				0, 0, 0
 			);
@@ -1575,7 +1574,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				113 >> 1, 253 >> 1, 146 >> 1,
 				0, 0, 0
 			);
@@ -1606,7 +1604,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				253 >> 1, 146 >> 1, 113 >> 1,
 				0, 0, 0
 			);
@@ -1636,7 +1633,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				253 >> 1, 30 >> 1, 15 >> 1,
 				0, 0, 0
 			);
@@ -1666,7 +1662,6 @@ void Menu_Tick(void)
 			//Draw background
 			Menu_DrawBack(
 				true,
-				8,
 				253 >> 1, 30 >> 1, 15 >> 1,
 				0, 0, 0
 			);

@@ -82,45 +82,45 @@ typedef struct
 
 //Boyfriend player definitions
 static const CharFrame char_bf_frame[] = {
-	{BF_ArcMain_BF0, {  0,   0, 102,  99}, { 53,  92}}, //0 idle 1
-	{BF_ArcMain_BF0, {103,   0, 102,  99}, { 53,  92}}, //1 idle 2
-	{BF_ArcMain_BF0, {  0, 100, 102, 101}, { 53,  94}}, //2 idle 3
-	{BF_ArcMain_BF0, {103, 100, 103, 104}, { 53,  97}}, //3 idle 4
-	{BF_ArcMain_BF1, {  0,   0, 103, 104}, { 53,  97}}, //4 idle 5
-	{BF_ArcMain_BF2, {  0,   0, 102,  99}, { 53,  92}}, //5 idle 6
-	{BF_ArcMain_BF2, {103,   0, 102,  99}, { 53,  92}}, //6 idle 7
-	{BF_ArcMain_BF2, {  0, 100, 102, 101}, { 53,  94}}, //7 idle 8
-	{BF_ArcMain_BF2, {103, 100, 103, 104}, { 53,  97}}, //8 idle 9
+	{BF_ArcMain_BF0, {  8,   0,  94,  99}, { 50,  93}}, //0 idle 1
+	{BF_ArcMain_BF0, {114,   0,  91,  99}, { 48,  93}}, //1 idle 2
+	{BF_ArcMain_BF0, { 12, 102,  91,  99}, { 47,  93}}, //2 idle 3
+	{BF_ArcMain_BF0, {108, 101,  97, 103}, { 53,  97}}, //3 idle 4
+	{BF_ArcMain_BF1, {  4,   1,  98, 103}, { 54,  97}}, //4 idle 5
+	{BF_ArcMain_BF2, {  1,   4, 101, 103}, { 57,  97}}, //5 idle 6
+	{BF_ArcMain_BF2, {106,   4, 101, 103}, { 56,  97}}, //6 idle 7
+	{BF_ArcMain_BF2, {  1, 111, 100, 103}, { 56,  97}}, //7 idle 8
+	{BF_ArcMain_BF2, {106, 111, 100, 103}, { 56,  97}}, //8 idle 9
 	
-	{BF_ArcMain_BF1, {104,   0,  96, 102}, { 56,  95}}, //9 left 1
-	{BF_ArcMain_BF1, {  0, 105,  94, 102}, { 54,  95}}, //10 left 2
-	{BF_ArcMain_BF1, { 95, 103,  94,  89}, { 52,  82}}, //11 left 3
-	{BF_ArcMain_BF3, {  0,   0,  94,  90}, { 52,  83}}, //12 left 4
+	{BF_ArcMain_BF1, {105,   1,  96, 101}, { 58,  96}}, //9 left 1
+	{BF_ArcMain_BF1, {  1, 107,  93, 101}, { 56,  95}}, //10 left 2
+	{BF_ArcMain_BF1, {109, 107,  93, 101}, { 55,  95}}, //11 left 3
+	{BF_ArcMain_BF3, {  2,   1,  93, 101}, { 55,  96}}, //12 left 4
 	
-	{BF_ArcMain_BF3, {104,   0,  96, 102}, { 56,  95}}, //13 down 1
-	{BF_ArcMain_BF3, {  0, 105,  94, 102}, { 54,  95}}, //14 down 2
-	{BF_ArcMain_BF3, { 95, 103,  94,  89}, { 52,  82}}, //15 down 3
-	{BF_ArcMain_BF4, {  0,   0,  94,  90}, { 52,  83}}, //16 down 4
+	{BF_ArcMain_BF3, { 99,  13,  94,  89}, { 56,  84}}, //13 down 1
+	{BF_ArcMain_BF3, {  1, 123,  93,  92}, { 54,  87}}, //14 down 2
+	{BF_ArcMain_BF3, { 96, 119,  95,  96}, { 55,  91}}, //15 down 3
+	{BF_ArcMain_BF4, {  2,   0,  94,  98}, { 55,  93}}, //16 down 4
 	
-	{BF_ArcMain_BF4, {104,   0,  96, 102}, { 56,  95}}, //17 up 1
-	{BF_ArcMain_BF4, {  0, 105,  94, 102}, { 54,  95}}, //18 up 2
-	{BF_ArcMain_BF5, {  0,   0,  94,  90}, { 52,  83}}, //19 up 3
+	{BF_ArcMain_BF4, {115,   1,  92, 111}, { 44, 104}}, //17 up 1
+	{BF_ArcMain_BF4, {  3, 100,  94, 111}, { 45, 104}}, //18 up 2
+	{BF_ArcMain_BF5, {  5,   1,  96, 109}, { 46, 102}}, //19 up 3
 	
-	{BF_ArcMain_BF5, {103,   0, 102,  99}, { 53,  92}}, //20 right 1
-	{BF_ArcMain_BF5, {  0, 100, 102, 101}, { 53,  94}}, //21 right 2
-	{BF_ArcMain_BF3, { 95, 103,  94,  89}, { 52,  82}}, //22 right 3
+	{BF_ArcMain_BF5, {105,   9, 102, 101}, { 47,  95}}, //20 right 1
+	{BF_ArcMain_BF5, {  8, 115, 101, 101}, { 47,  96}}, //21 right 2
+	{BF_ArcMain_BF5, {109, 115, 100, 101}, { 47,  96}}, //22 right 3
 	
-	{BF_ArcMain_BF6, {  0,   0,  93, 108}, { 52, 101}}, //23 left miss 1
-	{BF_ArcMain_BF6, { 94,   0,  93, 108}, { 52, 101}}, //24 left miss 2
+	{BF_ArcMain_BF6, {  0,   0,  93, 108}, { 52+3, 101+2}}, //23 left miss 1
+	{BF_ArcMain_BF6, { 94,   0,  93, 108}, { 52+3, 101+2}}, //24 left miss 2
 	
-	{BF_ArcMain_BF6, {  0, 109,  95,  98}, { 50,  90}}, //25 down miss 1
-	{BF_ArcMain_BF6, { 96, 109,  95,  97}, { 50,  89}}, //26 down miss 2
+	{BF_ArcMain_BF6, {  0, 109,  95,  98}, { 50+3,  90+3}}, //25 down miss 1
+	{BF_ArcMain_BF6, { 96, 109,  95,  97}, { 50+3,  89+3}}, //26 down miss 2
 	
-	{BF_ArcMain_BF7, {  0,   0,  90, 107}, { 44,  99}}, //27 up miss 1
-	{BF_ArcMain_BF7, { 91,   0,  89, 108}, { 44, 100}}, //28 up miss 2
+	{BF_ArcMain_BF7, {  0,   0,  90, 107}, { 44+3,  99+3}}, //27 up miss 1
+	{BF_ArcMain_BF7, { 91,   0,  89, 108}, { 44+3, 100+3}}, //28 up miss 2
 	
-	{BF_ArcMain_BF7, {  0, 108,  99, 108}, { 42, 101}}, //29 right miss 1
-	{BF_ArcMain_BF7, {100, 109, 101, 108}, { 43, 101}}, //30 right miss 2
+	{BF_ArcMain_BF7, {  0, 108,  99, 108}, { 43+3, 101+3}}, //29 right miss 1
+	{BF_ArcMain_BF7, {100, 109, 101, 108}, { 43+3, 101+3}}, //30 right miss 2
 
 	{BF_ArcMain_Dead0, {  0,   0, 128, 128}, { 53,  98}}, //31 dead0 0
 	{BF_ArcMain_Dead0, {128,   0, 128, 128}, { 53,  98}}, //32 dead0 1

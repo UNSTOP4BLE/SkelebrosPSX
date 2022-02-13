@@ -1,4 +1,4 @@
-	{ //StageId_1_1 (Bopeebo)
+	{ //StageId_1_1 (Nyeh heh heh)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
 		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
@@ -12,12 +12,12 @@
 		1, 1,
 		XA_Bopeebo, 0,
 		
-		StageId_1_2, STAGE_LOAD_FLAG
+		StageId_1_2, STAGE_LOAD_FLAG | STAGE_LOAD_OPPONENT
 	},
-	{ //StageId_1_2 (Fresh)
+	{ //StageId_1_2 (Bonely One)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_sans_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
+		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
 		{NULL},
 		
 		//Stage background
@@ -30,10 +30,10 @@
 		
 		StageId_1_3, STAGE_LOAD_FLAG
 	},
-	{ //StageId_1_3 (Dadbattle)
+	{ //StageId_1_3 (Not Enough)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_GF_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
+		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
 		{NULL},
 		
 		//Stage background
@@ -44,9 +44,9 @@
 		1, 3,
 		XA_Dadbattle, 0,
 		
-		StageId_1_4, 0
+		StageId_1_4, STAGE_LOAD_FLAG | STAGE_LOAD_OPPONENT
 	},
-	{ //StageId_1_4 (Tutorial)
+	{ //StageId_1_4 (No More Deal)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
 		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
@@ -63,7 +63,7 @@
 		StageId_1_4, 0
 	},
 	
-	{ //StageId_2_1 (Spookeez)
+	{ //StageId_1_1 Chara (Nyeh heh heh)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
 		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
@@ -77,12 +77,12 @@
 		2, 1,
 		XA_Spookeez, 0,
 		
-		StageId_1_2Chara, STAGE_LOAD_FLAG
+		StageId_1_2Chara, STAGE_LOAD_FLAG | STAGE_LOAD_OPPONENT
 	},
-	{ //StageId_2_2 (South)
+	{ //StageId_1_2 Chara (Bonely One)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
 		{NULL},
 		
 		//Stage background
@@ -93,12 +93,12 @@
 		2, 2,
 		XA_South, 2,
 		
-		StageId_1_3Chara, STAGE_LOAD_FLAG | STAGE_LOAD_OPPONENT
+		StageId_1_3Chara, STAGE_LOAD_FLAG
 	},
-	{ //StageId_2_3 (Monster)
+	{ //StageId_1_3 Chara (Not Enough)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
 		{NULL},
 		
 		//Stage background
@@ -112,10 +112,10 @@
 		StageId_1_3Chara, 0
 	},
 	
-	{ //StageId_3_1 (Pico)
+	{ //StageId_3_1 (Eeeechrome)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_sans_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
 		{NULL},
 		
 		//Stage background
@@ -128,10 +128,10 @@
 		
 		StageId_3_1, 0
 	},
-	{ //StageId_3_2 (Philly)
+	{ //StageId_3_2 (Parasite Sans)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_sans_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
 		{NULL},
 		
 		//Stage background
