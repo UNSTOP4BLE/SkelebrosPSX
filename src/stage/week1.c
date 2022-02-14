@@ -11,6 +11,8 @@
 #include "../stage.h"
 #include "../random.h"
 
+fixed_t back_r, back_g, back_b;
+
 //Week 1 background structure
 typedef struct
 {
@@ -106,12 +108,52 @@ void Week1_Henchmen_Draw(Back_Week1 *this, fixed_t x, fixed_t y)
 }
 
 //Week 1 background functions
+void Back_Week1_DrawFG(StageBack *back)
+{
+	u8 swapcolor = 0;
+	u32 color;
+
+    if ((stage.song_step & 0x5))
+	   swapcolor++;
+
+	switch (swapcolor)
+	{
+	 case 0:
+	 color = 0x64ffff;
+	 break;
+	 case 1 :
+	 color = 0xd44790;
+	 break;
+	 case 2 :
+	 color = 0x64d96d;
+	 break;
+	 case 3 :
+	 color = 0x8a47ff;
+	 break;
+	 default :
+	 swapcolor = 0;
+	 break;
+	}
+
+	fixed_t tgt_r = (fixed_t)((color >> 16) & 0xFF) << FIXED_SHIFT;
+	fixed_t tgt_g = (fixed_t)((color >>  8) & 0xFF) << FIXED_SHIFT;
+	fixed_t tgt_b = (fixed_t)((color >>  0) & 0xFF) << FIXED_SHIFT;
+			
+			back_r += (tgt_r - back_r) >> 4;
+			back_g += (tgt_g - back_g) >> 4;
+			back_b += (tgt_b - back_b) >> 4;
+
+	RECT cool = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+    
+	if ((stage.stage_id == StageId_1_1  && stage.song_step >= 643 && stage.song_step <= 830) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 643 && stage.song_step <= 830))
+	Gfx_BlendRect(&cool, back_r>> (FIXED_SHIFT + 1), back_g>> (FIXED_SHIFT + 1), back_b>> (FIXED_SHIFT + 1), 1);
+}
+
 void Back_Week1_DrawBG(StageBack *back)
 {
 	Back_Week1 *this = (Back_Week1*)back;
-	
-	fixed_t fx, fy;
- 
+    fixed_t fx, fy;
+
 	//Animate and draw henchmen
 	fx = stage.camera.x;
 	fy = stage.camera.y;
@@ -175,7 +217,7 @@ StageBack *Back_Week1_New(void)
 		return NULL;
 	
 	//Set background functions
-	this->back.draw_fg = NULL;
+	this->back.draw_fg = Back_Week1_DrawFG;
 	this->back.draw_md = NULL;
 	this->back.draw_bg = Back_Week1_DrawBG;
 	this->back.free = Back_Week1_Free;

@@ -135,11 +135,20 @@ static struct
 	} page_param;
 	
 	//Menu assets
-	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_title, tex_titlebg;
-	FontData font_bold, font_arial;
+	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_title, tex_titlebg, tex_names;
+	FontData font_bold,font_arial;
 	
 	Character *gf; //Title Girlfriend
 } menu;
+
+//Menu Chaacter
+static struct
+{
+	//Menu Character assets
+	Gfx_Tex tex_menuchar0,tex_menuchar1, tex_menuchar2, tex_menuchar3;
+	Gfx_Tex swap;
+	
+} menuchar;
 
 #ifdef PSXF_NETWORK
 
@@ -293,14 +302,22 @@ void Menu_Load(MenuPage page)
 	IO_Data menu_arc = IO_Read("\\MENU\\MENU.ARC;1");
 	Gfx_LoadTex(&menu.tex_back,  Archive_Find(menu_arc, "back.tim"),  0);
 	Gfx_LoadTex(&menu.tex_cooleffect,  Archive_Find(menu_arc, "coolfx.tim"),  0);
-	Gfx_LoadTex(&menu.tex_ng,    Archive_Find(menu_arc, "ng.tim"),    0);
 	Gfx_LoadTex(&menu.tex_story, Archive_Find(menu_arc, "story.tim"), 0);
 	Gfx_LoadTex(&menu.tex_title, Archive_Find(menu_arc, "title.tim"), 0);
 	Gfx_LoadTex(&menu.tex_titlebg, Archive_Find(menu_arc, "titlebg.tim"), 0);
+	Gfx_LoadTex(&menu.tex_names, Archive_Find(menu_arc, "boldfona.tim"), 0);
 	Mem_Free(menu_arc);
 	
 	FontData_Load(&menu.font_bold, Font_Bold);
 	FontData_Load(&menu.font_arial, Font_Arial);
+
+	//Load menu assets
+	IO_Data menuchar_arc = IO_Read("\\MENUCHAR\\MCHAR.ARC;1");
+	Gfx_LoadTex(&menuchar.tex_menuchar0,  Archive_Find(menuchar_arc, "mchar0.tim"),  0);
+	Gfx_LoadTex(&menuchar.tex_menuchar1,  Archive_Find(menuchar_arc, "mchar1.tim"),  0);
+	Gfx_LoadTex(&menuchar.tex_menuchar2,  Archive_Find(menuchar_arc, "mchar2.tim"),    0);
+	Gfx_LoadTex(&menuchar.tex_menuchar3,  Archive_Find(menuchar_arc, "mchar3.tim"), 0);
+	Mem_Free(menuchar_arc);
 	
 	menu.gf = Char_GF_New(FIXED_DEC(62,1), FIXED_DEC(-12,1));
 	stage.camera.x = stage.camera.y = FIXED_DEC(0,1);
@@ -417,7 +434,6 @@ void Menu_Tick(void)
 					
 					case 7:
 						menu.font_bold.draw(&menu.font_bold, "NEWGROUNDS",    SCREEN_WIDTH2, SCREEN_HEIGHT2 - 32, FontAlign_Center);
-						Gfx_BlitTex(&menu.tex_ng, &src_ng, (SCREEN_WIDTH - 128) >> 1, SCREEN_HEIGHT2 - 16);
 				//Fallthrough
 					case 6:
 					case 5:
@@ -665,6 +681,28 @@ void Menu_Tick(void)
 	        RECT coolfx_dst = {0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 4 / 5};
 	
 		    Gfx_DrawTex(&menu.tex_cooleffect, &coolfx_src, &coolfx_dst);
+
+			//there are definitely better ways to do this but hey it works
+			switch(menu.select)
+			{
+			 case 0:
+			 menuchar.swap = menuchar.tex_menuchar0;
+			 break;
+			 case 1:
+			 menuchar.swap = menuchar.tex_menuchar1;
+			 break;
+			 case 2:
+			 menuchar.swap = menuchar.tex_menuchar2;
+			 break;
+			 case 3:
+			 menuchar.swap = menuchar.tex_menuchar3;
+			 break;
+
+			}
+			RECT Char = {0, 0,180, 180};
+			RECT CharDst = {0, 0, 210, 240};
+
+			Gfx_DrawTex(&menuchar.swap, &Char, &CharDst);
 			
 			//Draw background
 			Menu_DrawBack(
@@ -706,7 +744,7 @@ void Menu_Tick(void)
 			}
 			
 			//Draw difficulty selector
-			Menu_DifficultySelector(SCREEN_WIDTH - 75, 80);
+			Menu_DifficultySelector(SCREEN_WIDTH - 75, 130);
 			
 			//Handle option and selection
 			if (menu.trans_time > 0 && (menu.trans_time -= timer_dt) <= 0)
@@ -752,27 +790,47 @@ void Menu_Tick(void)
 					Trans_Start();
 				}
 			}
-			
+			/*
 			//Draw week name and tracks
 			menu.font_bold.draw(&menu.font_bold,
 				menu_options[menu.select].name,
 				SCREEN_WIDTH - 16,
-				24,
+				8,
 				FontAlign_Right
 			);
+			*/
+			//Draw Song Names And "Tracks"
+			RECT Universe = {8, 48, 140, 9};
+			Gfx_BlitTex(&menu.tex_names,&Universe, 170, 10);
+
+			RECT Tracks = {51,  2,  50, 10};
+			Gfx_BlitTex(&menu.tex_names,&Tracks, 20, 147+10);
+
+			RECT name_1 = {44, 15,  65, 7};
+			Gfx_BlitTex(&menu.tex_names,&name_1, 20, 160+10);
+
+			RECT name_2 = {44, 24,  54, 7};
+			Gfx_BlitTex(&menu.tex_names,&name_2, 20, 169+10);
+
+			RECT name_3 = {44, 33,  54, 7};
+			Gfx_BlitTex(&menu.tex_names,&name_3, 20, 178+10);
 			
+			/*
 			const char * const *trackp = menu_options[menu.select].tracks;
 			for (size_t i = 0; i < COUNT_OF(menu_options[menu.select].tracks); i++, trackp++)
 			{
 				if (*trackp != NULL)
-					menu.font_bold.draw(&menu.font_bold,
+					menu.font_bold.draw_col(&menu.font_bold,
 						*trackp,
 						SCREEN_WIDTH - 16,
 						SCREEN_HEIGHT - (4 * 24) + (i * 24),
-						FontAlign_Right
+						FontAlign_Right,
+						210,
+						90,
+						108
 					);
 			}
-			
+			*/
 			//Draw upper strip
 			RECT name_bar = {0, 16, SCREEN_WIDTH, 32};
 			Gfx_DrawRect(&name_bar, 249, 207, 81);
@@ -791,13 +849,13 @@ void Menu_Tick(void)
 						continue;
 					if (y >= SCREEN_HEIGHT)
 						break;
-					Menu_DrawWeek(menu_options[i].week, 48, y);
+					Menu_DrawWeek(menu_options[i].week, 48, y + 50);
 				}
 			}
 			else if (animf_count & 2)
 			{
 				//Draw selected option
-				Menu_DrawWeek(menu_options[menu.select].week, 48, 64 + (menu.select * 48) - (menu.scroll >> FIXED_SHIFT));
+				Menu_DrawWeek(menu_options[menu.select].week, 48, 114 + (menu.select * 48) - (menu.scroll >> FIXED_SHIFT));
 			}
 			
 			break;

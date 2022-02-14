@@ -1816,6 +1816,9 @@ void Stage_Tick(void)
 				}
 			#endif
 			}
+			//Draw stage foreground
+			if (stage.back->draw_fg != NULL)
+				stage.back->draw_fg(stage.back);
 			
 			//Tick note splashes
 			ObjectList_Tick(&stage.objlist_splash);
@@ -1929,10 +1932,6 @@ void Stage_Tick(void)
 				health_dst.w = health_back.w << FIXED_SHIFT;
 				Stage_DrawTex(&stage.tex_hud1, &health_back, &health_dst, stage.bump);
 			}
-			
-			//Draw stage foreground
-			if (stage.back->draw_fg != NULL)
-				stage.back->draw_fg(stage.back);
 			
 			//Tick foreground objects
 			ObjectList_Tick(&stage.objlist_fg);
