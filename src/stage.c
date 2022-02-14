@@ -1510,6 +1510,21 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			//draw white flash mogus thingie
+			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.stage_id == 895))
+			{
+				RECT white_src = {184, 231, 2, 2};
+				RECT_FIXED white_dst = {
+					FIXED_DEC(-160,1),
+					FIXED_DEC(-120,1),
+					FIXED_DEC(320,1),
+					FIXED_DEC(240,1)
+				};
+		
+				Stage_DrawTex(&stage.tex_hud0, &white_src, &white_dst, stage.bump);
+			}
+
+
 			//debug shit 
 			FntPrint("Step %d", stage.song_step);
 			

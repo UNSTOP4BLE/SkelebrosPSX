@@ -14,7 +14,8 @@ all: \
 	iso/gf/main.arc \
 	iso/gf/tut.arc \
 	iso/gf/speaker.tim \
-	iso/week1/back.arc 
+	iso/week1/back.arc \
+	iso/week2/back.arc 
 
 iso/%.tim: iso/%.png
 	tools/funkintimconv/funkintimconv $@ $<
@@ -47,3 +48,6 @@ iso/gf/tut.arc: iso/gf/tut0.tim iso/gf/tut1.tim
 
 # Week 1
 iso/week1/back.arc: iso/week1/back0.tim iso/week1/mon0.tim iso/week1/mon1.tim
+
+# Week 2
+iso/week2/back.arc: iso/week2/back0.tim

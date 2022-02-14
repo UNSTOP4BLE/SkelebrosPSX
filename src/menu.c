@@ -873,7 +873,7 @@ void Menu_Tick(void)
 				{StageId_1_1,StageId_1_1Chara, 0xFF9271FD, "NYEH HEH HEH"},
 				{StageId_1_2,StageId_1_2Chara, 0xFF9271FD, "BONELY ONE"},
 				{StageId_1_3,StageId_1_3Chara, 0xFF9271FD, "NOT ENOUGH"},
-				{StageId_1_4,StageId_1_4, 0xFF9271FD, "NO MORE DEAL"},
+				{StageId_1_4,StageId_1_4, 0xFF9271FD, "NO MORE DEALS"},
 				{StageId_3_1,StageId_3_1, 0xFF941653, "EEEECHROME"},
 				{StageId_3_2,StageId_3_2, 0xFF941653, "PARASITE SANS"},
 			};

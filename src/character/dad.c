@@ -181,7 +181,7 @@ void Char_Dad_Tick(Character *character)
 		character->set_anim(character, CharAnim_Special);
 	
 
-	if ((stage.stage_id == StageId_1_1 && stage.song_step >= 336) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 336))
+	if ((stage.stage_id == StageId_1_1 && stage.song_step >= 336 && stage.song_step <= 895) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 336 && stage.song_step <= 895))
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Dad_SetFrame);
 	else
 		Animatable_Animate(&character->animatable, (void*)this, Char_Dad_SetFrame);
