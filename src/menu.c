@@ -578,7 +578,13 @@ void Menu_Tick(void)
 			
 			//Draw version identification
 			menu.font_bold.draw(&menu.font_bold,
-				"PSXFUNKIN BY CUCKYDEV",
+				"SKELEBROSPSX BY ",
+				16,
+				SCREEN_HEIGHT - 48,
+				FontAlign_Left
+			);
+			menu.font_bold.draw(&menu.font_bold,
+				"UNSTOPABLE AND IGORSOU",
 				16,
 				SCREEN_HEIGHT - 32,
 				FontAlign_Left
@@ -832,8 +838,12 @@ void Menu_Tick(void)
 			}
 			*/
 			//Draw upper strip
-			RECT name_bar = {0, 16, SCREEN_WIDTH, 32};
-			Gfx_DrawRect(&name_bar, 249, 207, 81);
+			RECT name_bar = {0, 20, SCREEN_WIDTH, 32};
+			//chara stuffs
+			if (menu.page_param.stage.diff == StageDiff_Chara)
+			Gfx_DrawRect(&name_bar, 255, 0, 0);
+			else
+			Gfx_DrawRect(&name_bar, 0, 0, 255);
 			
 			//Draw options
 			s32 next_scroll = menu.select * FIXED_DEC(48,1);
