@@ -11,6 +11,7 @@
 #include "../stage.h"
 #include "../random.h"
 
+u32 swapcolor;
 fixed_t back_r, back_g, back_b;
 
 //Week 1 background structure
@@ -72,8 +73,8 @@ static const CharFrame henchmen_frame[] = {
 };
 
 static const Animation henchmen_anim[] = {
-	{1, (const u8[]){5, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8,  ASCR_BACK, 1}}, //static
-	{2, (const u8[]){0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, ASCR_BACK, 1}}, //Left
+	{1, (const u8[]){5, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8,  ASCR_BACK, 1}}, //static
+	{2, (const u8[]){0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, ASCR_BACK, 1}}, //Left
 	{2, (const u8[]){9,10,11,9,10,11,9,10,11,9,10,11, 9, ASCR_BACK, 1}}, //fake fish spamton
 	{2, (const u8[]){12,13,14,15,12,13,14,15,12,13,14,15,12,13,14,15,12, ASCR_BACK, 1}}, //Sans
 	{2, (const u8[]){16,17,18,19,20,21,20,21,20,21, ASCR_BACK, 1}}, //Undyne
@@ -110,10 +111,9 @@ void Week1_Henchmen_Draw(Back_Week1 *this, fixed_t x, fixed_t y)
 //Week 1 background functions
 void Back_Week1_DrawFG(StageBack *back)
 {
-	u8 swapcolor = 0;
 	u32 color;
 
-    if ((stage.song_step & 0x5))
+    if ((stage.song_step % 0x5))
 	   swapcolor++;
 
 	switch (swapcolor)
@@ -134,6 +134,7 @@ void Back_Week1_DrawFG(StageBack *back)
 	 swapcolor = 0;
 	 break;
 	}
+	FntPrint("Step %d", swapcolor);
 
 	fixed_t tgt_r = (fixed_t)((color >> 16) & 0xFF) << FIXED_SHIFT;
 	fixed_t tgt_g = (fixed_t)((color >>  8) & 0xFF) << FIXED_SHIFT;

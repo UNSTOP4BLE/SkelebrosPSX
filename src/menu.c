@@ -661,7 +661,7 @@ void Menu_Tick(void)
 					menu.font_bold.draw(&menu.font_bold,
 						Menu_LowerIf(menu_options[i], menu.select != i),
 						SCREEN_WIDTH2,
-						SCREEN_HEIGHT2 + (i << 5) - 48 - (menu.scroll >> FIXED_SHIFT),
+						SCREEN_HEIGHT2 + (i << 5) - 48,
 						FontAlign_Center
 					);
 				}
@@ -672,7 +672,7 @@ void Menu_Tick(void)
 				menu.font_bold.draw(&menu.font_bold,
 					menu_options[menu.select],
 					SCREEN_WIDTH2,
-					SCREEN_HEIGHT2 + (menu.select << 5) - 48 - (menu.scroll >> FIXED_SHIFT),
+					SCREEN_HEIGHT2 + (menu.select << 5) - 48,
 					FontAlign_Center
 				);
 			}
