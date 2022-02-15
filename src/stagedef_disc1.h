@@ -12,7 +12,7 @@
 		1, 1,
 		XA_Bopeebo, 0,
 		
-		StageId_1_2, STAGE_LOAD_FLAG | STAGE_LOAD_OPPONENT
+		StageId_1_2, STAGE_LOAD_STAGE | STAGE_LOAD_OPPONENT
 	},
 	{ //StageId_1_2 (Bonely One)
 		//Characters
@@ -21,7 +21,7 @@
 		{NULL},
 		
 		//Stage background
-		Back_Dummy_New,
+		Back_Week2_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},
