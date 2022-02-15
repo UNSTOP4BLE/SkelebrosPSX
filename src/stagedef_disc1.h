@@ -1,7 +1,7 @@
 	{ //StageId_1_1 (Nyeh heh heh)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_BF_New,    FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 90,1)},
+		{Char_Dad_New, FIXED_DEC(-120 + 150,1),  FIXED_DEC(100 + 90,1)},
 		{NULL},
 		
 		//Stage background
@@ -46,7 +46,7 @@
 		
 		StageId_1_4, STAGE_LOAD_FLAG | STAGE_LOAD_OPPONENT
 	},
-	{ //StageId_1_4 (No More Deal)
+	{ //StageId_1_4 (No More Deals)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
 		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},

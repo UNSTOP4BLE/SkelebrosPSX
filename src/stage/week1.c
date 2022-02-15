@@ -132,7 +132,7 @@ void Back_Week1_DrawFG(StageBack *back)
 	 swapcolor = 0;
 	 break;
 	}
-	FntPrint("Colors %d", swapcolor);
+	//FntPrint("Colors %d", swapcolor);
 
 	fixed_t tgt_r = (fixed_t)((color >> 16) & 0xFF) << FIXED_SHIFT;
 	fixed_t tgt_g = (fixed_t)((color >>  8) & 0xFF) << FIXED_SHIFT;
