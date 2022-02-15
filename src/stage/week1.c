@@ -11,7 +11,6 @@
 #include "../stage.h"
 #include "../random.h"
 
-u32 swapcolor;
 fixed_t back_r, back_g, back_b;
 
 //Week 1 background structure
@@ -113,8 +112,7 @@ void Back_Week1_DrawFG(StageBack *back)
 {
 	u32 color;
 
-    if ((stage.song_step % 0x5))
-	   swapcolor++;
+	u16 swapcolor = stage.song_step >> 2 & 0x3;
 
 	switch (swapcolor)
 	{
@@ -134,7 +132,7 @@ void Back_Week1_DrawFG(StageBack *back)
 	 swapcolor = 0;
 	 break;
 	}
-	FntPrint("Step %d", swapcolor);
+	FntPrint("Colors %d", swapcolor);
 
 	fixed_t tgt_r = (fixed_t)((color >> 16) & 0xFF) << FIXED_SHIFT;
 	fixed_t tgt_g = (fixed_t)((color >>  8) & 0xFF) << FIXED_SHIFT;
@@ -146,7 +144,8 @@ void Back_Week1_DrawFG(StageBack *back)
 
 	RECT cool = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     
-	if ((stage.stage_id == StageId_1_1  && stage.song_step >= 643 && stage.song_step <= 830) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 643 && stage.song_step <= 830))
+	if (stage.flashlight)
+	if ((stage.stage_id == StageId_1_1  && stage.song_step >= 643 && stage.song_step <= 894) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 643 && stage.song_step <= 894))
 	Gfx_BlendRect(&cool, back_r>> (FIXED_SHIFT + 1), back_g>> (FIXED_SHIFT + 1), back_b>> (FIXED_SHIFT + 1), 1);
 }
 

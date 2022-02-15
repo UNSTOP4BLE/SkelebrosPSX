@@ -65,7 +65,7 @@ static const u8 note_anims[4][3] = {
 	{CharAnim_Right, CharAnim_RightAlt, PlayerAnim_RightMiss},
 };
 
-
+fixed_t white,whitespd;
 
 //Stage definitions
 //middlescroll
@@ -1513,15 +1513,16 @@ void Stage_Tick(void)
 			//draw white flash mogus thingie
 			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.stage_id == 895))
 			{
-				RECT white_src = {184, 231, 2, 2};
-				RECT_FIXED white_dst = {
-					FIXED_DEC(-160,1),
-					FIXED_DEC(-120,1),
-					FIXED_DEC(320,1),
-					FIXED_DEC(240,1)
-				};
-		
-				Stage_DrawTex(&stage.tex_hud0, &white_src, &white_dst, stage.bump);
+				white = FIXED_DEC(255,1);
+				whitespd = FIXED_DEC(120,1);
+			}
+			//Draw white fade
+			if (white > 0)
+			{
+				static const RECT flash = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+				u8 flash_col = white >> FIXED_SHIFT;
+				Gfx_BlendRect(&flash, flash_col, flash_col, flash_col, 1);
+			    white -= FIXED_MUL(whitespd, timer_dt);
 			}
 
 

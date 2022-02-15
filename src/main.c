@@ -56,6 +56,9 @@ int main(int argc, char **argv)
 	//camera
 	stage.movecamera = 1;
 
+	//flash stuff
+	stage.flashlight = 1;
+
 	//Remember arguments
 	my_argc = argc;
 	my_argv = argv;

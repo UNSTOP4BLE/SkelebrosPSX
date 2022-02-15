@@ -183,7 +183,7 @@ typedef struct
 typedef struct
 {
 	//Stage settings
-	boolean ghost, downscroll, middlescroll, expsync, movecamera;
+	boolean ghost, downscroll, middlescroll, expsync, movecamera, flashlight;
 	s32 mode;
 	
 	u32 offset;

@@ -1,5 +1,6 @@
 all: \
 	iso/menu/menu.arc \
+	iso/playerm/main.arc \
 	iso/menuchar/mchar.arc \
 	iso/menu/loading.tim \
 	iso/font/boldfont.tim \
@@ -28,6 +29,9 @@ iso/%.arc:
 
 # Menu
 iso/menu/menu.arc: iso/menu/back.tim iso/menu/coolfx.tim iso/menu/ng.tim iso/menu/story.tim iso/menu/title.tim iso/menu/titlebg.tim iso/menu/boldfona.tim
+
+# Story Characters
+iso/playerm/main.arc: iso/playerm/BF0.tim iso/playerm/BF1.tim iso/playerm/BF2.tim iso/playerm/BF3.tim iso/playerm/Chara0.tim iso/playerm/Chara1.tim
 
 # Menu Character
 iso/menuchar/mchar.arc: iso/menuchar/mchar0.tim iso/menuchar/mchar1.tim iso/menuchar/mchar2.tim iso/menuchar/mchar3.tim

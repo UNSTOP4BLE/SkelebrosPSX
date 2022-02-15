@@ -416,7 +416,6 @@ void Menu_Tick(void)
 					menu.page = menu.next_page = MenuPage_Title;
 				
 				//Draw different text depending on beat
-				RECT src_ng = {0, 0, 128, 128};
 				const char **funny_message = funny_messages[menu.page_state.opening.funny_message];
 				
 				switch (beat)
@@ -1123,6 +1122,7 @@ void Menu_Tick(void)
 				{OptType_Boolean, "GHOST TAP", &stage.ghost, {.spec_boolean = {0}}},
 				{OptType_Boolean, "DOWNSCROLL", &stage.downscroll, {.spec_boolean = {0}}},
 				{OptType_Boolean, "MIDDLESCROLL", &stage.middlescroll, {.spec_boolean = {0}}},
+				{OptType_Boolean, "FLASHING LIGHTS", &stage.flashlight, {.spec_boolean = {0}}},
 				{OptType_Boolean, "KADE ENGINE CAMERA", &stage.movecamera, {.spec_boolean = {0}}},
 				{OptType_Boolean, "BOTPLAY", &stage.botplay, {.spec_boolean = {0}}},
 			};
