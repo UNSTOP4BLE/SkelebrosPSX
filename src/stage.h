@@ -238,6 +238,8 @@ typedef struct
 	s16 noteshakex;
 	s16 noteshakey;
 
+	s8 dying;
+	
 	s16 song_step;
 	s16 botplay;
 	

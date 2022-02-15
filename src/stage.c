@@ -699,23 +699,22 @@ void Stage_BlendTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, con
 static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
 {
 	//Check if we should use 'dying' frame
-	s8 dying;
 	if (ox < 0)
-		dying = (health >= 18000) * 24;
+		stage.dying = 1;
 	else
-		dying = (health <= 2000) * 24;
-	
+		stage.dying = 0;
+
 	//Get src and dst
 	fixed_t hx = (128 << FIXED_SHIFT) * (10000 - health) / 10000;
 	RECT src = {
-		(i % 5) * 48 + dying,
-		16 + (i / 5) * 24,
-		24,
-		24
+		(i % 1) * 50,
+		16 + (i / 1) * 50,
+		50,
+		50
 	};
 	RECT_FIXED dst = {
-		hx + ox * FIXED_DEC(11,1) - FIXED_DEC(12,1),
-		FIXED_DEC(SCREEN_HEIGHT2 - 32 + 4 - 12, 1),
+		hx + ox * FIXED_DEC(25,1) - FIXED_DEC(25,1),
+		FIXED_DEC(SCREEN_HEIGHT2 - 32 + 4 - 25, 1),
 		src.w << FIXED_SHIFT,
 		src.h << FIXED_SHIFT
 	};
