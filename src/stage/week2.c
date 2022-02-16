@@ -33,10 +33,10 @@ void Back_Week2_DrawBG(StageBack *back)
 
 	RECT back_src = {0, 0, 256, 256};
 	RECT_FIXED back_dst = {
-		FIXED_DEC(-190,2) - fx,
-		FIXED_DEC(-100,2) - fy,
-		FIXED_DEC(640,2),
-		FIXED_DEC(350,2)
+		FIXED_DEC(-190,1) - fx,
+		FIXED_DEC(-100,1) - fy,
+		FIXED_DEC(590,1),
+		FIXED_DEC(350,1)
 	};
 	
 	Stage_DrawTex(&this->tex_back0, &back_src, &back_dst, stage.camera.bzoom);
@@ -64,7 +64,7 @@ StageBack *Back_Week2_New(void)
 	this->back.free = Back_Week2_Free;
 	
 	//Load background textures
-	IO_Data arc_back = IO_Read("\\WEEK2\\BACK.ARC;2");
+	IO_Data arc_back = IO_Read("\\WEEK2\\BACK.ARC;1");
 	Gfx_LoadTex(&this->tex_back0, Archive_Find(arc_back, "back0.tim"), 0);
 	Mem_Free(arc_back);
 	
