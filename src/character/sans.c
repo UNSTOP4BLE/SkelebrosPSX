@@ -70,7 +70,7 @@ static const CharFrame char_sans_frame[] = {
 };
 
 static const Animation char_sans_anim[CharAnim_Max] = {
-	{3, (const u8[]){ 0, 1, 2, 3, 4, 5, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
+	{3, (const u8[]){ 0, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
 	{2, (const u8[]){ 6, 7, 8, 9, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
@@ -150,7 +150,7 @@ Character *Char_sans_New(fixed_t x, fixed_t y)
 	this->character.health_i = 1;
 	
 	this->character.focus_x = FIXED_DEC(65,1);
-	this->character.focus_y = FIXED_DEC(-115,1);
+	this->character.focus_y = FIXED_DEC(-78,1);
 	this->character.focus_zoom = FIXED_DEC(1,1);
 	
 	//Load art
