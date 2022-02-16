@@ -76,7 +76,7 @@ static const Animation henchmen_anim[] = {
 	{2, (const u8[]){0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, ASCR_BACK, 1}}, //Left
 	{2, (const u8[]){9,10,11,9,10,11,9,10,11,9,10,11, 9, ASCR_BACK, 1}}, //fake fish spamton
 	{2, (const u8[]){12,13,14,15,12,13,14,15,12,13,14,15,12,13,14,15,12, ASCR_BACK, 1}}, //Sans
-	{2, (const u8[]){16,17,18,19,20,21,20,21,20,21, ASCR_BACK, 1}}, //Undyne
+	{2, (const u8[]){16,17,18,19,20,21,20,21,20,21,20,21,20,21,20,21, ASCR_BACK, 1}}, //Undyne
 };
 
 //Henchmen functions

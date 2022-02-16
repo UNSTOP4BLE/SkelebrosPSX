@@ -22,7 +22,7 @@
 #include "loadscr.h"
 
 #include "stage.h"
-#include "character/gf.h"
+#include "character/playerm.h"
 u32 moveuptitle;
 
 //Menu messages
@@ -138,7 +138,7 @@ static struct
 	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_title, tex_titlebg, tex_names;
 	FontData font_bold,font_arial;
 	
-	Character *gf; //Title Girlfriend
+	Character *playerm; //Title Girlfriend
 } menu;
 
 //Menu Chaacter
@@ -319,10 +319,9 @@ void Menu_Load(MenuPage page)
 	Gfx_LoadTex(&menuchar.tex_menuchar3,  Archive_Find(menuchar_arc, "mchar3.tim"), 0);
 	Mem_Free(menuchar_arc);
 	
-	menu.gf = Char_GF_New(FIXED_DEC(62,1), FIXED_DEC(-12,1));
+	menu.playerm = Char_PlayerM_New(FIXED_DEC(62,1), FIXED_DEC(9,1));
 	stage.camera.x = stage.camera.y = FIXED_DEC(0,1);
 	stage.camera.bzoom = FIXED_UNIT;
-	stage.gf_speed = 4;
 	
 	//Initialize menu state
 	menu.select = menu.next_select = 0;
@@ -353,13 +352,13 @@ void Menu_Load(MenuPage page)
 	Audio_WaitPlayXA();
 	
 	//Set background colour
-	Gfx_SetClear(0, 0, 0);
+	Gfx_SetClear(0,  0,  0);
 }
 
 void Menu_Unload(void)
 {
 	//Free title Girlfriend
-	Character_Free(menu.gf);
+	Character_Free(menu.playerm);
 }
 
 void Menu_ToStage(StageId id, StageDiff diff, boolean story)
@@ -719,6 +718,9 @@ void Menu_Tick(void)
 		}
 		case MenuPage_Story:
 		{
+			//Draw Playerm
+			menu.playerm->tick(menu.playerm);
+
 			static const struct
 			{
 				const char *week;
@@ -749,7 +751,7 @@ void Menu_Tick(void)
 			}
 			
 			//Draw difficulty selector
-			Menu_DifficultySelector(SCREEN_WIDTH - 75, 130);
+			Menu_DifficultySelector(SCREEN_WIDTH - 75, 160);
 			
 			//Handle option and selection
 			if (menu.trans_time > 0 && (menu.trans_time -= timer_dt) <= 0)
@@ -804,21 +806,21 @@ void Menu_Tick(void)
 				FontAlign_Right
 			);
 			*/
-			//Draw Song Names And "Tracks"
+			//Draw Song Names,"Tracks" and "Undertale Univers2"
 			RECT Universe = {8, 48, 140, 9};
 			Gfx_BlitTex(&menu.tex_names,&Universe, 170, 10);
 
 			RECT Tracks = {51,  2,  50, 10};
-			Gfx_BlitTex(&menu.tex_names,&Tracks, 20, 147+10);
+			Gfx_BlitTex(&menu.tex_names,&Tracks, 20, 147+40);
 
 			RECT name_1 = {44, 15,  65, 7};
-			Gfx_BlitTex(&menu.tex_names,&name_1, 20, 160+10);
+			Gfx_BlitTex(&menu.tex_names,&name_1, 20, 160+40);
 
 			RECT name_2 = {44, 24,  54, 7};
-			Gfx_BlitTex(&menu.tex_names,&name_2, 20, 169+10);
+			Gfx_BlitTex(&menu.tex_names,&name_2, 20, 169+40);
 
 			RECT name_3 = {44, 33,  54, 7};
-			Gfx_BlitTex(&menu.tex_names,&name_3, 20, 178+10);
+			Gfx_BlitTex(&menu.tex_names,&name_3, 20, 178+40);
 			
 			/*
 			const char * const *trackp = menu_options[menu.select].tracks;
@@ -837,12 +839,18 @@ void Menu_Tick(void)
 			}
 			*/
 			//Draw upper strip
-			RECT name_bar = {0, 20, SCREEN_WIDTH, 32};
+			RECT name_bar = {0, 25, SCREEN_WIDTH, 112};
 			//chara stuffs
 			if (menu.page_param.stage.diff == StageDiff_Chara)
+			{
+			stage.swap_player = true;
 			Gfx_DrawRect(&name_bar, 255, 0, 0);
+			}
 			else
+			{
+			stage.swap_player = false;
 			Gfx_DrawRect(&name_bar, 0, 0, 255);
+			}
 			
 			//Draw options
 			s32 next_scroll = menu.select * FIXED_DEC(48,1);
@@ -858,13 +866,13 @@ void Menu_Tick(void)
 						continue;
 					if (y >= SCREEN_HEIGHT)
 						break;
-					Menu_DrawWeek(menu_options[i].week, 48, y + 50);
+					Menu_DrawWeek(menu_options[i].week, 48, y + 80);
 				}
 			}
 			else if (animf_count & 2)
 			{
 				//Draw selected option
-				Menu_DrawWeek(menu_options[menu.select].week, 48, 114 + (menu.select * 48) - (menu.scroll >> FIXED_SHIFT));
+				Menu_DrawWeek(menu_options[menu.select].week, 48, 144 + (menu.select * 48) - (menu.scroll >> FIXED_SHIFT));
 			}
 			
 			break;

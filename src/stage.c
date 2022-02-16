@@ -73,6 +73,7 @@ u32 arrowposx,middleswitch;
 //shake stuff
 boolean noteshake;
 
+#include "character/playerm.h"
 #include "character/bf.h"
 #include "character/dad.h"
 #include "character/sans.h"
@@ -699,23 +700,80 @@ void Stage_BlendTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, con
 //Stage HUD functions
 static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
 {
+	s16 swap_icon, animicons, animicony,dyingy;
+	animicony = 0;
+	animicons = 0;
+
+	 if ((ox < 0 && health < 18000) || (ox > 0 && health > 2000))
+	 {
+	swap_icon = stage.song_step & 0x3;
+
+	switch (swap_icon)
+	{
+	case 0:
+	animicons = 0;
+	break;
+	case 1:
+	animicons = 50;
+	break;
+	case 2:
+	animicons = 100;
+	break;
+	case 3:
+	animicons =  0;
+	break;
+	}
+	 }
+	else 
+	 {
+	swap_icon = stage.song_step % 0x5;
+
+	switch (swap_icon)
+	{
+	case 0:
+	animicons = 0;
+	animicony = 50;
+	break;
+	case 1:
+	animicons = 50;
+	animicony = 50;
+	break;
+	case 2:
+	animicons = 100;
+	animicony = 50;
+	break;
+	case 3:
+	animicons = 150;
+	animicony = 50;
+	break;
+	case 4:
+	animicons =   0;
+	animicony = 100;
+	break;
+	case 5:
+	animicons =  50;
+	animicony = 100;
+     break;
+	}
+ }
+    FntPrint("Ded %d", swap_icon);
 	//Check if we should use 'dying' frame
 	if (ox < 0)
-		stage.dying = 1;
+		dyingy = (health >= 18000) * animicony;
 	else
-		stage.dying = 0;
+		dyingy = (health <= 2000) * animicony;
 
 	//Get src and dst
 	fixed_t hx = (128 << FIXED_SHIFT) * (10000 - health) / 10000;
 	RECT src = {
-		(i % 1) * 50,
-		16 + (i / 1) * 50,
+		(i % 1) * 50  + animicons,
+		16 + (i / 1) * 50 + dyingy,
 		50,
 		50
 	};
 	RECT_FIXED dst = {
 		hx + ox * FIXED_DEC(25,1) - FIXED_DEC(25,1),
-		FIXED_DEC(SCREEN_HEIGHT2 - 32 + 4 - 25, 1),
+		FIXED_DEC(SCREEN_HEIGHT2 - 48 + 4 - 25, 1),
 		src.w << FIXED_SHIFT,
 		src.h << FIXED_SHIFT
 	};

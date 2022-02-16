@@ -196,6 +196,8 @@ typedef struct
 	StageId stage_id;
 	StageDiff stage_diff;
 	
+	boolean swap_player;
+	
 	IO_Data chart_data;
 	Section *sections;
 	Note *notes;
@@ -237,8 +239,6 @@ typedef struct
 	
 	s16 noteshakex;
 	s16 noteshakey;
-
-	s8 dying;
 	
 	s16 song_step;
 	s16 botplay;

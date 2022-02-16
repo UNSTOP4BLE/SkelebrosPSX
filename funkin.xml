@@ -100,6 +100,9 @@
 
 			<!-- Character assets -->
 			<dir name = "char">
+			<!-- Boyfriend And Chara assets -->
+				<file name = "playerm.arc" type = "data" source = "iso/playerm/main.arc"/>
+
 				<!-- Boyfriend assets -->
 				<file name = "bf.arc" type = "data" source = "iso/bf/main.arc"/>
 				<file name = "bfdead.arc" type = "data" source = "iso/bf/dead.arc"/>
