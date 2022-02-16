@@ -26,6 +26,7 @@
 #define PAD_CIRCLE      8192
 #define PAD_CROSS       16384
 #define PAD_SQUARE      32768
+#define INPUT_TRIGGER    (PAD_L2 | PAD_L1 | PAD_R1 | PAD_R2)
 
 //Pad structure
 typedef struct

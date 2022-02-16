@@ -62,10 +62,10 @@ static const u8 note_anims[4][3] = {
 	{CharAnim_Down,  CharAnim_DownAlt,  PlayerAnim_DownMiss},
 	{CharAnim_Up,    CharAnim_UpAlt,    PlayerAnim_UpMiss},
 	{CharAnim_Right, CharAnim_RightAlt, PlayerAnim_RightMiss},
-};
+};  	
 
-fixed_t white,whitespd;
-
+	fixed_t white,whitespd;
+    
 //Stage definitions
 //middlescroll
 u32 arrowposx,middleswitch;
@@ -73,6 +73,11 @@ u32 arrowposx,middleswitch;
 boolean noteshake;
 //other mogus stuff idk
 boolean nohud;
+int misscounter = 0;
+
+int buttonpresscount = 0;
+int buttonpresscooldown = 0;
+boolean bone;
 
 #include "character/playerm.h"
 #include "character/bf.h"
@@ -414,6 +419,7 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 			this->character->set_anim(this->character, note_anims[type & 0x3][0]);
 		Stage_MissNote(this);
 		
+		misscounter ++;
 		this->health -= 400;
 		this->score -= 1;
 		this->refresh_score = true;
@@ -752,7 +758,7 @@ static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
      break;
 	}
  }
-    FntPrint("Ded %d", swap_icon);
+    //FntPrint("Ded %d", swap_icon);
 	//Check if we should use 'dying' frame
 	if (ox < 0)
 		dyingy = (health >= 18000) * animicony;
@@ -883,7 +889,8 @@ static void Stage_DrawNotes(void)
 					Stage_CutVocal();
 					Stage_MissNote(this);
 					this->health -= 475;
-					
+					misscounter ++;
+
 					//Send miss packet
 					#ifdef PSXF_NETWORK
 						if (stage.mode >= StageMode_Net1)
@@ -1278,7 +1285,8 @@ static void Stage_LoadState(void)
 		
 		stage.player_state[i].health = 10000;
 		stage.player_state[i].combo = 0;
-		
+		misscounter = 0;
+		buttonpresscount = 0;
 		stage.player_state[i].refresh_score = false;
 		stage.player_state[i].score = 0;
 		strcpy(stage.player_state[i].score_text, "0");
@@ -1577,7 +1585,7 @@ void Stage_Tick(void)
 
 
 
-           //Draw white fade
+            //Draw white fade
 			if (white > 0)
 			{
 				static const RECT flash = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
@@ -1591,12 +1599,29 @@ void Stage_Tick(void)
 				white = FIXED_DEC(255,1);
 				whitespd = FIXED_DEC(120,1);
 			}
-			
-
 
 			//debug shit 
 			FntPrint("Step %d", stage.song_step);
-			
+			FntPrint("miss %d", misscounter);
+			FntPrint("butn %d", buttonpresscount);
+			FntPrint("butncoold %d", buttonpresscooldown);
+
+			//bone mechanic
+			if (bone)
+			{
+				//todo input blcok
+				if (pad_state.press & INPUT_TRIGGER && buttonpresscooldown == 0)
+				{	
+					buttonpresscount ++;
+					buttonpresscooldown = 1;
+				}
+			}
+
+			if (buttonpresscooldown > 0 && buttonpresscooldown <= 50)
+				buttonpresscooldown ++;
+			else 
+				buttonpresscooldown = 0;
+
 			//shake hud
 			if (noteshake) 
 			{
