@@ -23,7 +23,6 @@
 #include "object/splash.h"
 
 //Stage constants
-//#define STAGE_NOHUD //Disable the HUD
 
 //#define STAGE_FREECAM //Freecam
 
@@ -72,6 +71,8 @@ fixed_t white,whitespd;
 u32 arrowposx,middleswitch;
 //shake stuff
 boolean noteshake;
+//other mogus stuff idk
+boolean nohud;
 
 #include "character/playerm.h"
 #include "character/bf.h"
@@ -601,9 +602,8 @@ void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixe
 		//Handle HUD drawing
 		if (tex == &stage.tex_hud0)
 		{
-			#ifdef STAGE_NOHUD
+			if (nohud)
 				return;
-			#endif
 			if (src->y >= 128 && src->y < 224)
 			{
 				//Pixel perfect scrolling
@@ -615,9 +615,8 @@ void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixe
 		}
 		else if (tex == &stage.tex_hud1)
 		{
-			#ifdef STAGE_NOHUD
+			if (nohud)
 				return;
-			#endif
 		}
 		else
 		{
@@ -633,9 +632,8 @@ void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixe
 		//Don't draw if HUD and is disabled
 		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
 		{
-			#ifdef STAGE_NOHUD
+			if (nohud)
 				return;
-			#endif
 		}
 	}
 	
@@ -666,10 +664,9 @@ void Stage_DrawTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_t
 void Stage_DrawTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, const POINT_FIXED *p1, const POINT_FIXED *p2, const POINT_FIXED *p3, fixed_t zoom)
 {
 	//Don't draw if HUD and HUD is disabled
-	#ifdef STAGE_NOHUD
+	if (nohud)
 		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
 			return;
-	#endif
 	
 	//Get screen-space points
 	POINT s0 = {SCREEN_WIDTH2 + (FIXED_MUL(p0->x, zoom) >> FIXED_SHIFT), SCREEN_HEIGHT2 + (FIXED_MUL(p0->y, zoom) >> FIXED_SHIFT)};
@@ -683,11 +680,10 @@ void Stage_DrawTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, cons
 void Stage_BlendTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, const POINT_FIXED *p1, const POINT_FIXED *p2, const POINT_FIXED *p3, fixed_t zoom, u8 mode)
 {
 	//Don't draw if HUD and HUD is disabled
-	#ifdef STAGE_NOHUD
+	if (nohud)
 		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
 			return;
-	#endif
-	
+
 	//Get screen-space points
 	POINT s0 = {SCREEN_WIDTH2 + (FIXED_MUL(p0->x, zoom) >> FIXED_SHIFT), SCREEN_HEIGHT2 + (FIXED_MUL(p0->y, zoom) >> FIXED_SHIFT)};
 	POINT s1 = {SCREEN_WIDTH2 + (FIXED_MUL(p1->x, zoom) >> FIXED_SHIFT), SCREEN_HEIGHT2 + (FIXED_MUL(p1->y, zoom) >> FIXED_SHIFT)};
@@ -1568,6 +1564,20 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			//note shakie
+			if ((stage.stage_id == StageId_1_2 && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_2Chara && stage.song_step >= 128 && stage.song_step <= 240))
+				noteshake = 1;
+			else
+				noteshake = 0;
+
+
+
+
+
+
+
+
+
 			//draw white flash mogus thingie
 			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.stage_id == 895))
 			{
