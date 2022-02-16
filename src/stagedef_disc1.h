@@ -16,8 +16,8 @@
 	},
 	{ //StageId_1_2 (Bonely One)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_sans_New,  FIXED_DEC(-120 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
 		//Stage background
@@ -32,12 +32,12 @@
 	},
 	{ //StageId_1_3 (Not Enough)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_sans_New,  FIXED_DEC(-120 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
 		//Stage background
-		Back_Week1_New,
+		Back_Week2_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},
@@ -65,8 +65,8 @@
 	
 	{ //StageId_1_1 Chara (Nyeh heh heh)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_Dad_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_BF_New,    FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 90,1)},
+		{Char_Dad_New, FIXED_DEC(-120 + 150,1),  FIXED_DEC(100 + 90,1)},
 		{NULL},
 		
 		//Stage background
@@ -81,12 +81,12 @@
 	},
 	{ //StageId_1_2 Chara (Bonely One)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_sans_New,  FIXED_DEC(-120 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
 		//Stage background
-		Back_Week1_New,
+		Back_Week2_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},
@@ -97,12 +97,12 @@
 	},
 	{ //StageId_1_3 Chara (Not Enough)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_sans_New,  FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
+		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_sans_New,  FIXED_DEC(-120 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
 		//Stage background
-		Back_Week1_New,
+		Back_Week2_New,
 		
 		//Song info
 		{FIXED_DEC(3,1),FIXED_DEC(3,1),FIXED_DEC(3,1)},

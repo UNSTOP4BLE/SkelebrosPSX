@@ -48,10 +48,10 @@ static const fixed_t note_xmiddle[8] = {
 	 FIXED_DEC(94,1) + FIXED_DEC(SCREEN_WIDEADD,4),
 	FIXED_DEC(128,1) + FIXED_DEC(SCREEN_WIDEADD,4),
 	//Opponent
-	FIXED_DEC(-128,1) - FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(-128,1) - FIXED_DEC(SCREEN_WIDEADD,4),//+34
-	 FIXED_DEC(-128,1) - FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(-128,1) - FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(-50,1) - FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(-16,1) - FIXED_DEC(SCREEN_WIDEADD,4),//+34
+	 FIXED_DEC(170,1) - FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(204,1) - FIXED_DEC(SCREEN_WIDEADD,4),
 };
 
 static const fixed_t note_y = FIXED_DEC(32 - SCREEN_HEIGHT2, 1);
@@ -1923,9 +1923,15 @@ void Stage_Tick(void)
 				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				
 				//Opponent
-				if (!(stage.middlescroll))
+				if (stage.middlescroll)
 				{
-					note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) +  note_x[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
+					note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + note_xmiddle[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
+					Stage_DrawStrum(i | 4, &note_src, &note_dst);
+					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+				}
+				else
+				{
+					note_dst.x = stage.noteshakex + note_x[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
 					Stage_DrawStrum(i | 4, &note_src, &note_dst);
 					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				}
