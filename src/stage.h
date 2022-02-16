@@ -34,6 +34,7 @@
 #define STAGE_LOAD_STAGE      (1 << 3) //Reload stage
 #define STAGE_LOAD_FLAG       (1 << 7)
 
+
 //Stage enums
 typedef enum
 {
