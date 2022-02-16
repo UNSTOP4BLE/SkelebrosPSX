@@ -28,7 +28,7 @@ iso/%.arc:
 	tools/funkinarcpak/funkinarcpak $@ $^
 
 # Menu
-iso/menu/menu.arc: iso/menu/back.tim iso/menu/coolfx.tim iso/menu/ng.tim iso/menu/story.tim iso/menu/title.tim iso/menu/titlebg.tim iso/menu/boldfona.tim
+iso/menu/menu.arc: iso/menu/back.tim iso/menu/coolfx.tim iso/menu/story.tim iso/menu/bgstory.tim iso/menu/title.tim iso/menu/titlebg.tim iso/menu/boldfona.tim
 
 # Story Characters
 iso/playerm/main.arc: iso/playerm/BF0.tim iso/playerm/BF1.tim iso/playerm/BF2.tim iso/playerm/BF3.tim iso/playerm/Chara0.tim iso/playerm/Chara1.tim

@@ -1577,14 +1577,7 @@ void Stage_Tick(void)
 
 
 
-
-			//draw white flash mogus thingie
-			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.stage_id == 895))
-			{
-				white = FIXED_DEC(255,1);
-				whitespd = FIXED_DEC(120,1);
-			}
-			//Draw white fade
+           //Draw white fade
 			if (white > 0)
 			{
 				static const RECT flash = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
@@ -1592,6 +1585,13 @@ void Stage_Tick(void)
 				Gfx_BlendRect(&flash, flash_col, flash_col, flash_col, 1);
 			    white -= FIXED_MUL(whitespd, timer_dt);
 			}
+			//draw white flash mogus thingie
+			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 895))
+			{
+				white = FIXED_DEC(255,1);
+				whitespd = FIXED_DEC(120,1);
+			}
+			
 
 
 			//debug shit 

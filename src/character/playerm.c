@@ -63,14 +63,14 @@ static const CharFrame char_playerm_frame[] = {
 	{PlayerM_ArcMain_BF0, {103, 156, 100,  80}, { 37,  72}}, //3 idle 6
 	
 	//alts
-	{PlayerM_ArcMain_Chara0, {  0,   0,  66,  88}, { 29,  68}}, //22 idle 1
-	{PlayerM_ArcMain_Chara0, { 68,   0,  65,  88}, { 29,  68}}, //22 idle 1
-	{PlayerM_ArcMain_Chara0, {136,   1,  67,  87}, { 29,  68}}, //22 idle 1
-	{PlayerM_ArcMain_Chara0, {  0,  89,  65,  92}, { 29,  68}}, //22 idle 1
-	{PlayerM_ArcMain_Chara0, { 66,  88,  65,  93}, { 29,  68}}, //22 idle 1
-	{PlayerM_ArcMain_Chara0, {136,  90,  66,  91}, { 29,  68}}, //22 idle 1
-	{PlayerM_ArcMain_Chara1, {  0,   0,  66,  92}, { 29,  68}}, //22 idle 1
-	{PlayerM_ArcMain_Chara1, { 69,   0,  66,  92}, { 29,  68}}, //22 idle 1
+	{PlayerM_ArcMain_Chara0, {  0,   0,  66,  88}, { 29-14,  80-8}}, //22 idle 1
+	{PlayerM_ArcMain_Chara0, { 68,   0,  65,  88}, { 29-14,  80-8}}, //22 idle 1
+	{PlayerM_ArcMain_Chara0, {136,   1,  67,  87}, { 31-14,  79-8}}, //22 idle 1
+	{PlayerM_ArcMain_Chara0, {  0,  89,  65,  92}, { 29-14,  84-8}}, //22 idle 1
+	{PlayerM_ArcMain_Chara0, { 66,  88,  65,  93}, { 27-14,  85-8}}, //22 idle 1
+	{PlayerM_ArcMain_Chara0, {136,  90,  66,  91}, { 29-14,  83-8}}, //22 idle 1
+	{PlayerM_ArcMain_Chara1, {  0,   0,  66,  92}, { 28-14,  84-8}}, //22 idle 1
+	{PlayerM_ArcMain_Chara1, { 69,   0,  66,  92}, { 29-14,  84-8}}, //22 idle 1
 };
 
 static const Animation char_playerm_anim[CharAnim_Max] = {

@@ -135,7 +135,7 @@ static struct
 	} page_param;
 	
 	//Menu assets
-	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_title, tex_titlebg, tex_names;
+	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_storybg, tex_title, tex_titlebg, tex_names;
 	FontData font_bold,font_arial;
 	
 	Character *playerm; //Title Girlfriend
@@ -303,6 +303,7 @@ void Menu_Load(MenuPage page)
 	Gfx_LoadTex(&menu.tex_back,  Archive_Find(menu_arc, "back.tim"),  0);
 	Gfx_LoadTex(&menu.tex_cooleffect,  Archive_Find(menu_arc, "coolfx.tim"),  0);
 	Gfx_LoadTex(&menu.tex_story, Archive_Find(menu_arc, "story.tim"), 0);
+	Gfx_LoadTex(&menu.tex_storybg, Archive_Find(menu_arc, "bgstory.tim"), 0);
 	Gfx_LoadTex(&menu.tex_title, Archive_Find(menu_arc, "title.tim"), 0);
 	Gfx_LoadTex(&menu.tex_titlebg, Archive_Find(menu_arc, "titlebg.tim"), 0);
 	Gfx_LoadTex(&menu.tex_names, Archive_Find(menu_arc, "boldfona.tim"), 0);
@@ -319,7 +320,7 @@ void Menu_Load(MenuPage page)
 	Gfx_LoadTex(&menuchar.tex_menuchar3,  Archive_Find(menuchar_arc, "mchar3.tim"), 0);
 	Mem_Free(menuchar_arc);
 	
-	menu.playerm = Char_PlayerM_New(FIXED_DEC(62,1), FIXED_DEC(9,1));
+	menu.playerm = Char_PlayerM_New(FIXED_DEC(72,1), FIXED_DEC(9,1));
 	stage.camera.x = stage.camera.y = FIXED_DEC(0,1);
 	stage.camera.bzoom = FIXED_UNIT;
 	
@@ -718,6 +719,9 @@ void Menu_Tick(void)
 		}
 		case MenuPage_Story:
 		{
+			//swap bg
+			u16 swapbg;
+			swapbg = 0;
 			//Draw Playerm
 			menu.playerm->tick(menu.playerm);
 
@@ -783,10 +787,9 @@ void Menu_Tick(void)
 	                menu.page_param.stage.id = menu_options[menu.select].stagealt;
 					else
 					menu.page_param.stage.id = menu_options[menu.select].stage;
+					menu.playerm->set_anim(menu.playerm, CharAnim_Special);
 					menu.page_param.stage.story = true;
 					menu.trans_time = FIXED_UNIT;
-					menu.page_state.title.fade = FIXED_DEC(255,1);
-					menu.page_state.title.fadespd = FIXED_DEC(510,1);
 				}
 				
 				//Return to main menu if circle is pressed
@@ -838,19 +841,24 @@ void Menu_Tick(void)
 					);
 			}
 			*/
-			//Draw upper strip
-			RECT name_bar = {0, 25, SCREEN_WIDTH, 112};
 			//chara stuffs
 			if (menu.page_param.stage.diff == StageDiff_Chara)
 			{
 			stage.swap_player = true;
-			Gfx_DrawRect(&name_bar, 255, 0, 0);
+			swapbg = 77;
 			}
 			else
 			{
+			swapbg = 0;
 			stage.swap_player = false;
-			Gfx_DrawRect(&name_bar, 0, 0, 255);
 			}
+
+			//Draw Background story
+			RECT bg_src = {0, swapbg, 256, 77};
+			RECT bf_dst = {0, 25, SCREEN_WIDTH, 112};
+
+			Gfx_DrawTex(&menu.tex_storybg, &bg_src, &bf_dst);
+
 			
 			//Draw options
 			s32 next_scroll = menu.select * FIXED_DEC(48,1);
