@@ -1601,7 +1601,6 @@ void Stage_Tick(void)
 			//bone mechanic
 			if (bonesystem.bone)
 			{
-				//todo input blcok
 				if (pad_state.press & INPUT_TRIGGER && bonesystem.buttonpresscooldown == 0)
 				{	
 					bonesystem.buttonpresscount ++;
@@ -1620,7 +1619,12 @@ void Stage_Tick(void)
 				stage.noteshakex = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
 				stage.noteshakey = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
 			}
-			
+			else
+			{
+				stage.noteshakex = 0;
+				stage.noteshakey = 0;
+			}
+
         	//camera like sonic.exe
     		if (stage.movecamera)
 			{
@@ -1969,23 +1973,30 @@ void Stage_Tick(void)
 					this->refresh_miss = false;
 				}
 				
-				//Display score
-				RECT score_src = {169, 246, 36, 9};
-				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-50,1) : FIXED_DEC(100,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
+				//Display miss
+				RECT miss_src = {169, 246, 36, 9};
+				RECT_FIXED miss_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-50,1) : FIXED_DEC(100,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
-					score_dst.y = -score_dst.y - score_dst.h;
+					miss_dst.y = -miss_dst.y - miss_dst.h;
 				
 				RECT slash_src = {163, 223, 3, 13};
-				RECT_FIXED slash_dst = {score_dst.x  - FIXED_DEC(4,1), score_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
+				RECT_FIXED slash_dst = {miss_dst.x  - FIXED_DEC(4,1), miss_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
+				
+				//shake slash
+				slash_dst.y += stage.noteshakey;
+				slash_dst.x += stage.noteshakex;
 				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
 				
-				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+				//shake miss
+				miss_dst.y += stage.noteshakey;
+				miss_dst.x += stage.noteshakex;
+				Stage_DrawTex(&stage.tex_hud0, &miss_src, &miss_dst, stage.bump);
 				
 				//Draw number
-				score_src.y = 240;
-				score_src.w = 8;
-				score_dst.x += FIXED_DEC(40,1);
-				score_dst.w = FIXED_DEC(8,1);
+				miss_src.y = 240;
+				miss_src.w = 8;
+				miss_dst.x += FIXED_DEC(40,1);
+				miss_dst.w = FIXED_DEC(8,1);
 				
 				for (const char *p = this->miss_text; ; p++)
 				{
@@ -1996,16 +2007,16 @@ void Stage_Tick(void)
 					
 					//Draw character
 					if (c == '-')
-						score_src.x = 160;
+						miss_src.x = 160;
 					else if (c == '.')
-						score_src.x = 160;
+						miss_src.x = 160;
 					else //Should be a number
-						score_src.x = 80 + ((c - '0') << 3);
+						miss_src.x = 80 + ((c - '0') << 3);
 					
-					Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+					Stage_DrawTex(&stage.tex_hud0, &miss_src, &miss_dst, stage.bump);
 					
 					//Move character right
-					score_dst.x += FIXED_DEC(7,1);
+					miss_dst.x += FIXED_DEC(7,1);
 				}
 			}
 
