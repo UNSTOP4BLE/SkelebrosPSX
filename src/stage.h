@@ -177,6 +177,16 @@ typedef struct
 	boolean refresh_score;
 	s32 score, max_score;
 	char score_text[13];
+
+	boolean refresh_miss;
+	s32 miss;
+	char miss_text[13];
+	
+	boolean refresh_accuracy;
+	s32 min_accuracy;
+	s32 accuracy;
+	s32 max_accuracy;
+	char accuracy_text[13];
 	
 	u16 pad_held, pad_press;
 } PlayerState;
@@ -266,6 +276,16 @@ typedef struct
 } Stage;
 
 extern Stage stage;
+
+
+typedef struct
+{
+  u16 buttonpresscount, buttonpresscooldown;
+  boolean bone;
+
+} BoneSystem;
+
+extern BoneSystem bonesystem;
 
 //Stage drawing functions
 void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_t zoom, u8 r, u8 g, u8 b);

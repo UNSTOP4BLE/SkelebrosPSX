@@ -265,7 +265,7 @@ Obj_Combo *Obj_Combo_New(fixed_t x, fixed_t y, u8 hit_type, u16 combo)
 			this->x = FIXED_DEC(-112,1) - FIXED_DEC(SCREEN_WIDEADD,4);
 		else
 			this->x = FIXED_DEC(30,1) + FIXED_DEC(SCREEN_WIDEADD,4);
-		y = FIXED_DEC(73,1);
+		y = FIXED_DEC(63,1);
 	}
 	this->obj.free = Obj_Combo_Free;
 	

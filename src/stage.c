@@ -73,11 +73,6 @@ u32 arrowposx,middleswitch;
 boolean noteshake;
 //other mogus stuff idk
 boolean nohud;
-int misscounter = 0;
-
-int buttonpresscount = 0;
-int buttonpresscooldown = 0;
-boolean bone;
 
 #include "character/playerm.h"
 #include "character/bf.h"
@@ -95,6 +90,9 @@ static const StageDef stage_defs[StageId_Max] = {
 
 //Stage state
 Stage stage;
+
+//bone state
+BoneSystem bonesystem;
 
 //Stage music functions
 static void Stage_StartVocal(void)
@@ -284,6 +282,8 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
 
 static void Stage_MissNote(PlayerState *this)
 {
+	this->miss += 1;
+	this->refresh_miss = true;
 	if (this->combo)
 	{
 		//Kill combo
@@ -419,7 +419,6 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 			this->character->set_anim(this->character, note_anims[type & 0x3][0]);
 		Stage_MissNote(this);
 		
-		misscounter ++;
 		this->health -= 400;
 		this->score -= 1;
 		this->refresh_score = true;
@@ -498,6 +497,7 @@ static void Stage_SustainCheck(PlayerState *this, u8 type)
 static void Stage_ProcessPlayer(PlayerState *this, Pad *pad, boolean playing)
 {
 	//Handle player note presses
+	if (!(bonesystem.bone))
 	if (!(stage.botplay)) {
 		if (playing)
 		{
@@ -733,28 +733,26 @@ static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
 	switch (swap_icon)
 	{
 	case 0:
-	animicons = 0;
-	animicony = 50;
+	animicons = 150;
 	break;
 	case 1:
-	animicons = 50;
-	animicony = 50;
+	animicons = 200;
 	break;
 	case 2:
-	animicons = 100;
+	animicons =  0;
 	animicony = 50;
 	break;
 	case 3:
-	animicons = 150;
+	animicons = 50;
 	animicony = 50;
 	break;
 	case 4:
-	animicons =   0;
-	animicony = 100;
+	animicons = 100;
+	animicony =  50;
 	break;
 	case 5:
-	animicons =  50;
-	animicony = 100;
+	animicons =  150;
+	animicony =  50;
      break;
 	}
  }
@@ -889,7 +887,6 @@ static void Stage_DrawNotes(void)
 					Stage_CutVocal();
 					Stage_MissNote(this);
 					this->health -= 475;
-					misscounter ++;
 
 					//Send miss packet
 					#ifdef PSXF_NETWORK
@@ -1285,8 +1282,10 @@ static void Stage_LoadState(void)
 		
 		stage.player_state[i].health = 10000;
 		stage.player_state[i].combo = 0;
-		misscounter = 0;
-		buttonpresscount = 0;
+		stage.player_state[i].refresh_miss = false;
+		stage.player_state[i].miss = 0;
+		strcpy(stage.player_state[i].miss_text, "0");
+		bonesystem.buttonpresscount = 0;
 		stage.player_state[i].refresh_score = false;
 		stage.player_state[i].score = 0;
 		strcpy(stage.player_state[i].score_text, "0");
@@ -1578,12 +1577,7 @@ void Stage_Tick(void)
 			else
 				noteshake = 0;
 
-
-
-
-
-
-
+            bonesystem.bone = true;
 
             //Draw white fade
 			if (white > 0)
@@ -1602,25 +1596,24 @@ void Stage_Tick(void)
 
 			//debug shit 
 			FntPrint("Step %d", stage.song_step);
-			FntPrint("miss %d", misscounter);
-			FntPrint("butn %d", buttonpresscount);
-			FntPrint("butncoold %d", buttonpresscooldown);
+			FntPrint("butn %d", bonesystem.buttonpresscount);
+			FntPrint("butncoold %d", bonesystem.buttonpresscooldown);
 
 			//bone mechanic
-			if (bone)
+			if (bonesystem.bone)
 			{
 				//todo input blcok
-				if (pad_state.press & INPUT_TRIGGER && buttonpresscooldown == 0)
+				if (pad_state.press & INPUT_TRIGGER && bonesystem.buttonpresscooldown == 0)
 				{	
-					buttonpresscount ++;
-					buttonpresscooldown = 1;
+					bonesystem.buttonpresscount ++;
+					bonesystem.buttonpresscooldown = 1;
 				}
 			}
 
-			if (buttonpresscooldown > 0 && buttonpresscooldown <= 50)
-				buttonpresscooldown ++;
+			if (bonesystem.buttonpresscooldown > 0 && bonesystem.buttonpresscooldown <= 50)
+				bonesystem.buttonpresscooldown ++;
 			else 
-				buttonpresscooldown = 0;
+				bonesystem.buttonpresscooldown = 0;
 
 			//shake hud
 			if (noteshake) 
@@ -1666,7 +1659,7 @@ void Stage_Tick(void)
 			if (stage.botplay)
 			{
 				//Draw botplay
-				RECT bot_fill = {174, 225, 67, 16};
+				RECT bot_fill = {172, 227, 67, 16};
 				RECT_FIXED bot_dst = {FIXED_DEC(-33,1), FIXED_DEC(-60,1), FIXED_DEC(67,1), FIXED_DEC(16,1)};
 				
 				bot_dst.w = bot_fill.w << FIXED_SHIFT;
@@ -1962,6 +1955,61 @@ void Stage_Tick(void)
 				}
 			}
 			
+			//Draw Combo Break
+			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
+			{
+				PlayerState *this = &stage.player_state[i];
+				
+				//Get string representing number
+				if (this->refresh_miss)
+				{
+					if (this->miss != 0)
+						sprintf(this->miss_text, "%d", this->miss);
+					else
+						strcpy(this->miss_text, "0");
+					this->refresh_miss = false;
+				}
+				
+				//Display score
+				RECT score_src = {169, 246, 36, 9};
+				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-50,1) : FIXED_DEC(100,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
+				if (stage.downscroll)
+					score_dst.y = -score_dst.y - score_dst.h;
+				
+				RECT slash_src = {163, 223, 3, 13};
+				RECT_FIXED slash_dst = {score_dst.x  - FIXED_DEC(4,1), score_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
+				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
+				
+				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+				
+				//Draw number
+				score_src.y = 240;
+				score_src.w = 8;
+				score_dst.x += FIXED_DEC(40,1);
+				score_dst.w = FIXED_DEC(8,1);
+				
+				for (const char *p = this->miss_text; ; p++)
+				{
+					//Get character
+					char c = *p;
+					if (c == '\0')
+						break;
+					
+					//Draw character
+					if (c == '-')
+						score_src.x = 160;
+					else if (c == '.')
+						score_src.x = 160;
+					else //Should be a number
+						score_src.x = 80 + ((c - '0') << 3);
+					
+					Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+					
+					//Move character right
+					score_dst.x += FIXED_DEC(7,1);
+				}
+			}
+
 			//Draw score
 			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
 			{
@@ -1979,7 +2027,7 @@ void Stage_Tick(void)
 				
 				//Display score
 				RECT score_src = {80, 224, 40, 10};
-				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-100,1) : FIXED_DEC(14,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(40,1), FIXED_DEC(10,1)};
+				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-134,1) : FIXED_DEC(14,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(40,1), FIXED_DEC(10,1)};
 				if (stage.downscroll)
 					score_dst.y = -score_dst.y - score_dst.h;
 				
@@ -1992,7 +2040,7 @@ void Stage_Tick(void)
 				//Draw number
 				score_src.y = 240;
 				score_src.w = 8;
-				score_dst.x += FIXED_DEC(40,1);
+				score_dst.x += FIXED_DEC(39,1);
 				score_dst.w = FIXED_DEC(8,1);
 				
 				for (const char *p = this->score_text; ; p++)

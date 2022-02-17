@@ -48,13 +48,13 @@ static const CharFrame char_playerm_frame[] = {
 	{PlayerM_ArcMain_BF0, {  0, 156,  98,  81}, { 35,  72}}, //2 idle 5
 	{PlayerM_ArcMain_BF0, {103, 156, 100,  80}, { 37,  72}}, //3 idle 6
 
-	{PlayerM_ArcMain_BF1, {  1,   0, 106,  87}, { 97 + -60,  87 + -14}}, //6 idle 6
-	{PlayerM_ArcMain_BF1, {109,   0, 102,  87}, { 91 + -60,  87 + -14}}, //7 idle 6
-	{PlayerM_ArcMain_BF1, {  0,  88,  97,  88}, { 88 + -60,  88 + -14}}, //8 idle 6
-	{PlayerM_ArcMain_BF1, {103,  87,  98,  88}, { 86 + -60,  88 + -14}}, //9 idle 6
-	{PlayerM_ArcMain_BF2, {  0,   1,  96,  88}, { 86 + -60,  88 + -14}}, //0 idle 6
-	{PlayerM_ArcMain_BF2, {101,   2,  96,  87}, { 86 + -60,  87 + -14}}, //11 idle 6
-	{PlayerM_ArcMain_BF2, {  0,  90, 102,  86}, { 93 + -60,  86 + -14}}, //12 idle 6
+	{PlayerM_ArcMain_BF1, {  1,   0, 106,  87}, { 97 + -58,  87 + -14}}, //6 idle 6
+	{PlayerM_ArcMain_BF1, {109,   0, 102,  87}, { 91 + -58,  87 + -14}}, //7 idle 6
+	{PlayerM_ArcMain_BF1, {  0,  88,  97,  88}, { 88 + -58,  88 + -14}}, //8 idle 6
+	{PlayerM_ArcMain_BF1, {103,  87,  98,  88}, { 86 + -58,  88 + -14}}, //9 idle 6
+	{PlayerM_ArcMain_BF2, {  0,   1,  96,  88}, { 86 + -58,  88 + -14}}, //0 idle 6
+	{PlayerM_ArcMain_BF2, {101,   2,  96,  87}, { 86 + -58,  87 + -14}}, //11 idle 6
+	{PlayerM_ArcMain_BF2, {  0,  90, 102,  86}, { 93 + -58,  86 + -14}}, //12 idle 6
 	{PlayerM_ArcMain_BF2, {102,  90,  93,  79}, { 87 + -60,  79 + -14}}, //13 idle 6
 	{PlayerM_ArcMain_BF2, {  0, 177,  92,  79}, { 86 + -60,  79 + -14}}, //4 idle 6
 	{PlayerM_ArcMain_BF3, {  0,   1,  89,  79}, { 81 + -60,  79 + -14}}, //5 idle 6
@@ -73,10 +73,10 @@ static const CharFrame char_playerm_frame[] = {
 	{PlayerM_ArcMain_Chara1, {  0,   0,  66,  92}, { 28-14,  84-8}}, //22 idle 1
 	{PlayerM_ArcMain_Chara1, { 69,   0,  66,  92}, { 29-14,  84-8}}, //22 idle 1
 
-	{PlayerM_ArcMain_Chara1, {138,   0,  70,  84}, { 46 + -20,  84 + -10}}, //22 idle 1
-	{PlayerM_ArcMain_Chara1, {  0,  98,  69,  85}, { 46 + -20,  85 + -10}}, //22 idle 1
-	{PlayerM_ArcMain_Chara1, { 72,  98,  68,  85}, { 45 + -20,  85 + -10}}, //22 idle 1
-	{PlayerM_ArcMain_Chara1, {144,  98,  68,  85}, { 45 + -20,  85 + -10}}, //22 idle 1
+	{PlayerM_ArcMain_Chara1, {138,   0,  70,  84}, { 16,  84 - 10}}, //22 idle 1
+	{PlayerM_ArcMain_Chara1, {  0,  98,  69,  85}, { 16,  85 - 10}}, //22 idle 1
+	{PlayerM_ArcMain_Chara1, { 72,  98,  68,  85}, { 15,  85 - 10}}, //22 idle 1
+	{PlayerM_ArcMain_Chara1, {144,  98,  68,  85}, { 15,  85 - 10}}, //22 idle 1
 };
 
 static const Animation char_playerm_anim[CharAnim_Max] = {
