@@ -24,7 +24,7 @@
 
 //Stage constants
 
-//#define STAGE_FREECAM //Freecam
+#define STAGE_FREECAM //Freecam
 
 //normal note x
 static const fixed_t note_x[8] = {
@@ -1572,6 +1572,12 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			//do da susi black and white mogus swap
+			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 640 && stage.song_step <= 1163) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 640 && stage.song_step <= 1163))
+				stage.utswap = 1;
+			else 
+				stage.utswap = 0;
+
 			//note shakie
 			if ((stage.stage_id == StageId_1_2 && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_2Chara && stage.song_step >= 128 && stage.song_step <= 240))
 				noteshake = 1;

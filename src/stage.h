@@ -254,6 +254,8 @@ typedef struct
 	s16 song_step;
 	s16 botplay;
 	
+	s16 utswap;
+
 	u8 gf_speed; //Typically 4 steps, changes in Fresh
 	
 	PlayerState player_state[2];
