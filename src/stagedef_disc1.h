@@ -12,11 +12,11 @@
 		1, 1,
 		XA_Bopeebo, 0,
 		
-		StageId_1_2, STAGE_LOAD_STAGE | STAGE_LOAD_OPPONENT | STAGE_LOAD_STAGE
+		StageId_1_2, STAGE_LOAD_FLAG | STAGE_LOAD_PLAYER | STAGE_LOAD_OPPONENT | STAGE_LOAD_STAGE
 	},
 	{ //StageId_1_2 (Bonely One)
 		//Characters
-		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BFSans_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
@@ -77,11 +77,11 @@
 		2, 1,
 		XA_Spookeez, 0,
 		
-		StageId_1_2Chara, STAGE_LOAD_FLAG | STAGE_LOAD_OPPONENT | STAGE_LOAD_STAGE
+		StageId_1_2Chara, STAGE_LOAD_FLAG | STAGE_LOAD_PLAYER| STAGE_LOAD_OPPONENT | STAGE_LOAD_STAGE
 	},
 	{ //StageId_1_2 Chara (Bonely One)
 		//Characters
-		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BFSans_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
@@ -114,7 +114,7 @@
 	
 	{ //StageId_3_1 (Eeeechrome)
 		//Characters
-		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BFSans_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
@@ -130,7 +130,7 @@
 	},
 	{ //StageId_3_2 (Parasite Sans)
 		//Characters
-		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BFSans_New,     FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		

@@ -76,6 +76,7 @@ boolean nohud;
 
 #include "character/playerm.h"
 #include "character/bf.h"
+#include "character/bfsans.h"
 #include "character/dad.h"
 #include "character/sans.h"
 #include "character/gf.h"
@@ -1576,8 +1577,6 @@ void Stage_Tick(void)
 				noteshake = 1;
 			else
 				noteshake = 0;
-
-            bonesystem.bone = true;
 
             //Draw white fade
 			if (white > 0)

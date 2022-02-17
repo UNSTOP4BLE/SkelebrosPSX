@@ -105,6 +105,7 @@
 
 				<!-- Boyfriend assets -->
 				<file name = "bf.arc" type = "data" source = "iso/bf/main.arc"/>
+				<file name = "bfsans.arc" type = "data" source = "iso/bfsans/main.arc"/>
 				<file name = "bfdead.arc" type = "data" source = "iso/bf/dead.arc"/>
 				
 				<!-- Dad assets -->
