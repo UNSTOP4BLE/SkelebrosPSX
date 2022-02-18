@@ -172,9 +172,20 @@ void Char_sans_Tick(Character *character)
 	if ((character->pad_held & (INPUT_LEFT | INPUT_DOWN | INPUT_UP | INPUT_RIGHT)) == 0)
 		Character_PerformIdle(character);
 	
+
+	//bad time
 	if ((stage.stage_id == StageId_1_3 && stage.song_step == 687) || (stage.stage_id == StageId_1_3Chara && stage.song_step == 687))
 		character->set_anim(character, CharAnim_Special);
 
+	if ((stage.stage_id == StageId_1_3 && stage.song_step >= 687 && stage.song_step <= 703) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 687 && stage.song_step <= 703))
+		this->character.focus_zoom = FIXED_DEC(14,10);
+	else 
+		this->character.focus_zoom = FIXED_DEC(9,10);
+
+	if ((stage.stage_id == StageId_1_3 && stage.song_step >= 700 && stage.song_step <= 704) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 700 && stage.song_step <= 704))
+		this->character.focus_x = FIXED_DEC(85,1);
+	else 
+		this->character.focus_x = FIXED_DEC(65,1);
 	//Animate and draw
 	if (stage.utswap)
 		Animatable_Animate(&character->animatableb, (void*)this, Char_sans_SetFrame);
