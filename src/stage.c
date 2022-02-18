@@ -1556,11 +1556,16 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+
+			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10)
+				stage.state = StageState_Dead;
+
 			//nohud when bad time
 			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 687 && stage.song_step <= 703) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 687 && stage.song_step <= 703))
 				nohud = 1;
 			else
 				nohud = 0;
+
 			//do da susi black and white mogus swap
 			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 640 && stage.song_step <= 1163) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 640 && stage.song_step <= 1163))
 				stage.utswap = 1;
@@ -1568,7 +1573,7 @@ void Stage_Tick(void)
 				stage.utswap = 0;
 
 			//note shakie
-			if ((stage.stage_id == StageId_1_2 && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_2Chara && stage.song_step >= 128 && stage.song_step <= 240))
+			if ((stage.stage_id == StageId_1_2 && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_2Chara && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_4 && stage.song_step >= 1090 && stage.song_step <= 1344))
 				noteshake = 1;
 			else
 				noteshake = 0;
@@ -1581,6 +1586,7 @@ void Stage_Tick(void)
 				Gfx_BlendRect(&flash, flash_col, flash_col, flash_col, 0);
 			    white -= FIXED_MUL(whitespd, timer_dt);
 			}
+
 			//draw white flash mogus thingie
 			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 895))
 			{
@@ -1613,6 +1619,12 @@ void Stage_Tick(void)
 			{
 				stage.noteshakex = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
 				stage.noteshakey = RandomRange(FIXED_DEC(-5,1),FIXED_DEC(5,1));
+				//shake the screen too if song is no more deals
+				if (stage.stage_id == StageId_1_4 && noteshake) 
+				{
+					stage.camera.x += RandomRange(FIXED_DEC(-3,1),FIXED_DEC(3,1));
+					stage.camera.y += RandomRange(FIXED_DEC(-3,1),FIXED_DEC(3,1));
+				}
 			}
 			else
 			{

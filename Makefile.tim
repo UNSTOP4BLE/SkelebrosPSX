@@ -62,4 +62,4 @@ iso/week1/back.arc: iso/week1/back0.tim iso/week1/mon0.tim iso/week1/mon1.tim
 iso/week2/back.arc: iso/week2/back0.tim iso/week2/platform.tim
 
 # Week 3
-iso/week3/back.arc: iso/week3/back0.tim
+iso/week3/back.arc: iso/week3/back0.tim iso/week3/misses.tim

@@ -19,8 +19,36 @@ typedef struct
 
 	//Textures
 	Gfx_Tex tex_back0; //bg
+	Gfx_Tex tex_misses; //no more than 10 misses
 
 } Back_Week3;
+
+void Back_Week3_DrawFG(StageBack *back)
+{
+	Back_Week3 *this = (Back_Week3*)back;
+
+	//Draw back
+	RECT miss_src = {1, 1, 254, 16};
+	RECT_FIXED miss_dst = {
+		FIXED_DEC(-159,1),
+		FIXED_DEC(-36,1),
+		FIXED_DEC(254,1),
+		FIXED_DEC(16,1)
+	};
+
+	RECT miss2_src = {1, 18, 64, 13};
+	RECT_FIXED miss2_dst = {
+		FIXED_DEC(95,1),
+		FIXED_DEC(-33,1),
+		FIXED_DEC(64,1),
+		FIXED_DEC(13,1)
+	};
+	if (stage.stage_id == StageId_1_4 && stage.song_step >= 12 && stage.song_step <= 56) 
+	{
+		Stage_DrawTex(&this->tex_misses, &miss_src, &miss_dst, stage.bump);
+		Stage_DrawTex(&this->tex_misses, &miss2_src, &miss2_dst, stage.bump);
+	}
+}
 
 void Back_Week3_DrawBG(StageBack *back)
 {
@@ -57,7 +85,7 @@ StageBack *Back_Week3_New(void)
 		return NULL;
 	
 	//Set background functions
-	this->back.draw_fg = NULL;
+	this->back.draw_fg = Back_Week3_DrawFG;
 	this->back.draw_md = NULL;
 	this->back.draw_bg = Back_Week3_DrawBG;
 	this->back.free = Back_Week3_Free;
@@ -65,6 +93,7 @@ StageBack *Back_Week3_New(void)
 	//Load background textures
 	IO_Data arc_back = IO_Read("\\WEEK3\\BACK.ARC;1");
 	Gfx_LoadTex(&this->tex_back0, Archive_Find(arc_back, "back0.tim"), 0);
+	Gfx_LoadTex(&this->tex_misses, Archive_Find(arc_back, "misses.tim"), 0);
 	Mem_Free(arc_back);
 
 	return (StageBack*)this;
