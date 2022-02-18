@@ -1573,6 +1573,11 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			//nohud when bad time
+			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 687 && stage.song_step <= 703) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 687 && stage.song_step <= 703))
+				nohud = 1;
+			else
+				nohud = 0;
 			//do da susi black and white mogus swap
 			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 640 && stage.song_step <= 1163) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 640 && stage.song_step <= 1163))
 				stage.utswap = 1;
