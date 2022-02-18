@@ -702,63 +702,45 @@ void Stage_BlendTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, con
 }
 
 //Stage HUD functions
-static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
+static void Stage_DrawHealth(s16 health, u8 i, s8 ox, s16 swap_icon, s16 swap_deathicon, s16 deathicon, s16 backicon)
 {
-	s16 swap_icon, animicons, animicony,dyingy;
+	s32 animicons, animicony,dyingy;
 	animicony = 0;
 	animicons = 0;
+	swap_icon = swap_icon*50;
+    swap_deathicon = swap_deathicon*50;
+	deathicon = deathicon + swap_icon*50;
+
 
 	 if ((ox < 0 && health < 18000) || (ox > 0 && health > 2000))
 	 {
-	swap_icon = stage.song_step & 0x3;
+	 animicony = 0;
+	 animicons = swap_icon;
 
-	switch (swap_icon)
-	{
-	case 0:
-	animicons = 0;
-	break;
-	case 1:
-	animicons = 50;
-	break;
-	case 2:
-	animicons = 100;
-	break;
-	case 3:
-	animicons =  0;
-	break;
-	}
+	 if (animicons > 200)
+	 {
+	  animicons = 0;
+	  animicony += 50;
+	 }
+	 
 	 }
 	else 
 	 {
-	swap_icon = stage.song_step % 0x5;
+	swap_icon = swap_deathicon;
+	animicons = deathicon;
+	if (animicons > 200)
+	 {
+	  animicons = swap_icon - 100;
+	  animicony += 50;
 
-	switch (swap_icon)
+    if (swap_icon == 0)
 	{
-	case 0:
-	animicons = 150;
-	break;
-	case 1:
-	animicons = 200;
-	break;
-	case 2:
-	animicons =  0;
-	animicony = 50;
-	break;
-	case 3:
-	animicons = 50;
-	animicony = 50;
-	break;
-	case 4:
-	animicons = 100;
-	animicony =  50;
-	break;
-	case 5:
-	animicons =  150;
-	animicony =  50;
-     break;
+	  animicons = deathicon;
+	  animicony -= backicon;
 	}
- }
-    //FntPrint("Ded %d", swap_icon);
+	 }
+	}
+    FntPrint("Ded %d", animicons);
 	//Check if we should use 'dying' frame
 	if (ox < 0)
 		dyingy = (health >= 18000) * animicony;
@@ -1528,7 +1510,7 @@ void Stage_Tick(void)
 					}
 					else
 					{
-						Menu_Load(MenuPage_Mods);
+						Menu_Load(MenuPage_Credits);
 					}
 				}
 				LoadScr_End();
@@ -2098,8 +2080,8 @@ void Stage_Tick(void)
 					stage.player_state[0].health = 20000;
 				
 				//Draw health heads
-				Stage_DrawHealth(stage.player_state[0].health, stage.player->health_i,    1);
-				Stage_DrawHealth(stage.player_state[0].health, stage.opponent->health_i, -1);
+				Stage_DrawHealth(stage.player_state[0].health, stage.player->health_i,    1, stage.song_step % 0x3, stage.song_step % 0x5, 3, 50);
+				Stage_DrawHealth(stage.player_state[0].health, stage.opponent->health_i, -1, stage.song_step % 0x3, stage.song_step % 0x5, 3, 50);
 				
 				//Draw health bar
 				RECT health_fill = {0, 0, 256 - (256 * stage.player_state[0].health / 20000), 8};

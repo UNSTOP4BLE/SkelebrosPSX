@@ -80,7 +80,7 @@ static struct
 	//Menu state
 	u8 page, next_page;
 	boolean page_swap;
-	u8 select, next_select;
+	u8 select, next_select,skip_select;
 	
 	fixed_t scroll;
 	fixed_t trans_time;
@@ -105,6 +105,10 @@ static struct
 		{
 			fixed_t back_r, back_g, back_b;
 		} freeplay;
+        struct
+		{
+			fixed_t back_r, back_g, back_b;
+		} credit;
 	#ifdef PSXF_NETWORK
 		struct
 		{
@@ -329,6 +333,7 @@ void Menu_Load(MenuPage page)
 	
 	//Initialize menu state
 	menu.select = menu.next_select = 0;
+	menu.skip_select = 0;
 	
 	switch (menu.page = menu.next_page = page)
 	{
@@ -627,7 +632,7 @@ void Menu_Tick(void)
 							menu.next_page = MenuPage_Freeplay;
 							break;
 						case 2: //Mods
-							menu.next_page = MenuPage_Mods;
+							menu.next_page = MenuPage_Credits;
 							break;
 						case 3: //Options
 							menu.next_page = MenuPage_Options;
@@ -1012,47 +1017,46 @@ void Menu_Tick(void)
 			);
 			break;
 		}
-		case MenuPage_Mods:
+		case MenuPage_Credits:
 		{
 			static const struct
 			{
-				StageId stage;
+				u32 col;
 				const char *text;
-				boolean difficulty;
+				const char *text2;
 			} menu_options[] = {
-				{StageId_Kapi_1, "VS KAPI", false},
-				{StageId_Clwn_1, "VS TRICKY", true},
-				{StageId_Clwn_4, "   EXPURGATION", false},
-				{StageId_2_4,    "CLUCKED", false},
+				//{StageId_4_4, 0xFFFC96D7, "TEST"},
+				{0xFF9271FD, "PORTED BY",NULL},
+				{0xFF9271FD, "UNSTOPABLE",  "SPRITES CODE OFFSETS"},
+				{0xFF9271FD, "IGORSOU3000", "SPRITES CODE OFFSETS"},
+				{0xFF9271FD, "",NULL},
+				{0xFF9271FD, "NO MORE DEALS",NULL},
+				{0xFF941653, "EEEECHROME",NULL},
+				{0xFF941653, "PARASITE SANS",NULL},
 			};
+
+			FntPrint("select %d", menu.select);
+			FntPrint("sselect %d", menu.skip_select);
 			
 			//Initialize page
 			if (menu.page_swap)
 			{
 				menu.scroll = COUNT_OF(menu_options) * FIXED_DEC(24 + SCREEN_HEIGHT2,1);
 				menu.page_param.stage.diff = StageDiff_BF;
+				menu.page_state.credit.back_r = FIXED_DEC(255,1);
+				menu.page_state.credit.back_g = FIXED_DEC(255,1);
+				menu.page_state.credit.back_b = FIXED_DEC(255,1);
 			}
-			
-			//Draw page label
-			menu.font_bold.draw(&menu.font_bold,
-				"MODS",
-				16,
-				SCREEN_HEIGHT - 32,
-				FontAlign_Left
-			);
-			
-			//Draw difficulty selector
-			if (menu_options[menu.select].difficulty)
-				Menu_DifficultySelector(SCREEN_WIDTH - 100, SCREEN_HEIGHT2 - 48);
 			
 			//Handle option and selection
 			if (menu.next_page == menu.page && Trans_Idle())
 			{
+				
 				//Change option
 				if (pad_state.press & PAD_UP)
 				{
 					if (menu.select > 0)
-						menu.select--;
+						menu.select -= 1;
 					else
 						menu.select = COUNT_OF(menu_options) - 1;
 				}
@@ -1064,25 +1068,21 @@ void Menu_Tick(void)
 						menu.select = 0;
 				}
 				
-				//Select option if cross is pressed
-				if (pad_state.press & (PAD_START | PAD_CROSS))
-				{
-					menu.next_page = MenuPage_Stage;
-					menu.page_param.stage.id = menu_options[menu.select].stage;
-					menu.page_param.stage.story = true;
-					if (!menu_options[menu.select].difficulty)
-						menu.page_param.stage.diff = StageDiff_Chara;
-					Trans_Start();
-				}
-				
 				//Return to main menu if circle is pressed
 				if (pad_state.press & PAD_CIRCLE)
 				{
 					menu.next_page = MenuPage_Main;
-					menu.next_select = 2; //Mods
+					menu.next_select = 1; //Freeplay
 					Trans_Start();
 				}
 			}
+			      //Draw credits information
+			        menu.font_bold.draw(&menu.font_bold,
+					Menu_LowerIf(menu_options[menu.select].text2, false),
+					160,
+					SCREEN_HEIGHT2 - 100,
+					FontAlign_Center
+			);
 			
 			//Draw options
 			s32 next_scroll = menu.select * FIXED_DEC(24,1);
@@ -1100,16 +1100,26 @@ void Menu_Tick(void)
 				//Draw text
 				menu.font_bold.draw(&menu.font_bold,
 					Menu_LowerIf(menu_options[i].text, menu.select != i),
-					48 + (y >> 2),
+					160,
 					SCREEN_HEIGHT2 + y - 8,
-					FontAlign_Left
+					FontAlign_Center
 				);
 			}
 			
 			//Draw background
+			fixed_t tgt_r = (fixed_t)((menu_options[menu.select].col >> 16) & 0xFF) << FIXED_SHIFT;
+			fixed_t tgt_g = (fixed_t)((menu_options[menu.select].col >>  8) & 0xFF) << FIXED_SHIFT;
+			fixed_t tgt_b = (fixed_t)((menu_options[menu.select].col >>  0) & 0xFF) << FIXED_SHIFT;
+			
+			menu.page_state.credit.back_r += (tgt_r - menu.page_state.credit.back_r) >> 4;
+			menu.page_state.credit.back_g += (tgt_g - menu.page_state.credit.back_g) >> 4;
+			menu.page_state.credit.back_b += (tgt_b - menu.page_state.credit.back_b) >> 4;
+			
 			Menu_DrawBack(
 				true,
-				197 >> 1, 240 >> 1, 95 >> 1,
+				menu.page_state.credit.back_r >> (FIXED_SHIFT + 1),
+				menu.page_state.credit.back_g >> (FIXED_SHIFT + 1),
+				menu.page_state.credit.back_b >> (FIXED_SHIFT + 1),
 				0, 0, 0
 			);
 			break;
