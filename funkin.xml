@@ -103,6 +103,9 @@
 			<!-- Boyfriend And Chara assets -->
 				<file name = "playerm.arc" type = "data" source = "iso/playerm/main.arc"/>
 
+			<!-- Sans And Papyruss assets -->
+				<file name = "spm.arc" type = "data" source = "iso/oppom/main.arc"/>
+
 				<!-- Boyfriend assets -->
 				<file name = "bf.arc" type = "data" source = "iso/bf/main.arc"/>
 				<file name = "bfsans.arc" type = "data" source = "iso/bfsans/main.arc"/>

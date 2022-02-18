@@ -23,8 +23,7 @@
 #include "object/splash.h"
 
 //Stage constants
-
-#define STAGE_FREECAM //Freecam
+//#define STAGE_FREECAM //Freecam
 
 //normal note x
 static const fixed_t note_x[8] = {
@@ -65,6 +64,7 @@ static const u8 note_anims[4][3] = {
 };  	
 
 	fixed_t white,whitespd;
+	fixed_t black,blackspd;
     
 //Stage definitions
 //middlescroll
@@ -75,6 +75,7 @@ boolean noteshake;
 boolean nohud;
 
 #include "character/playerm.h"
+#include "character/spm.h"
 #include "character/bf.h"
 #include "character/bfsans.h"
 #include "character/dad.h"
@@ -1589,7 +1590,7 @@ void Stage_Tick(void)
 			{
 				static const RECT flash = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 				u8 flash_col = white >> FIXED_SHIFT;
-				Gfx_BlendRect(&flash, flash_col, flash_col, flash_col, 1);
+				Gfx_BlendRect(&flash, flash_col, flash_col, flash_col, 0);
 			    white -= FIXED_MUL(whitespd, timer_dt);
 			}
 			//draw white flash mogus thingie
@@ -2114,6 +2115,21 @@ void Stage_Tick(void)
 			
 			//Tick foreground objects
 			ObjectList_Tick(&stage.objlist_fg);
+
+			//Draw black fade
+			if (black > 0)
+			{
+				static const RECT blackflash = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+				u8 blackflash_col =  black >> FIXED_SHIFT;
+				Gfx_BlendRect(&blackflash,  blackflash_col,  blackflash_col,  blackflash_col, 2);
+			     black -= FIXED_MUL(blackspd, timer_dt);
+			}
+			//draw  black flash
+			if ((stage.stage_id == StageId_1_3 && stage.song_step == 639) || (stage.stage_id == StageId_1_3Chara && stage.song_step == 639))
+			{
+				 black = FIXED_DEC(255,1);
+				 blackspd = FIXED_DEC(120,1);
+			}
 			
 			//Tick characters
 			stage.player->tick(stage.player);

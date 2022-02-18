@@ -23,6 +23,7 @@ SRCS = src/main.c \
        src/animation.c \
        src/character.c \
        src/character/playerm.c \
+       src/character/spm.c \
        src/character/bf.c \
        src/character/bfsans.c \
        src/character/speaker.c \

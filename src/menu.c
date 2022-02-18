@@ -23,6 +23,7 @@
 
 #include "stage.h"
 #include "character/playerm.h"
+#include "character/spm.h"
 u32 moveuptitle;
 
 //Menu messages
@@ -139,6 +140,7 @@ static struct
 	FontData font_bold,font_arial;
 	
 	Character *playerm; //Title Girlfriend
+	Character *spm; //Title Girlfriend
 } menu;
 
 //Menu Chaacter
@@ -321,6 +323,7 @@ void Menu_Load(MenuPage page)
 	Mem_Free(menuchar_arc);
 	
 	menu.playerm = Char_PlayerM_New(FIXED_DEC(72,1), FIXED_DEC(9,1));
+	menu.spm = Char_SPM_New(FIXED_DEC(22,1), FIXED_DEC(9,1));
 	stage.camera.x = stage.camera.y = FIXED_DEC(0,1);
 	stage.camera.bzoom = FIXED_UNIT;
 	
@@ -724,6 +727,8 @@ void Menu_Tick(void)
 			swapbg = 0;
 			//Draw Playerm
 			menu.playerm->tick(menu.playerm);
+			//Draw SPM
+			menu.spm->tick(menu.spm);
 
 			static const struct
 			{
