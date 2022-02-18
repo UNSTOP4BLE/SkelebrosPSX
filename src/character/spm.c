@@ -39,37 +39,31 @@ typedef struct
 
 //SPM character definitions
 static const CharFrame char_spm_frame[] = {
-	{SPM_ArcMain_Idle0, {  0,   0, 191, 213}, {127, 212}}, //0 idle 1
-	{SPM_ArcMain_Idle1, {  0,   0, 198, 209}, {135, 208}}, //1 idle 2
-	{SPM_ArcMain_Idle2, {  0,   0, 189, 214}, {125, 213}}, //2 idle 3
-	{SPM_ArcMain_Idle3, {  0,   0, 191, 215}, {124, 214}}, //3 idle 4
-	{SPM_ArcMain_Idle4, {  0,   0, 188, 215}, {122, 214}}, //2 idle 3
-	{SPM_ArcMain_Idle5, {  0,   0, 191, 215}, {124, 214}}, //3 idle 4
+	{SPM_ArcMain_Idle0, { 17,   0, 151, 112}, {79, 112}}, //0 idle 1
+	{SPM_ArcMain_Idle0, { 19, 116, 151, 112}, {79, 112}}, //1 idle 2
+	{SPM_ArcMain_Idle1, { 19,   0, 148, 112}, {78, 112}}, //2 idle 3
+	{SPM_ArcMain_Idle1, { 20, 116, 144, 112}, {79, 112}}, //3 idle 4
+	{SPM_ArcMain_Idle2, { 20,   0, 140, 112}, {80, 112}}, //2 idle 3
+	{SPM_ArcMain_Idle2, { 20, 116, 145, 112}, {81, 112}}, //3 idle 4
+	{SPM_ArcMain_Idle3, { 17,   0, 143, 112}, {81, 112}}, //3 idle 4
+	{SPM_ArcMain_Idle3, { 21, 116, 155, 112}, {81, 112}}, //3 idle 4
+	{SPM_ArcMain_Idle4, { 17,   0, 157, 112}, {81, 112}}, //3 idle 4
+	{SPM_ArcMain_Idle4, { 21, 116, 159, 112}, {81, 112}}, //3 idle 4
+	{SPM_ArcMain_Idle5, { 19,   0, 160, 112}, {81, 112}}, //3 idle 4
+	{SPM_ArcMain_Idle5, { 21, 116, 158, 112}, {81, 112}}, //3 idle 4
+	
 };
 
 static const Animation char_spm_anim[CharAnim_Max] = {
-	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{2, (const u8[]){ 14, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, ASCR_BACK, 1}}, //CharAnim_Special
-	{2, (const u8[]){ 6, 7, ASCR_BACK, 2}},         //CharAnim_Left
+	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},  //CharAnim_Special
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
-	{2, (const u8[]){ 8, 9, ASCR_BACK, 2}},         //CharAnim_Down
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //CharAnim_Down
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
-	{2, (const u8[]){ 10, 11, ASCR_BACK, 2}},         //CharAnim_Up
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //CharAnim_Up
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
-	{2, (const u8[]){ 12, 13, ASCR_BACK, 2}},         //CharAnim_Right
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_RightAlt
-};
-
-static const Animation char_spm_animb[CharAnim_Max] = {
-	{2, (const u8[]){ 18, 19, 20, 21, 22, 23, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{2, (const u8[]){ 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35, ASCR_BACK, 1}}, //CharAnim_Special
-	{2, (const u8[]){ 24, 25, ASCR_BACK, 2}},         //CharAnim_Left
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
-	{2, (const u8[]){ 26, 27, ASCR_BACK, 2}},         //CharAnim_Down
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
-	{2, (const u8[]){ 28, 29, ASCR_BACK, 2}},         //CharAnim_Up
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
-	{2, (const u8[]){ 30, 31, ASCR_BACK, 2}},         //CharAnim_Right
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //CharAnim_Right
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_RightAlt
 };
 
@@ -92,24 +86,12 @@ void Char_SPM_Tick(Character *character)
 {
 	Char_SPM *this = (Char_SPM*)character;
 	
+
 	//Perform idle dance
 	if ((character->pad_held & (INPUT_LEFT | INPUT_DOWN | INPUT_UP | INPUT_RIGHT)) == 0)
 		Character_PerformIdle(character);
 	
-	//Animate and draw
-	if ((stage.stage_id == StageId_1_1 && stage.song_step == 324) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 324))
-		character->set_anim(character, CharAnim_Special);
-
-
-	if ((stage.stage_id == StageId_1_1 && stage.song_step == 763) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 763))
-		character->set_anim(character, CharAnim_Special);
-	
-
-	if ((stage.stage_id == StageId_1_1 && stage.song_step >= 336 && stage.song_step <= 895) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 336 && stage.song_step <= 895))
-		Animatable_Animate(&character->animatableb, (void*)this, Char_SPM_SetFrame);
-	else
-		Animatable_Animate(&character->animatable, (void*)this, Char_SPM_SetFrame);
-
+	Animatable_Animate(&character->animatable, (void*)this, Char_SPM_SetFrame);
 	Character_Draw(character, &this->tex, &char_spm_frame[this->frame]);
 }
 
@@ -117,7 +99,6 @@ void Char_SPM_SetAnim(Character *character, u8 anim)
 {
 	//Set animation
 	Animatable_SetAnim(&character->animatable, anim);
-	Animatable_SetAnim(&character->animatableb, anim);
 	Character_CheckStartSing(character);
 }
 
@@ -146,7 +127,6 @@ Character *Char_SPM_New(fixed_t x, fixed_t y)
 	this->character.free = Char_SPM_Free;
 	
 	Animatable_Init(&this->character.animatable, char_spm_anim);
-	Animatable_Init(&this->character.animatableb, char_spm_animb);	
 	Character_Init((Character*)this, x, y);
 	
 	//Set character information

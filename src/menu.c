@@ -323,7 +323,7 @@ void Menu_Load(MenuPage page)
 	Mem_Free(menuchar_arc);
 	
 	menu.playerm = Char_PlayerM_New(FIXED_DEC(72,1), FIXED_DEC(9,1));
-	menu.spm = Char_SPM_New(FIXED_DEC(22,1), FIXED_DEC(9,1));
+	menu.spm = Char_SPM_New(FIXED_DEC(-82,1), FIXED_DEC(17,1));
 	stage.camera.x = stage.camera.y = FIXED_DEC(0,1);
 	stage.camera.bzoom = FIXED_UNIT;
 	
@@ -363,6 +363,7 @@ void Menu_Unload(void)
 {
 	//Free title Girlfriend
 	Character_Free(menu.playerm);
+	Character_Free(menu.spm);
 }
 
 void Menu_ToStage(StageId id, StageDiff diff, boolean story)
