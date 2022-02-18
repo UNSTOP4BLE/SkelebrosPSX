@@ -731,7 +731,7 @@ static void Stage_DrawHealth(s16 health, u8 i, s8 ox, s16 swap_icon, s16 swap_de
 	animicons = deathicon;
 	if (animicons > 200)
 	 {
-	  animicons = swap_icon - 100;
+	  animicons = swap_icon;
 	  animicony += 50;
 
     if (swap_icon == 0)
