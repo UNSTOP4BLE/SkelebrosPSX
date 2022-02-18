@@ -88,6 +88,8 @@
 			
 			<!-- Week 3 assets -->
 			<dir name = "week3">
+				<!-- Background art -->
+				<file name = "back.arc" type = "data" source = "iso/week3/back.arc"/>
 				<!-- Pico charts -->
 				<file name = "3.1e.cht" type = "data" source = "iso/chart/eeeechrome.json.cht"/>
 				<file name = "3.1n.cht" type = "data" source = "iso/chart/eeeechrome.json.cht"/>

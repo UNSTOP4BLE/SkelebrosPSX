@@ -84,6 +84,7 @@ boolean nohud;
 
 #include "stage/week1.h"
 #include "stage/week2.h"
+#include "stage/week3.h"
 #include "stage/dummy.h"
 
 static const StageDef stage_defs[StageId_Max] = {
