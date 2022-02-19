@@ -2167,6 +2167,74 @@ void Stage_Tick(void)
 
 			else
 			{
+			//Draw Accuracy
+			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
+			{
+				PlayerState *this = &stage.player_state[i];
+				
+				this->accuracy = (this->min_accuracy * 100) / (this->max_accuracy);
+				
+				//Get string representing number
+				if (this->refresh_accuracy)
+				{
+					if (this->accuracy != 0)
+						sprintf(this->accuracy_text, "%d", this->accuracy);
+					else
+						strcpy(this->accuracy_text, "0");
+					this->refresh_accuracy = false;
+				}
+				
+				//Display score
+				RECT score_src = {205, 246, 51, 9};
+				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-100,1) : FIXED_DEC(40,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(51,1), FIXED_DEC(9,1)};
+				if (stage.downscroll)
+					score_dst.y = -score_dst.y - score_dst.h;
+				//shake accurate
+				score_dst.y += stage.noteshakey;
+				score_dst.x += stage.noteshakex;
+				
+				RECT accur_src = {138, 223, 9, 11};
+				u8 accura;
+				if (this->accuracy == 100)
+					accura = 117;
+				else if (this->accuracy > 10)
+					accura = 110;
+				else
+					accura = 102;
+				
+				RECT_FIXED accur_dst = {score_dst.x + FIXED_DEC(accura,1) - FIXED_DEC(40,1), score_dst.y - FIXED_DEC(1,1), FIXED_DEC(9,1), FIXED_DEC(11,1)};
+				Stage_DrawTex(&stage.tex_hud0, &accur_src, &accur_dst, stage.bump);
+				
+				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+				
+				//Draw number
+				score_src.y = 240;
+				score_src.w = 8;
+				score_dst.x += FIXED_DEC(56,1);
+				score_dst.w = FIXED_DEC(8,1);
+				
+				for (const char *p = this->accuracy_text; ; p++)
+				{
+					//Get character
+					char c = *p;
+					if (c == '\0')
+						break;
+					
+					//Draw character
+					if (c == '-')
+						score_src.x = 160;
+					else if (c == '.')
+						score_src.x = 160;
+					else //Should be a number
+						score_src.x = 80 + ((c - '0') << 3);
+					
+					Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+					
+					//Move character right
+					score_dst.x += FIXED_DEC(7,1);
+				}
+			}
+			
 			//Draw Combo Break
 			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
 			{

@@ -169,7 +169,8 @@ void Char_Dad_Tick(Character *character)
 	Char_Dad *this = (Char_Dad*)character;
 	
 	//Perform idle dance
-	if ((character->pad_held & (INPUT_LEFT | INPUT_DOWN | INPUT_UP | INPUT_RIGHT)) == 0)
+	if ((character->pad_held & (INPUT_LEFT | INPUT_DOWN | INPUT_UP | INPUT_RIGHT)) == 0 &&
+	     character->animatable.anim != CharAnim_Special)
 		Character_PerformIdle(character);
 	
 	//Animate and draw
