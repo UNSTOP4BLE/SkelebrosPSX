@@ -80,11 +80,13 @@ boolean nohud;
 #include "character/bfsans.h"
 #include "character/dad.h"
 #include "character/sans.h"
+#include "character/gold.h"
 #include "character/gf.h"
 
 #include "stage/week1.h"
 #include "stage/week2.h"
 #include "stage/week3.h"
+#include "stage/mono.h"
 #include "stage/dummy.h"
 
 static const StageDef stage_defs[StageId_Max] = {

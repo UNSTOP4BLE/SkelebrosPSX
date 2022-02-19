@@ -20,6 +20,7 @@ SRCS = src/main.c \
        src/stage/week1.c \
        src/stage/week2.c \
        src/stage/week3.c \
+       src/stage/mono.c \
        src/stage/dummy.c \
        src/animation.c \
        src/character.c \
@@ -30,6 +31,7 @@ SRCS = src/main.c \
        src/character/speaker.c \
        src/character/dad.c \
        src/character/sans.c \
+       src/character/gold.c \
        src/character/gf.c \
        src/object.c \
        src/object/combo.c \

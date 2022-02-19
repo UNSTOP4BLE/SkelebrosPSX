@@ -15,6 +15,7 @@ all: \
 	iso/bfsans/main.arc \
 	iso/dad/main.arc \
 	iso/sans/main.arc \
+	iso/gold/main.arc \
 	iso/gf/main.arc \
 	iso/gf/tut.arc \
 	iso/gf/speaker.tim \
@@ -51,6 +52,9 @@ iso/dad/main.arc: iso/dad/idle0.tim iso/dad/idle1.tim iso/dad/idle2.tim iso/dad/
 
 # sansz
 iso/sans/main.arc: iso/sans/idle0.tim iso/sans/idle1.tim iso/sans/down.tim iso/sans/left0.tim iso/sans/left1.tim iso/sans/right.tim iso/sans/up0.tim iso/sans/up1.tim iso/sans/idleb0.tim iso/sans/idleb1.tim iso/sans/downb.tim iso/sans/leftb0.tim iso/sans/leftb1.tim iso/sans/rightb.tim iso/sans/upb0.tim iso/sans/upb1.tim iso/sans/specb0.tim iso/sans/specb1.tim iso/sans/specb2.tim iso/sans/specb3.tim
+
+# gold
+iso/gold/main.arc: iso/gold/idle.tim iso/gold/down.tim iso/gold/left0.tim iso/gold/left1.tim iso/gold/right0.tim iso/gold/right1.tim iso/gold/up0.tim iso/gold/up1.tim iso/gold/spec0.tim iso/gold/spec1.tim iso/gold/spec2.tim
 
 # GF
 iso/gf/main.arc: iso/gf/gf0.tim iso/gf/gf1.tim iso/gf/gf2.tim

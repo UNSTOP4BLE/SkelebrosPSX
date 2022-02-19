@@ -114,12 +114,12 @@
 	
 	{ //StageId_3_1 (Eeeechrome)
 		//Characters
-		{Char_BFSans_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
-		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BF_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_gold_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
 		//Stage background
-		Back_Week2_New,
+		Back_mono_New,
 		
 		//Song info
 		{FIXED_DEC(27,10),FIXED_DEC(27,10),FIXED_DEC(27,10)},
