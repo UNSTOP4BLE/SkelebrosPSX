@@ -187,6 +187,10 @@ void Char_Dad_Tick(Character *character)
 		Animatable_Animate(&character->animatable, (void*)this, Char_Dad_SetFrame);
 
 	Character_Draw(character, &this->tex, &char_dad_frame[this->frame]);
+
+	this->character.number_i = 3;
+	this->character.swap_i = stage.song_step % 0x3;
+	this->character.swapdeath_i = stage.song_step % 0x6;
 }
 
 void Char_Dad_SetAnim(Character *character, u8 anim)
@@ -228,7 +232,7 @@ Character *Char_Dad_New(fixed_t x, fixed_t y)
 	//Set character information
 	this->character.spec = 0;
 	
-	this->character.health_i = 0;
+	this->character.health_i = stage.tex_hud1;
 	
 	this->character.focus_x = FIXED_DEC(65,1);
 	this->character.focus_y = FIXED_DEC(-115,1);

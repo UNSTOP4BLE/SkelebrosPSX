@@ -176,8 +176,6 @@ Character *Char_PlayerM_New(fixed_t x, fixed_t y)
 	//Set character information
 	this->character.spec = 0;
 	
-	this->character.health_i = 1;
-	
 	this->character.focus_x = FIXED_DEC(65,1);
 	this->character.focus_y = FIXED_DEC(-115,1);
 	this->character.focus_zoom = FIXED_DEC(1,1);

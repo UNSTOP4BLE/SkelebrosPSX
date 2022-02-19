@@ -219,6 +219,10 @@ void Char_BFSans_Tick(Character *character)
 			(stage.song_step & 0x7) == 0)
 			character->set_anim(character, CharAnim_Idle);
 	}
+	this->character.number_i = 3;
+	this->character.swap_i = stage.song_step % 0x3;
+	this->character.swapdeath_i = stage.song_step % 0x3;
+
 	
 	//Retry screen
 	if (character->animatable.anim >= PlayerAnim_Dead3)
@@ -397,7 +401,7 @@ Character *Char_BFSans_New(fixed_t x, fixed_t y)
 	//Set character information
 	this->character.spec = CHAR_SPEC_MISSANIM;
 	
-	this->character.health_i = 0;
+	this->character.health_i = stage.tex_sans;
 	
 	this->character.focus_x = FIXED_DEC(-45,1);
 	this->character.focus_y = FIXED_DEC(-103,1);

@@ -248,11 +248,26 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
 		 5, //SHIT
 	};
 	this->score += score_inc[hit_type];
+	this->min_accuracy += 1;
 	this->refresh_score = true;
+
+	if (hit_type == 3)
+	this->max_accuracy += 4;
+
+	else if (hit_type == 2)
+	this->max_accuracy += 3;
+
+	else if (hit_type == 1)
+	this->max_accuracy += 2;
+
+	else
+	this->max_accuracy += 1;
+	this->refresh_accuracy = true;
 	
 	//Restore vocals and health
 	Stage_StartVocal();
 	this->health += 230;
+	
 	
 	//Create combo object telling of our combo
 	Obj_Combo *combo = Obj_Combo_New(
@@ -285,6 +300,8 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
 
 static void Stage_MissNote(PlayerState *this)
 {
+	this->max_accuracy += 1;
+	this->refresh_accuracy = true;
 	this->miss += 1;
 	this->refresh_miss = true;
 	if (this->combo)
@@ -703,56 +720,35 @@ void Stage_BlendTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, con
 }
 
 //Stage HUD functions
-static void Stage_DrawHealth(s16 health, u8 i, s8 ox, s16 swap_icon, s16 swap_deathicon, s16 deathicon, s16 backicon)
+static void Stage_DrawHealth(s16 health, Gfx_Tex i, s8 ox, s16 swap_icon, s16 swap_deathicon, s16 number)
 {
-	s32 animicons, animicony,dyingy;
-	animicony = 0;
-	animicons = 0;
-	swap_icon = swap_icon*50;
-    swap_deathicon = swap_deathicon*50;
-	deathicon = deathicon + swap_icon*50;
+	//animate variable
+	u16 animicons, animicony;
+    animicons = animicony = 0;
+    
+	//animate code
+	if (stage.song_step >= 0)
+{
+	if ((ox < 0 && health < 18000)|| (ox > 0 && health > 2000))
+	animicons = swap_icon*50;
 
+	else
+    animicons = (number + swap_deathicon)*50;
 
-	 if ((ox < 0 && health < 18000) || (ox > 0 && health > 2000))
-	 {
-	 animicony = 0;
-	 animicons = swap_icon;
-
-	 if (animicons > 200)
-	 {
-	  animicons = 0;
-	  animicony += 50;
-	 }
-	 
-	 }
-	else 
-	 {
-	swap_icon = swap_deathicon;
-	animicons = deathicon;
 	if (animicons > 200)
 	 {
-	  animicons = swap_icon;
+	  animicons -= 250;
 	  animicony += 50;
-
-    if (swap_icon == 0)
-	{
-	  animicons = deathicon;
-	  animicony -= backicon;
-	}
 	 }
-	}
-    FntPrint("Ded %d", animicons);
-	//Check if we should use 'dying' frame
-	if (ox < 0)
-		dyingy = (health >= 18000) * animicony;
-	else
-		dyingy = (health <= 2000) * animicony;
+}
+
+    //FntPrint("Ded %d", animicons);
 
 	//Get src and dst
 	fixed_t hx = (128 << FIXED_SHIFT) * (10000 - health) / 10000;
 	RECT src = {
-		(i % 1) * 50  + animicons,
-		16 + (i / 1) * 50 + dyingy,
+	    animicons,
+		16 + animicony,
 		50,
 		50
 	};
@@ -770,7 +766,7 @@ static void Stage_DrawHealth(s16 health, u8 i, s8 ox, s16 swap_icon, s16 swap_de
 	dst.x += stage.noteshakex;
 
 	//Draw health icon
-	Stage_DrawTex(&stage.tex_hud1, &src, &dst, FIXED_MUL(stage.bump, stage.sbump));
+	Stage_DrawTex(&i, &src, &dst, FIXED_MUL(stage.bump, stage.sbump));
 }
 
 static void Stage_DrawStrum(u8 i, RECT *note_src, RECT_FIXED *note_dst)
@@ -870,8 +866,11 @@ static void Stage_DrawNotes(void)
 				{
 					//Missed note
 					Stage_CutVocal();
-					Stage_MissNote(this);
-					this->health -= 475;
+					if (!(note->type & NOTE_FLAG_SUSTAIN))
+					{
+						Stage_MissNote(this);
+						this->health -= 1000;
+					}
 
 					//Send miss packet
 					#ifdef PSXF_NETWORK
@@ -1269,6 +1268,10 @@ static void Stage_LoadState(void)
 		stage.player_state[i].combo = 0;
 		stage.player_state[i].refresh_miss = false;
 		stage.player_state[i].miss = 0;
+		stage.player_state[i].accuracy = 0;
+		stage.player_state[i].max_accuracy = 0;
+		stage.player_state[i].min_accuracy = 0;
+		strcpy(stage.player_state[i].accuracy_text, "0");
 		strcpy(stage.player_state[i].miss_text, "0");
 		bonesystem.buttonpresscount = 0;
 		stage.player_state[i].refresh_score = false;
@@ -1297,6 +1300,7 @@ void Stage_Load(StageId id, StageDiff difficulty, boolean story)
 	else
 		Gfx_LoadTex(&stage.tex_hud0, IO_Read("\\STAGE\\HUD0.TIM;1"), GFX_LOADTEX_FREE);
 	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\HUD1.TIM;1"), GFX_LOADTEX_FREE);
+	Gfx_LoadTex(&stage.tex_sans, IO_Read("\\STAGE\\SANS.TIM;1"), GFX_LOADTEX_FREE);
 	
 	//Load stage background
 	Stage_LoadStage();
@@ -1583,7 +1587,7 @@ void Stage_Tick(void)
 			{
 				static const RECT flash = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 				u8 flash_col = white >> FIXED_SHIFT;
-				Gfx_BlendRect(&flash, flash_col, flash_col, flash_col, 0);
+				Gfx_BlendRect(&flash, flash_col, flash_col, flash_col, 1);
 			    white -= FIXED_MUL(whitespd, timer_dt);
 			}
 
@@ -1964,7 +1968,205 @@ void Stage_Tick(void)
 					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				}
 			}
+			if (stage.mode < StageMode_2P)
+			{
+			 //Draw score
+			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
+			{
+				PlayerState *this = &stage.player_state[i];
+				
+				//Get string representing number
+				if (this->refresh_score)
+				{
+					if (this->score != 0)
+						sprintf(this->score_text, "%d0", this->score * stage.max_score / this->max_score);
+					else
+						strcpy(this->score_text, "0");
+					this->refresh_score = false;
+				}
+				
+				//Display score
+				RECT score_src = {80, 224, 34, 9};
+				RECT_FIXED score_dst = {FIXED_DEC(-150,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(34,1), FIXED_DEC(9,1)};
+				if (stage.downscroll)
+					score_dst.y = -score_dst.y - score_dst.h;
+
+				//shake score
+				score_dst.y += stage.noteshakey;
+				score_dst.x += stage.noteshakex;
+				
+				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+				
+				//Draw number
+				score_src.y = 240;
+				score_src.w = 8;
+				score_dst.x += FIXED_DEC(40,1);
+				score_dst.w = FIXED_DEC(8,1);
+				
+				for (const char *p = this->score_text; ; p++)
+				{
+					//Get character
+					char c = *p;
+					if (c == '\0')
+						break;
+					
+					//Draw character
+					if (c == '-')
+						score_src.x = 160;
+					else //Should be a number
+						score_src.x = 80 + ((c - '0') << 3);
+					
+					Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+					
+					//Move character right
+					score_dst.x += FIXED_DEC(7,1);
+				}
+			}
 			
+			//Draw Combo Break
+			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
+			{
+				PlayerState *this = &stage.player_state[i];
+				
+				//Get string representing number
+				if (this->refresh_miss)
+				{
+					if (this->miss != 0)
+						sprintf(this->miss_text, "%d", this->miss);
+					else
+						strcpy(this->miss_text, "0");
+					this->refresh_miss = false;
+				}
+				
+				//Display score
+				RECT score_src = {169, 246, 36, 9};
+				RECT_FIXED score_dst = {FIXED_DEC(-60,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
+				if (stage.downscroll)
+					score_dst.y = -score_dst.y - score_dst.h;
+
+				//shake miss
+				score_dst.y += stage.noteshakey;
+				score_dst.x += stage.noteshakex;
+				
+				RECT slash_src = {163, 223, 3, 13};
+				RECT_FIXED slash_dst = {FIXED_DEC(-64,1), score_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
+				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
+
+				//shake slash
+				slash_dst.y += stage.noteshakey;
+				slash_dst.x += stage.noteshakex;
+				
+				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+				
+				//Draw number
+				score_src.y = 240;
+				score_src.w = 8;
+				score_dst.x += FIXED_DEC(70,1);
+				score_dst.w = FIXED_DEC(8,1);
+				
+				for (const char *p = this->miss_text; ; p++)
+				{
+					//Get character
+					char c = *p;
+					if (c == '\0')
+						break;
+					
+					//Draw character
+					if (c == '-')
+						score_src.x = 160;
+					else if (c == '.')
+						score_src.x = 160;
+					else //Should be a number
+						score_src.x = 80 + ((c - '0') << 3);
+					
+					Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+					
+					//Move character right
+					score_dst.x += FIXED_DEC(7,1);
+				}
+			}
+			
+			
+			
+			//Draw Accuracy
+			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
+			{
+				PlayerState *this = &stage.player_state[i];
+				
+				this->accuracy = (this->min_accuracy * 100) / (this->max_accuracy);
+				
+				//Get string representing number
+				if (this->refresh_accuracy)
+				{
+					if (this->accuracy != 0)
+						sprintf(this->accuracy_text, "%d", this->accuracy);
+					else
+						strcpy(this->accuracy_text, "0");
+					this->refresh_accuracy = false;
+				}
+				
+				//Display score
+				RECT score_src = {205, 246, 51, 9};
+				RECT_FIXED score_dst = {FIXED_DEC(39,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(51,1), FIXED_DEC(9,1)};
+				if (stage.downscroll)
+					score_dst.y = -score_dst.y - score_dst.h;
+				//shake accurate
+				score_dst.y += stage.noteshakey;
+				score_dst.x += stage.noteshakex;
+				
+				RECT slash_src = {163, 223, 3, 13};
+				RECT_FIXED slash_dst = {FIXED_DEC(35,1), score_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
+
+				//shake slash
+				slash_dst.y += stage.noteshakey;
+				slash_dst.x += stage.noteshakex;
+				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
+				
+				RECT accur_src = {138, 223, 9, 11};
+				u8 accura;
+				if (this->accuracy == 100)
+					accura = 117;
+				else if (this->accuracy > 10)
+					accura = 110;
+				else
+					accura = 102;
+				
+				RECT_FIXED accur_dst = {FIXED_DEC(accura,1), score_dst.y - FIXED_DEC(1,1), FIXED_DEC(9,1), FIXED_DEC(11,1)};
+				Stage_DrawTex(&stage.tex_hud0, &accur_src, &accur_dst, stage.bump);
+				
+				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+				
+				//Draw number
+				score_src.y = 240;
+				score_src.w = 8;
+				score_dst.x += FIXED_DEC(56,1);
+				score_dst.w = FIXED_DEC(8,1);
+				
+				for (const char *p = this->accuracy_text; ; p++)
+				{
+					//Get character
+					char c = *p;
+					if (c == '\0')
+						break;
+					
+					//Draw character
+					if (c == '-')
+						score_src.x = 160;
+					else if (c == '.')
+						score_src.x = 160;
+					else //Should be a number
+						score_src.x = 80 + ((c - '0') << 3);
+					
+					Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+					
+					//Move character right
+					score_dst.x += FIXED_DEC(7,1);
+				}
+			}
+			}
+
+			else
+			{
 			//Draw Combo Break
 			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
 			{
@@ -1982,7 +2184,7 @@ void Stage_Tick(void)
 				
 				//Display miss
 				RECT miss_src = {169, 246, 36, 9};
-				RECT_FIXED miss_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-50,1) : FIXED_DEC(100,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
+				RECT_FIXED miss_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-50,1) : FIXED_DEC(100,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
 					miss_dst.y = -miss_dst.y - miss_dst.h;
 				
@@ -2044,7 +2246,7 @@ void Stage_Tick(void)
 				
 				//Display score
 				RECT score_src = {80, 224, 40, 10};
-				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-134,1) : FIXED_DEC(14,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(40,1), FIXED_DEC(10,1)};
+				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-134,1) : FIXED_DEC(14,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(40,1), FIXED_DEC(10,1)};
 				if (stage.downscroll)
 					score_dst.y = -score_dst.y - score_dst.h;
 				
@@ -2079,6 +2281,7 @@ void Stage_Tick(void)
 					score_dst.x += FIXED_DEC(7,1);
 				}
 			}
+		}
 			
 			if (stage.mode < StageMode_2P)
 			{
@@ -2093,8 +2296,8 @@ void Stage_Tick(void)
 					stage.player_state[0].health = 20000;
 				
 				//Draw health heads
-				Stage_DrawHealth(stage.player_state[0].health, stage.player->health_i,    1, stage.song_step % 0x3, stage.song_step % 0x5, 3, 50);
-				Stage_DrawHealth(stage.player_state[0].health, stage.opponent->health_i, -1, stage.song_step % 0x3, stage.song_step % 0x5, 3, 50);
+				Stage_DrawHealth(stage.player_state[0].health, stage.player->health_i,  1, stage.player->swap_i, stage.player->swapdeath_i, stage.player->number_i);
+				Stage_DrawHealth(stage.player_state[0].health, stage.opponent->health_i, -1, stage.opponent->swap_i, stage.opponent->swapdeath_i, stage.opponent->number_i);
 				
 				//Draw health bar
 				RECT health_fill = {0, 0, 256 - (256 * stage.player_state[0].health / 20000), 8};
