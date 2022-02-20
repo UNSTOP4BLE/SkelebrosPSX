@@ -59,9 +59,9 @@ boolean Obj_Combo_Tick(Object *obj)
 			clipp = 16 - ((this->ct * 60) >> FIXED_SHIFT);
 		
 		RECT combo_src = {
-			80,
+			101,
 			128,
-			80,
+			77,
 			clipp << 1
 		};
 		RECT_FIXED combo_dst = {

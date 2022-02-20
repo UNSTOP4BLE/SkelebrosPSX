@@ -11,9 +11,6 @@
 #include "../stage.h"
 #include "../main.h"
 
-int mog = 0;
-int sog = 0;
-
 //gold character structure
 enum
 {
@@ -73,23 +70,23 @@ static const CharFrame char_gold_frame[] = {
 	{gold_ArcMain_Right1, {  0, 122, 137, 122}, { 34 + 10, 122 - 10}}, //11 right 2
 
 	//fade thing
-	{gold_ArcMain_Spec0, {  0,   0, 98, 147}, { 63, 146}}, //11 right 2
-	{gold_ArcMain_Spec0, { 99,   0, 96, 126}, { 63, 146}}, //11 right 2
-	{gold_ArcMain_Spec0, {159, 124, 97, 132}, { 63, 146}}, //11 right 2
-	{gold_ArcMain_Spec1, {  0,   0, 97, 136}, { 63, 146}}, //11 right 2
-	{gold_ArcMain_Spec1, { 97,   0, 99, 140}, { 63, 146}}, //11 right 2
-	{gold_ArcMain_Spec2, {  0,   0, 97, 144}, { 63, 146}}, //11 right 2
-	{gold_ArcMain_Spec2, { 97,   0, 99, 144}, { 63, 146}}, //11 right 2
+	{gold_ArcMain_Spec0, {  0,   0, 98, 147}, { 64, 147}}, //11 right 2
+	{gold_ArcMain_Spec0, { 99,   0, 96, 126}, { 62, 126}}, //11 right 2
+	{gold_ArcMain_Spec0, {159, 124, 97, 132}, { 63, 132}}, //11 right 2
+	{gold_ArcMain_Spec1, {  0,   0, 97, 136}, { 63, 136}}, //11 right 2
+	{gold_ArcMain_Spec1, { 97,   0, 99, 140}, { 63, 140}}, //11 right 2
+	{gold_ArcMain_Spec2, {  0,   0, 97, 144}, { 63, 144}}, //11 right 2
+	{gold_ArcMain_Spec2, { 97,   0, 99, 144}, { 63, 144}}, //11 right 2
 
 };
 
 static const Animation char_gold_anim[CharAnim_Max] = {
 	{2, (const u8[]){ 0, 1, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{2, (const u8[]){18,19,20,21,22,23,24,  ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
+	{2, (const u8[]){18,19,20,21,22,23,24, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
 	{2, (const u8[]){ 2, 3, 4, 5, ASCR_BACK, 0}},         //CharAnim_Left
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
+	{2, (const u8[]){24,23,22,21, ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 6, 7, 8, 9, ASCR_BACK, 0}},         //CharAnim_Down
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
+	{2, (const u8[]){20,19,18, ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
 	{2, (const u8[]){ 10, 11, 12, 13, ASCR_BACK, 0}},         //CharAnim_Up
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
 	{2, (const u8[]){ 14, 15, 16, 17, ASCR_BACK, 0}},         //CharAnim_Right
@@ -122,13 +119,18 @@ void Char_gold_Tick(Character *character)
     if (stage.song_step == 6)
 		character->set_anim(character, CharAnim_Special);
 	
+	if (stage.song_step == 1560)
+		character->set_anim(character, CharAnim_LeftAlt);
+	if (stage.song_step == 1564)
+		character->set_anim(character, CharAnim_DownAlt);
+	
 	//Animate and draw
 	this->character.number_i = 3;
 	this->character.swap_i = stage.song_step % 0x3;
 	this->character.swapdeath_i = stage.song_step % 0x3;
 
 	Animatable_Animate(&character->animatable, (void*)this, Char_gold_SetFrame);
-	if (stage.song_step > 5)
+	if (stage.song_step > 5 && stage.song_step < 1564)
 	Character_Draw(character, &this->tex, &char_gold_frame[this->frame]);
 }
 
