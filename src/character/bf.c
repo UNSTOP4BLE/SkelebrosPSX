@@ -11,6 +11,7 @@
 #include "../stage.h"
 #include "../random.h"
 #include "../main.h"
+#include "../timer.h"
 
 //Boyfriend skull fragments
 static SkullFragment char_bf_skull[15] = {
@@ -327,6 +328,7 @@ void Char_BF_Tick(Character *character)
 	
 	//Animate and draw character
 	Animatable_Animate(&character->animatable, (void*)this, Char_BF_SetFrame);
+	if (character->animatable.anim < PlayerAnim_LeftMiss || animf_count & 2)
 	Character_Draw(character, &this->tex, &char_bf_frame[this->frame]);
 }
 

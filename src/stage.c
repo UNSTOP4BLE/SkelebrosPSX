@@ -80,6 +80,7 @@ boolean nohud;
 #include "character/bfsans.h"
 #include "character/dad.h"
 #include "character/sans.h"
+#include "character/chara.h"
 #include "character/gold.h"
 #include "character/gf.h"
 
@@ -641,7 +642,7 @@ void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixe
 				hz &= FIXED_UAND;
 			}
 		}
-		else if (tex == &stage.tex_hud1)
+		else if (tex == &stage.tex_hud1 )
 		{
 			if (nohud)
 				return;
@@ -658,7 +659,7 @@ void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixe
 	else
 	{
 		//Don't draw if HUD and is disabled
-		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
+		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1 || tex == &stage.tex_sans)
 		{
 			if (nohud)
 				return;
@@ -693,7 +694,7 @@ void Stage_DrawTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, cons
 {
 	//Don't draw if HUD and HUD is disabled
 	if (nohud)
-		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
+		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1  || tex == &stage.tex_sans)
 			return;
 	
 	//Get screen-space points
@@ -709,7 +710,7 @@ void Stage_BlendTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, con
 {
 	//Don't draw if HUD and HUD is disabled
 	if (nohud)
-		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
+		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1  || tex == &stage.tex_sans)
 			return;
 
 	//Get screen-space points
@@ -729,15 +730,15 @@ static void Stage_DrawHealth(s16 health, Gfx_Tex i, s8 ox, s16 swap_icon, s16 sw
     animicons = animicony = 0;
     
 	//animate code
-	if (stage.song_step >= 0)
+	if (stage.song_step >= 1)
 {
 	if ((ox < 0 && health < 18000)|| (ox > 0 && health > 2000))
-	animicons = swap_icon*50;
+	animicons = (stage.utswap) ? (swap_icon + number *2)*50 : swap_icon*50;
 
 	else
-    animicons = (number + swap_deathicon)*50;
+    animicons =  (stage.utswap) ? (swap_deathicon + number*3)*50 : (number + swap_deathicon)*50;
 
-	if (animicons > 200)
+	while (animicons > 200)
 	 {
 	  animicons -= 250;
 	  animicony += 50;
@@ -1301,6 +1302,9 @@ void Stage_Load(StageId id, StageDiff difficulty, boolean story)
 		Gfx_LoadTex(&stage.tex_hud0, IO_Read("\\STAGE\\HUD0WEEB.TIM;1"), GFX_LOADTEX_FREE);
 	else
 		Gfx_LoadTex(&stage.tex_hud0, IO_Read("\\STAGE\\HUD0.TIM;1"), GFX_LOADTEX_FREE);
+	if (id == StageId_1_4)
+	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\CHARA.TIM;1"), GFX_LOADTEX_FREE);
+	else
 	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\HUD1.TIM;1"), GFX_LOADTEX_FREE);
 	Gfx_LoadTex(&stage.tex_sans, IO_Read("\\STAGE\\SANS.TIM;1"), GFX_LOADTEX_FREE);
 	
@@ -2372,7 +2376,7 @@ void Stage_Tick(void)
 				//Draw health bar
 				RECT health_fill = {0, 0, 256 - (256 * stage.player_state[0].health / 20000), 8};
 				RECT health_back = {0, 8, 256, 8};
-				RECT_FIXED health_dst = {FIXED_DEC(-128,1), (SCREEN_HEIGHT2 - 32) << FIXED_SHIFT, 0, FIXED_DEC(8,1)};
+				RECT_FIXED health_dst = {FIXED_DEC(-128,1), (SCREEN_HEIGHT2 - 37) << FIXED_SHIFT, 0, FIXED_DEC(8,1)};
 				if (stage.downscroll)
 					health_dst.y = -health_dst.y - health_dst.h;
 				
@@ -2402,6 +2406,11 @@ void Stage_Tick(void)
 			{
 				 black = FIXED_DEC(255,1);
 				 blackspd = FIXED_DEC(120,1);
+			}
+			if ((stage.stage_id == StageId_1_3 && stage.song_step == 1163) || (stage.stage_id == StageId_1_3Chara && stage.song_step == 1163))
+			{
+				 black = FIXED_DEC(255,1);
+				 blackspd = FIXED_DEC(160,1);
 			}
 			
 			//Tick characters

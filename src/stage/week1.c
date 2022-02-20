@@ -111,7 +111,7 @@ void Week1_Henchmen_Draw(Back_Week1 *this, fixed_t x, fixed_t y)
 void Back_Week1_DrawFG(StageBack *back)
 {
 	u32 color;
-
+    
 	u16 swapcolor = stage.song_step >> 2 & 0x3;
 
 	switch (swapcolor)

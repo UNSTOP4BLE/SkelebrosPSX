@@ -54,6 +54,7 @@ void Back_Week2_DrawBG(StageBack *back)
 		FIXED_DEC(42,1)
 	};
 	
+	//removed bg and add plataform when undertale mode it's true
 	if (stage.utswap == 0)
 		Stage_DrawTex(&this->tex_back0, &back_src, &back_dst, stage.camera.bzoom);
 	else 

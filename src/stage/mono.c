@@ -22,16 +22,6 @@ typedef struct
 
 } Back_mono;
 
-void Back_mono_DrawBG(StageBack *back)
-{
-	Back_mono *this = (Back_mono*)back;
-    fixed_t fx, fy;
-
-	//Draw back
-	fx = stage.camera.x;
-	fy = stage.camera.y;
-}
-
 void Back_mono_Free(StageBack *back)
 {
 	Back_mono *this = (Back_mono*)back;
@@ -50,13 +40,8 @@ StageBack *Back_mono_New(void)
 	//Set background functions
 	this->back.draw_fg = NULL;
 	this->back.draw_md = NULL;
-	this->back.draw_bg = Back_mono_DrawBG;
+	this->back.draw_bg = NULL;
 	this->back.free = Back_mono_Free;
-	
-	//Load background textures
-	//IO_Data arc_back = IO_Read("\\MONO\\BACK.ARC;1");
-	//Gfx_LoadTex(&this->tex_back0, Archive_Find(arc_back, "back0.tim"), 0);
-//	Mem_Free(arc_back);
 
 	Gfx_SetClear(0, 0, 0);
 

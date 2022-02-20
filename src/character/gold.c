@@ -73,19 +73,19 @@ static const CharFrame char_gold_frame[] = {
 	{gold_ArcMain_Right1, {  0, 122, 137, 122}, { 34 + 10, 122 - 10}}, //11 right 2
 
 	//fade thing
-	{gold_ArcMain_Spec0, {  0,   0, 0, 0}, { 0, 0}}, //11 right 2
-	{gold_ArcMain_Spec0, {  0,   0, 0, 0}, { 0, 0}}, //11 right 2
-	{gold_ArcMain_Spec0, {  0,   0, 0, 0}, { 0, 0}}, //11 right 2
-	{gold_ArcMain_Spec1, {  0,   0, 0, 0}, { 0, 0}}, //11 right 2
-	{gold_ArcMain_Spec1, {  0,   0, 0, 0}, { 0, 0}}, //11 right 2
-	{gold_ArcMain_Spec2, {  0,   0, 0, 0}, { 0, 0}}, //11 right 2
-	{gold_ArcMain_Spec2, {  0,   0, 0, 0}, { 0, 0}}, //11 right 2
+	{gold_ArcMain_Spec0, {  0,   0, 98, 147}, { 63, 146}}, //11 right 2
+	{gold_ArcMain_Spec0, { 99,   0, 96, 126}, { 63, 146}}, //11 right 2
+	{gold_ArcMain_Spec0, {159, 124, 97, 132}, { 63, 146}}, //11 right 2
+	{gold_ArcMain_Spec1, {  0,   0, 97, 136}, { 63, 146}}, //11 right 2
+	{gold_ArcMain_Spec1, { 97,   0, 99, 140}, { 63, 146}}, //11 right 2
+	{gold_ArcMain_Spec2, {  0,   0, 97, 144}, { 63, 146}}, //11 right 2
+	{gold_ArcMain_Spec2, { 97,   0, 99, 144}, { 63, 146}}, //11 right 2
 
 };
 
 static const Animation char_gold_anim[CharAnim_Max] = {
 	{2, (const u8[]){ 0, 1, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
+	{2, (const u8[]){18,19,20,21,22,23,24,  ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
 	{2, (const u8[]){ 2, 3, 4, 5, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 6, 7, 8, 9, ASCR_BACK, 0}},         //CharAnim_Down
@@ -118,6 +118,9 @@ void Char_gold_Tick(Character *character)
 	//Perform idle dance
 	if ((character->pad_held & (INPUT_LEFT | INPUT_DOWN | INPUT_UP | INPUT_RIGHT)) == 0)
 		Character_PerformIdle(character);
+
+    if (stage.song_step == 6)
+		character->set_anim(character, CharAnim_Special);
 	
 	//Animate and draw
 	this->character.number_i = 3;
@@ -125,6 +128,7 @@ void Char_gold_Tick(Character *character)
 	this->character.swapdeath_i = stage.song_step % 0x3;
 
 	Animatable_Animate(&character->animatable, (void*)this, Char_gold_SetFrame);
+	if (stage.song_step > 5)
 	Character_Draw(character, &this->tex, &char_gold_frame[this->frame]);
 }
 

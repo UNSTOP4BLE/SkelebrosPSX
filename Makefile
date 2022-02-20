@@ -31,6 +31,7 @@ SRCS = src/main.c \
        src/character/speaker.c \
        src/character/dad.c \
        src/character/sans.c \
+       src/character/chara.c \
        src/character/gold.c \
        src/character/gf.c \
        src/object.c \

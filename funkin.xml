@@ -42,6 +42,7 @@
 				<file name = "hud0.tim" type = "data" source = "iso/stage/hud0.tim"/>
 				<file name = "hud1.tim" type = "data" source = "iso/stage/hud1.tim"/>
 				<file name = "sans.tim" type = "data" source = "iso/stage/sans.tim"/>
+				<file name = "chara.tim" type = "data" source = "iso/stage/chara.tim"/>
 				<file name = "hud0weeb.tim" type = "data" source = "iso/stage/hud0weeb.tim"/>
 			</dir>
 			
@@ -120,6 +121,9 @@
 				<!-- senz assets -->
 				<file name = "sans.arc" type = "data" source = "iso/sans/main.arc"/>
 				<file name = "gold.arc" type = "data" source = "iso/gold/main.arc"/>
+
+				<!-- Chara assets -->
+				<file name = "chara.arc" type = "data" source = "iso/chara/main.arc"/>
 				
 				<!-- Girlfriend assets -->
 				<file name = "gf.arc" type = "data" source = "iso/gf/main.arc"/>

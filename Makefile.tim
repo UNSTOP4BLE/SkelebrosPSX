@@ -9,12 +9,14 @@ all: \
 	iso/stage/hud0.tim \
 	iso/stage/hud1.tim \
 	iso/stage/sans.tim \
+	iso/stage/chara.tim \
 	iso/stage/hud0weeb.tim \
 	iso/bf/main.arc \
 	iso/bf/dead.arc \
 	iso/bfsans/main.arc \
 	iso/dad/main.arc \
 	iso/sans/main.arc \
+	iso/chara/main.arc \
 	iso/gold/main.arc \
 	iso/gf/main.arc \
 	iso/gf/tut.arc \
@@ -52,6 +54,9 @@ iso/dad/main.arc: iso/dad/idle0.tim iso/dad/idle1.tim iso/dad/idle2.tim iso/dad/
 
 # sansz
 iso/sans/main.arc: iso/sans/idle0.tim iso/sans/idle1.tim iso/sans/down.tim iso/sans/left0.tim iso/sans/left1.tim iso/sans/right.tim iso/sans/up0.tim iso/sans/up1.tim iso/sans/idleb0.tim iso/sans/idleb1.tim iso/sans/downb.tim iso/sans/leftb0.tim iso/sans/leftb1.tim iso/sans/rightb.tim iso/sans/upb0.tim iso/sans/upb1.tim iso/sans/specb0.tim iso/sans/specb1.tim iso/sans/specb2.tim iso/sans/specb3.tim
+
+# Chara
+iso/chara/main.arc: iso/chara/idle0.tim iso/chara/idle1.tim iso/chara/idle2.tim iso/chara/idle3.tim iso/chara/left0.tim iso/chara/left1.tim iso/chara/left2.tim iso/chara/left3.tim iso/chara/down0.tim iso/chara/down1.tim iso/chara/down2.tim iso/chara/down3.tim iso/chara/up0.tim iso/chara/up1.tim iso/chara/up2.tim iso/chara/up3.tim iso/chara/right0.tim iso/chara/right1.tim
 
 # gold
 iso/gold/main.arc: iso/gold/idle.tim iso/gold/down.tim iso/gold/left0.tim iso/gold/left1.tim iso/gold/right0.tim iso/gold/right1.tim iso/gold/up0.tim iso/gold/up1.tim iso/gold/spec0.tim iso/gold/spec1.tim iso/gold/spec2.tim
