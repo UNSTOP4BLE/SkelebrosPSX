@@ -769,6 +769,7 @@ static void Stage_DrawHealth(s16 health, Gfx_Tex i, s8 ox, s16 swap_icon, s16 sw
 	dst.x += stage.noteshakex;
 
 	//Draw health icon
+	if (!(nohud))
 	Stage_DrawTex(&i, &src, &dst, FIXED_MUL(stage.bump, stage.sbump));
 }
 
