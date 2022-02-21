@@ -80,7 +80,7 @@ static struct
 	//Menu state
 	u8 page, next_page;
 	boolean page_swap;
-	u8 select, next_select,skip_select;
+	u8 select, next_select,skip_selectup,skip_selectdown;
 	
 	fixed_t scroll;
 	fixed_t trans_time;
@@ -140,7 +140,7 @@ static struct
 	} page_param;
 	
 	//Menu assets
-	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_storybg, tex_title, tex_titlebg, tex_names;
+	Gfx_Tex tex_back,tex_cooleffect, tex_ng, tex_story, tex_storybg, tex_crediti, tex_title, tex_titlebg, tex_names;
 	FontData font_bold,font_arial;
 	
 	Character *playerm; //Title Girlfriend
@@ -221,6 +221,24 @@ static const char *Menu_LowerIf(const char *text, boolean lower)
 	return menu_text_buffer;
 }
 
+static void Credits_DrawImage(u8 i, s32 x,s32 y)
+{
+RECT src = {
+		(i % 4) * 64,
+	    (i / 4) * 64,
+	    64,
+		64,
+	};
+	RECT dst = {
+		x,
+		y,
+		16,
+		16,
+	};
+	
+	//Draw credit image
+	Gfx_DrawTex(&menu.tex_crediti, &src, &dst);
+}
 static void Menu_DrawBack(boolean flash, u8 r0, u8 g0, u8 b0, u8 r1, u8 g1, u8 b1)
 {
 	RECT back_src = {0, 0, 255, 255};
@@ -310,6 +328,7 @@ void Menu_Load(MenuPage page)
 	Gfx_LoadTex(&menu.tex_cooleffect,  Archive_Find(menu_arc, "coolfx.tim"),  0);
 	Gfx_LoadTex(&menu.tex_story, Archive_Find(menu_arc, "story.tim"), 0);
 	Gfx_LoadTex(&menu.tex_storybg, Archive_Find(menu_arc, "bgstory.tim"), 0);
+	Gfx_LoadTex(&menu.tex_crediti, Archive_Find(menu_arc, "crediti.tim"), 0);
 	Gfx_LoadTex(&menu.tex_title, Archive_Find(menu_arc, "title.tim"), 0);
 	Gfx_LoadTex(&menu.tex_titlebg, Archive_Find(menu_arc, "titlebg.tim"), 0);
 	Gfx_LoadTex(&menu.tex_names, Archive_Find(menu_arc, "boldfona.tim"), 0);
@@ -332,8 +351,7 @@ void Menu_Load(MenuPage page)
 	stage.camera.bzoom = FIXED_UNIT;
 	
 	//Initialize menu state
-	menu.select = menu.next_select = 0;
-	menu.skip_select = 0;
+	menu.select = menu.skip_selectup = menu.skip_selectdown = menu.next_select = 0;
 	
 	switch (menu.page = menu.next_page = page)
 	{
@@ -567,7 +585,7 @@ void Menu_Tick(void)
 			static const char *menu_options[] = {
 				"STORY MODE",
 				"FREEPLAY",
-				"MODS",
+				"CREDITS",
 				"OPTIONS",
 				#ifdef PSXF_NETWORK
 					"JOIN SERVER",
@@ -583,20 +601,6 @@ void Menu_Tick(void)
 				#else
 					FIXED_DEC(12,1);
 				#endif
-			
-			//Draw version identification
-			menu.font_bold.draw(&menu.font_bold,
-				"SKELEBROSPSX BY ",
-				16,
-				SCREEN_HEIGHT - 48,
-				FontAlign_Left
-			);
-			menu.font_bold.draw(&menu.font_bold,
-				"UNSTOPABLE AND IGORSOU",
-				16,
-				SCREEN_HEIGHT - 32,
-				FontAlign_Left
-			);
 			
 			//Handle option and selection
 			if (menu.trans_time > 0 && (menu.trans_time -= timer_dt) <= 0)
@@ -774,7 +778,7 @@ void Menu_Tick(void)
 			
 			if (menu.next_page == menu.page && Trans_Idle())
 			{
-				//Change option
+			/*	//Change option
 				if (pad_state.press & PAD_UP)
 				{
 					if (menu.select > 0)
@@ -789,6 +793,7 @@ void Menu_Tick(void)
 					else
 						menu.select = 0;
 				}
+				*/
 				
 				//Select option if cross is pressed
 				if (pad_state.press & (PAD_START | PAD_CROSS))
@@ -1019,24 +1024,53 @@ void Menu_Tick(void)
 		}
 		case MenuPage_Credits:
 		{
+			menu.skip_selectup = menu.select - 1;
+			menu.skip_selectdown = menu.select + 1;
 			static const struct
 			{
 				u32 col;
 				const char *text;
 				const char *text2;
 			} menu_options[] = {
-				//{StageId_4_4, 0xFFFC96D7, "TEST"},
 				{0xFF9271FD, "PORTED BY",NULL},
 				{0xFF9271FD, "UNSTOPABLE",  "SPRITES CODE OFFSETS"},
-				{0xFF9271FD, "IGORSOU3000", "SPRITES CODE OFFSETS"},
+				{0xFF9271FD, "IGORSOU", "SPRITES CODE OFFSETS"},
 				{0xFF9271FD, "",NULL},
-				{0xFF9271FD, "NO MORE DEALS",NULL},
-				{0xFF941653, "EEEECHROME",NULL},
-				{0xFF941653, "PARASITE SANS",NULL},
+				{0xFF9271FD, "SPECIAL THANKS",NULL},
+				{0xFF941653, "LUCKY","MISS AND ACCURATE CODE" },
+				{0xFF941653, "CUCKYDEV","MAKE THE PSXFUNKIN" },
+				{0xFF941653, "PSXFUNKIN DISCORD","DISCORD"},
+				{0xFF941653, "ZERIBEN","FRIEND"},
+				{0xFF941653, "LORD SCOUT", "FRIEND"},
+				{0xFF941653, "JOHN PAUL", "FRIEND"},
+				{0xFF9271FD, "",NULL},
+				{0xFF9271FD, "OG CREATORS",NULL},
+				{0xFF941653, "JLOOR","OWNER AND MAIN PROGRAMMER" },
+				{0xFF941653, "ZERO ARTIST","CO OWNER AND MAIN ARTIST" },
+				{0xFF941653, "JHAIX","MAIN MUSICIAN AND CHARTER"},
+				{0xFF941653, "ALEXR","MUSICIAN"},
+				{0xFF941653, "MANUX", "PROGRAMMER"},
+				{0xFF941653, "YIRIUS", "PROGRAMMER"},
+				{0xFF941653, "REWINDXA", "MAIN CHARTER"},
+				{0xFF9271FD, "",NULL},
+				{0xFF9271FD, "OG SPECIAL THANKS",NULL},
+				{0xFF941653, "JLOOR COMMUNITY","DISCORD SERVER" },
+				{0xFF941653, "CAPE FUNKIN","CHARTER OF NO MORE DEAL" },
+				{0xFF941653, "ZETAE","HELPED IN PAPY BG"},
+				{0xFF941653, "SOYJULIAN","HELPED IN SANS BG"},
+				{0xFF941653, "JKL", "FRIEND"},
+				{0xFF941653, "MIGUEL EXTREME STUDIOS", "FRIEND"},
+				{0xFF941653, "ELNELSON", "FRIEND"},
+				{0xFF941653, "SEREBEAT", "BF REANIMATED"},
+				{0xFF9271FD, "",NULL},
+				{0xFF9271FD, "OG SONGS",NULL},
+				{0xFF941653, "BENLAB CRIMSON","COMPOSER OF NO MORE DEAL" },
+				{0xFF941653, "MIDEAR","COMPOSER OF BONELY ONE" },
 			};
-
-			FntPrint("select %d", menu.select);
-			FntPrint("sselect %d", menu.skip_select);
+            //debug thing
+			//FntPrint("select %d", menu.select);
+			//FntPrint("sselectup %d", menu.skip_selectup);
+			//FntPrint("sselectdown %d", menu.skip_selectdown);
 			
 			//Initialize page
 			if (menu.page_swap)
@@ -1055,14 +1089,19 @@ void Menu_Tick(void)
 				//Change option
 				if (pad_state.press & PAD_UP)
 				{
-					if (menu.select > 0)
-						menu.select -= 1;
+					//thanks stackoverflow for exist
+					if (strcmp(menu_options[menu.skip_selectup].text,"") == 0)
+                        menu.select -= 2;
+					else if (menu.select > 0)
+						menu.select--;
 					else
 						menu.select = COUNT_OF(menu_options) - 1;
 				}
 				if (pad_state.press & PAD_DOWN)
 				{
-					if (menu.select < COUNT_OF(menu_options) - 1)
+					if (strcmp(menu_options[menu.skip_selectdown].text,"") == 0)
+					    menu.select += 2;
+					else if (menu.select < COUNT_OF(menu_options) - 1)
 						menu.select++;
 					else
 						menu.select = 0;
@@ -1072,7 +1111,7 @@ void Menu_Tick(void)
 				if (pad_state.press & PAD_CIRCLE)
 				{
 					menu.next_page = MenuPage_Main;
-					menu.next_select = 1; //Freeplay
+					menu.next_select = 2; //Credits
 					Trans_Start();
 				}
 			}
@@ -1080,7 +1119,7 @@ void Menu_Tick(void)
 			        menu.font_bold.draw(&menu.font_bold,
 					Menu_LowerIf(menu_options[menu.select].text2, false),
 					160,
-					SCREEN_HEIGHT2 - 100,
+					SCREEN_HEIGHT2 - 110,
 					FontAlign_Center
 			);
 			
@@ -1096,7 +1135,9 @@ void Menu_Tick(void)
 					continue;
 				if (y >= SCREEN_HEIGHT2 + 8)
 					break;
-				
+				//Draw credits image
+				Credits_DrawImage(i, 240, SCREEN_HEIGHT2 + y - 8);
+
 				//Draw text
 				menu.font_bold.draw(&menu.font_bold,
 					Menu_LowerIf(menu_options[i].text, menu.select != i),
