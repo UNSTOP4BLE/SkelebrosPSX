@@ -102,6 +102,11 @@
 				<file name = "3.2h.cht" type = "data" source = "iso/chart/parasite-sans.json.cht"/>
 			</dir>
 
+			<dir name = "monoch">
+				<!-- Background art -->
+				<file name = "back.arc" type = "data" source = "iso/monoch/back.arc"/>
+			</dir>
+
 			<!-- Character assets -->
 			<dir name = "char">
 			<!-- Boyfriend And Chara assets -->
