@@ -53,6 +53,21 @@ static const fixed_t note_xmiddle[8] = {
 	 FIXED_DEC(204,1) - FIXED_DEC(SCREEN_WIDEADD,4),
 };
 
+//monochrome notes
+static const fixed_t note_xmono[8] = {
+	//BF
+	 FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(60,1) + FIXED_DEC(SCREEN_WIDEADD,4),//+34
+	 FIXED_DEC(94,1) + FIXED_DEC(SCREEN_WIDEADD,4),
+	FIXED_DEC(128,1) + FIXED_DEC(SCREEN_WIDEADD,4),
+	//Opponent
+	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),//+34
+	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),
+};
+
+
 static const fixed_t note_y = FIXED_DEC(32 - SCREEN_HEIGHT2, 1);
 
 static const u16 note_key[] = {INPUT_LEFT, INPUT_DOWN, INPUT_UP, INPUT_RIGHT};
@@ -901,10 +916,12 @@ static void Stage_DrawNotes(void)
 		}
 		else
 		{
-			if (stage.middlescroll)
-		     	middleswitch = note_xmiddle[(note->type & 0x7) ^ stage.note_swap];
 
-		    	else
+			if (stage.mode != StageMode_2P && stage.stage_id == StageId_3_1)
+				middleswitch = note_xmono[(note->type & 0x7) ^ stage.note_swap];
+			else if (stage.middlescroll)
+		     	middleswitch = note_xmiddle[(note->type & 0x7) ^ stage.note_swap];
+			else
 		    	middleswitch = note_x[(note->type & 0x7) ^ stage.note_swap];
 
 			//Don't draw if below screen
@@ -1340,6 +1357,8 @@ void Stage_Load(StageId id, StageDiff difficulty, boolean story)
 	
 	//Initialize stage according to mode
 	stage.note_swap = (stage.mode == StageMode_Swap && (!(stage.middlescroll))) ? 4 : 0;
+	
+	stage.note_swap = (stage.mode == StageMode_Swap && (stage.stage_id != StageId_3_1)) ? 4 : 0;
 	
 	//Load music
 	stage.note_scroll = 0;
@@ -1965,6 +1984,12 @@ void Stage_Tick(void)
 				if (stage.middlescroll)
 				{
 					note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + note_xmiddle[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
+					Stage_DrawStrum(i | 4, &note_src, &note_dst);
+					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+				}
+				else if (stage.stage_id == StageId_3_1 && stage.mode != StageMode_2P)
+				{
+					note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + note_xmono[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
 					Stage_DrawStrum(i | 4, &note_src, &note_dst);
 					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				}

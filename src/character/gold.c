@@ -173,7 +173,7 @@ Character *Char_gold_New(fixed_t x, fixed_t y)
 	
 	this->character.health_i = stage.tex_sans;
 	
-	this->character.focus_x = FIXED_DEC(-20,1);
+	this->character.focus_x = FIXED_DEC(-15,1);
 	this->character.focus_y = FIXED_DEC(-70,1);
 	this->character.focus_zoom = FIXED_DEC(14,10);
 	

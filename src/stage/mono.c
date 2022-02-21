@@ -13,8 +13,10 @@
 
 /*
 #include "../pad.h"
-int mog = 0;
-int sog = 0;
+int mog = -159;
+int sog = -119;
+int zog = 320;
+int nog = 240;
 */
 //mono background structure
 typedef struct
@@ -24,6 +26,7 @@ typedef struct
 
 	//Textures
 	Gfx_Tex tex_ded; //imdead
+	Gfx_Tex tex_scream; //ded paps
 
 } Back_mono;
 
@@ -33,7 +36,7 @@ void Back_mono_DrawFG(StageBack *back)
     fixed_t fx, fy;
 
 /*
-	FntPrint("x%d y%d", mog, sog);
+	FntPrint("x%d y%d zog %d nog %d", mog, sog, zog, nog);
 
 	if (pad_state.held & PAD_UP)
 		sog --;
@@ -43,10 +46,31 @@ void Back_mono_DrawFG(StageBack *back)
 		mog --;
 	if (pad_state.held & PAD_RIGHT)
 		mog ++;
+	
+	if (pad_state.held & PAD_TRIANGLE)
+		zog --;
+	if (pad_state.held & PAD_CROSS)
+		zog ++;
+	if (pad_state.held & PAD_SQUARE)
+		nog --;
+	if (pad_state.held & PAD_CIRCLE)
+		nog ++;
 */
+
 	//Draw back
 	fx = stage.camera.x;
 	fy = stage.camera.y;
+
+	RECT scream_src = {0, 0, 256, 256};
+	RECT_FIXED scream_dst = {
+		FIXED_DEC(-162,1),
+		FIXED_DEC(-87,1),
+		FIXED_DEC(307,1),
+		FIXED_DEC(174,1)
+	};
+	
+	if ((stage.song_step >= 504 && stage.song_step <= 511) || (stage.song_step >= 951 && stage.song_step <= 958) || (stage.song_step >= 964 && stage.song_step <= 966) || (stage.song_step >= 972 && stage.song_step <= 975) || (stage.song_step >= 980 && stage.song_step <= 982) || (stage.song_step >= 1117 && stage.song_step <= 1119) || (stage.song_step >= 1208 && stage.song_step <= 1214) || (stage.song_step >= 1536 && stage.song_step <= 1543))
+		Stage_DrawTex(&this->tex_scream, &scream_src, &scream_dst, stage.camera.bzoom);
 
 	RECT ded_src = {0, 0, 109, 93};
 	RECT_FIXED ded_dst = {
@@ -94,6 +118,7 @@ StageBack *Back_mono_New(void)
 	//Load background textures
 	IO_Data arc_back = IO_Read("\\MONOCH\\BACK.ARC;1");
 	Gfx_LoadTex(&this->tex_ded, Archive_Find(arc_back, "ded.tim"), 0);
+	Gfx_LoadTex(&this->tex_scream, Archive_Find(arc_back, "scream.tim"), 0);
 	Mem_Free(arc_back);
 
 	Gfx_SetClear(0, 0, 0);
