@@ -1356,9 +1356,7 @@ void Stage_Load(StageId id, StageDiff difficulty, boolean story)
 	stage.sbump = FIXED_UNIT;
 	
 	//Initialize stage according to mode
-	stage.note_swap = (stage.mode == StageMode_Swap && (!(stage.middlescroll))) ? 4 : 0;
-	
-	stage.note_swap = (stage.mode == StageMode_Swap && (stage.stage_id != StageId_3_1)) ? 4 : 0;
+	stage.note_swap = (stage.mode == StageMode_Swap && (!(stage.middlescroll || (stage.mode == StageMode_Swap && (stage.stage_id == StageId_3_1))))) ? 4 : 0;
 	
 	//Load music
 	stage.note_scroll = 0;

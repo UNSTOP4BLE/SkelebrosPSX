@@ -48,7 +48,7 @@
 	},
 	{ //StageId_1_4 (No More Deals)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60,1),  FIXED_DEC(100,1)},
+		{Char_BF_New,    FIXED_DEC(90,1),  FIXED_DEC(100,1)},
 		{Char_Chara_New, FIXED_DEC(-120,1),  FIXED_DEC(100,1)},
 		{NULL},
 		

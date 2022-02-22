@@ -24,7 +24,12 @@
 #include "stage.h"
 #include "character/playerm.h"
 #include "character/spm.h"
+
 u32 moveuptitle;
+//menu characters variable
+s16 transparency,moving;
+u16 movingposi = 9;
+boolean check,checkchar = false;
 
 //Menu messages
 static const char *funny_messages[][2] = {
@@ -220,7 +225,6 @@ static const char *Menu_LowerIf(const char *text, boolean lower)
 	*dstp++ = '\0';
 	return menu_text_buffer;
 }
-
 static void Credits_DrawImage(u8 i, s32 x,s32 y)
 {
 RECT src = {
@@ -232,8 +236,8 @@ RECT src = {
 	RECT dst = {
 		x,
 		y,
-		16,
-		16,
+		22,
+		22,
 	};
 	
 	//Draw credit image
@@ -582,6 +586,7 @@ void Menu_Tick(void)
 		case MenuPage_Main:
 		{
 			moveuptitle = 0;
+
 			static const char *menu_options[] = {
 				"STORY MODE",
 				"FREEPLAY",
@@ -611,6 +616,8 @@ void Menu_Tick(void)
 				//Change option
 				if (pad_state.press & PAD_UP)
 				{
+					check = true;
+					checkchar = true;
 					if (menu.select > 0)
 						menu.select--;
 					else
@@ -618,6 +625,8 @@ void Menu_Tick(void)
 				}
 				if (pad_state.press & PAD_DOWN)
 				{
+					check = true;
+					checkchar = true;
 					if (menu.select < COUNT_OF(menu_options) - 1)
 						menu.select++;
 					else
@@ -699,28 +708,63 @@ void Menu_Tick(void)
 	        RECT coolfx_dst = {0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 4 / 5};
 	
 		    Gfx_DrawTex(&menu.tex_cooleffect, &coolfx_src, &coolfx_dst);
-
+			
 			//there are definitely better ways to do this but hey it works
+			
+            //starting move character
+			if (check == true)	 
+			 moving += movingposi;
+
+            //make transparency be 50%
+			if (moving >= 20)
+			transparency = 1;
+
+             //make transparency be 100%
+			if (moving < 20)
+			transparency = 0;
+
+            //allow character swap and move character to the left
+			if (moving >= 80)
+			{
+			checkchar = false;
+			movingposi = -9;
+			}
+
+			 //reset everything
+            if (moving < 0)
+			{
+			 movingposi = 9;
+             moving = 0;
+			 check = false;
+			}
+			 //debug thing
+			FntPrint("moving %d", moving);
+            
 			switch(menu.select)
 			{
 			 case 0:
+			 if (checkchar == false)
 			 menuchar.swap = menuchar.tex_menuchar0;
 			 break;
 			 case 1:
+			 if (checkchar == false)
 			 menuchar.swap = menuchar.tex_menuchar1;
 			 break;
 			 case 2:
+			 if (checkchar == false)
 			 menuchar.swap = menuchar.tex_menuchar2;
 			 break;
 			 case 3:
+			 if (checkchar == false)
 			 menuchar.swap = menuchar.tex_menuchar3;
 			 break;
 
 			}
 			RECT Char = {0, 0,180, 180};
-			RECT CharDst = {0, 0, 210, 240};
-
-			Gfx_DrawTex(&menuchar.swap, &Char, &CharDst);
+			RECT CharDst = {moving, 0, 210, 240};
+            
+			if (moving <= 55)
+			Gfx_BlendTex(&menuchar.swap, &Char, &CharDst,transparency);
 			
 			//Draw background
 			Menu_DrawBack(
@@ -1031,43 +1075,44 @@ void Menu_Tick(void)
 				u32 col;
 				const char *text;
 				const char *text2;
+				s16 icon;
 			} menu_options[] = {
-				{0xFF9271FD, "PORTED BY",NULL},
-				{0xFF9271FD, "UNSTOPABLE",  "SPRITES CODE OFFSETS"},
-				{0xFF9271FD, "IGORSOU", "SPRITES CODE OFFSETS"},
-				{0xFF9271FD, "",NULL},
-				{0xFF9271FD, "PLAYTEST",NULL},
-				{0xFF9271FD, "JOHN PAUL",  "PLAYTESTER AND FRIEND"},
-				{0xFF9271FD, "",NULL},
-				{0xFF9271FD, "SPECIAL THANKS",NULL},
-				{0xFF941653, "LUCKY","MISS AND ACCURATE CODE" },
-				{0xFF941653, "CUCKYDEV","MAKE THE PSXFUNKIN" },
-				{0xFF941653, "PSXFUNKIN DISCORD","DISCORD"},
-				{0xFF941653, "ZERIBEN","FRIEND"},
-				{0xFF941653, "LORD SCOUT", "FRIEND"},
-				{0xFF9271FD, "",NULL},
-				{0xFF9271FD, "OG CREATORS",NULL},
-				{0xFF941653, "JLOOR","OWNER AND MAIN PROGRAMMER" },
-				{0xFF941653, "ZERO ARTIST","CO OWNER AND MAIN ARTIST" },
-				{0xFF941653, "JHAIX","MAIN MUSICIAN AND CHARTER"},
-				{0xFF941653, "ALEXR","MUSICIAN"},
-				{0xFF941653, "MANUX", "PROGRAMMER"},
-				{0xFF941653, "YIRIUS", "PROGRAMMER"},
-				{0xFF941653, "REWINDXA", "MAIN CHARTER"},
-				{0xFF9271FD, "",NULL},
-				{0xFF9271FD, "OG SPECIAL THANKS",NULL},
-				{0xFF941653, "JLOOR COMMUNITY","DISCORD SERVER" },
-				{0xFF941653, "CAPE FUNKIN","CHARTER OF NO MORE DEAL" },
-				{0xFF941653, "ZETAE","HELPED IN PAPY BG"},
-				{0xFF941653, "SOYJULIAN","HELPED IN SANS BG"},
-				{0xFF941653, "JKL", "FRIEND"},
-				{0xFF941653, "MIGUEL EXTREME STUDIOS", "FRIEND"},
-				{0xFF941653, "ELNELSON", "FRIEND"},
-				{0xFF941653, "SEREBEAT", "BF REANIMATED"},
-				{0xFF9271FD, "",NULL},
-				{0xFF9271FD, "OG SONGS",NULL},
-				{0xFF941653, "BENLAB CRIMSON","COMPOSER OF NO MORE DEAL" },
-				{0xFF941653, "MIDEAR","COMPOSER OF BONELY ONE" },
+				{0xFF9271FD, "PORTED BY",NULL,NULL},
+				{0xFF9271FD, "UNSTOPABLE",  "SPRITES CODE OFFSETS",0},
+				{0xFF9271FD, "IGORSOU", "SPRITES CODE OFFSETS",1},
+				{0xFF9271FD, "",NULL,NULL},
+				{0xFF9271FD, "PLAYTEST",NULL,NULL},
+				{0xFF9271FD, "JOHN PAUL",  "PLAYTESTER AND FRIEND",4},
+				{0xFF9271FD, "",NULL,NULL},
+				{0xFF9271FD, "SPECIAL THANKS",NULL,NULL},
+				{0xFF941653, "LUCKY","MISS AND ACCURATE CODE",7 },
+				{0xFF941653, "CUCKYDEV","MAKE THE PSXFUNKIN",2 },
+				{0xFF941653, "PSXFUNKIN DISCORD","DISCORD",NULL},
+				{0xFF941653, "ZERIBEN","FRIEND",5},
+				{0xFF941653, "LORD SCOUT", "FRIEND",6},
+				{0xFF9271FD, "",NULL,NULL},
+				{0xFF9271FD, "OG CREATORS",NULL,NULL},
+				{0xFF941653, "JLOOR","OWNER AND MAIN PROGRAMMER",NULL },
+				{0xFF941653, "ZERO ARTIST","CO OWNER AND MAIN ARTIST",NULL },
+				{0xFF941653, "JHAIX","MAIN MUSICIAN AND CHARTER",NULL},
+				{0xFF941653, "ALEXR","MUSICIAN",NULL},
+				{0xFF941653, "MANUX", "PROGRAMMER",NULL},
+				{0xFF941653, "YIRIUS", "PROGRAMMER",NULL},
+				{0xFF941653, "REWINDXA", "MAIN CHARTER",NULL},
+				{0xFF9271FD, "",NULL,NULL},
+				{0xFF9271FD, "OG SPECIAL THANKS",NULL,NULL},
+				{0xFF941653, "JLOOR COMMUNITY","DISCORD SERVER",NULL},
+				{0xFF941653, "CAPE FUNKIN","CHARTER OF NO MORE DEAL",NULL },
+				{0xFF941653, "ZETAE","HELPED IN PAPY BG",NULL},
+				{0xFF941653, "SOYJULIAN","HELPED IN SANS BG",NULL},
+				{0xFF941653, "JKL", "FRIEND",NULL},
+				{0xFF941653, "MIGUEL EXTREME STUDIOS", "FRIEND",NULL},
+				{0xFF941653, "ELNELSON", "FRIEND",NULL},
+				{0xFF941653, "SEREBEAT", "BF REANIMATED",NULL},
+				{0xFF9271FD, "",NULL,NULL},
+				{0xFF9271FD, "OG SONGS",NULL,NULL},
+				{0xFF941653, "BENLAB CRIMSON","COMPOSER OF NO MORE DEAL",NULL },
+				{0xFF941653, "MIDEAR","COMPOSER OF BONELY ONE",NULL },
 			};
             //debug thing
 			//FntPrint("select %d", menu.select);
@@ -1091,8 +1136,7 @@ void Menu_Tick(void)
 				//Change option
 				if (pad_state.press & PAD_UP)
 				{
-					//thanks stackoverflow for exist
-					if (strcmp(menu_options[menu.skip_selectup].text,"") == 0)
+					if (menu_options[menu.skip_selectup].text[0] == '\0')
                         menu.select -= 2;
 					else if (menu.select > 0)
 						menu.select--;
@@ -1101,7 +1145,7 @@ void Menu_Tick(void)
 				}
 				if (pad_state.press & PAD_DOWN)
 				{
-					if (strcmp(menu_options[menu.skip_selectdown].text,"") == 0)
+					if (menu_options[menu.skip_selectdown].text[0] == '\0')
 					    menu.select += 2;
 					else if (menu.select < COUNT_OF(menu_options) - 1)
 						menu.select++;
@@ -1138,7 +1182,8 @@ void Menu_Tick(void)
 				if (y >= SCREEN_HEIGHT2 + 8)
 					break;
 				//Draw credits image
-				Credits_DrawImage(i, 240, SCREEN_HEIGHT2 + y - 8);
+				if (menu_options[i].icon != NULL)
+				Credits_DrawImage(menu_options[i].icon, 240, SCREEN_HEIGHT2 + y - 8);
 
 				//Draw text
 				menu.font_bold.draw(&menu.font_bold,

@@ -27,7 +27,7 @@ void Back_Week3_DrawFG(StageBack *back)
 {
 	Back_Week3 *this = (Back_Week3*)back;
 
-	//Draw back
+	//Draw misses
 	RECT miss_src = {1, 1, 254, 16};
 	RECT_FIXED miss_dst = {
 		FIXED_DEC(-159,1),
@@ -61,9 +61,9 @@ void Back_Week3_DrawBG(StageBack *back)
 
 	RECT back_src = {0, 0, 256, 256};
 	RECT_FIXED back_dst = {
-		FIXED_DEC(-190,1) - fx,
-		FIXED_DEC(-100,1) - fy,
-		FIXED_DEC(590,1),
+		FIXED_DEC(-268,1) - fx,
+		FIXED_DEC(-190,1) - fy,
+		FIXED_DEC(502,1),
 		FIXED_DEC(350,1)
 	};
 	Stage_DrawTex(&this->tex_back0, &back_src, &back_dst, stage.camera.bzoom);
