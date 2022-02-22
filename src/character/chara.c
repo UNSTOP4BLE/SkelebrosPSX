@@ -28,8 +28,6 @@ enum
 	Chara_ArcMain_Down3,
 	Chara_ArcMain_Up0,
 	Chara_ArcMain_Up1,
-	Chara_ArcMain_Up2,
-	Chara_ArcMain_Up3,
 	Chara_ArcMain_Right0,
 	Chara_ArcMain_Right1,
 	Chara_Arc_Max,
@@ -50,34 +48,35 @@ typedef struct
 
 //Chara character definitions
 static const CharFrame char_chara_frame[] = {
-	{Chara_ArcMain_Idle0, {  2,   1, 101, 154}, { 38, 154}}, //0 idle 1
-	{Chara_ArcMain_Idle0, {105,   0, 102, 155}, { 39, 154}}, //1 idle 2
-	{Chara_ArcMain_Idle1, {  0,   0, 105, 155}, { 38, 155}}, //2 idle 3
-	{Chara_ArcMain_Idle1, {108,   0, 100, 155}, { 35, 155}}, //3 idle 4
-	{Chara_ArcMain_Idle2, {  6,   0,  99, 156}, { 34, 155}}, //4 idle 5
-	{Chara_ArcMain_Idle2, {108,   0, 100, 155}, { 35, 155}}, //5 idle 6
-	{Chara_ArcMain_Idle3, {  4,   0, 101, 156}, { 37, 156}}, //6 idle 7
-	{Chara_ArcMain_Idle3, {108,   0, 100, 155}, { 36, 155}}, //7 idle 8
+	{Chara_ArcMain_Idle0, {  2,   1, 101, 154}, { 58, 154}}, //0 idle 1
+	{Chara_ArcMain_Idle0, {105,   0, 102, 155}, { 58, 155}}, //1 idle 2
+	{Chara_ArcMain_Idle1, {  2,   0, 103, 155}, { 58, 155}}, //2 idle 3
+	{Chara_ArcMain_Idle1, {108,   0, 100, 155}, { 56, 155}}, //3 idle 4
+	{Chara_ArcMain_Idle2, {  6,   0,  99, 155}, { 55, 155}}, //4 idle 5
+	{Chara_ArcMain_Idle2, {108,   0, 100, 155}, { 56, 155}}, //5 idle 6
+	{Chara_ArcMain_Idle3, {  4,   0, 101, 156}, { 57, 156}}, //6 idle 7
+	{Chara_ArcMain_Idle3, {108,   0, 100, 155}, { 56, 155}}, //7 idle 8
 	
-	{Chara_ArcMain_Left0, {  0,   0, 136, 139}, { 79, 139}}, //8 left 1
-	{Chara_ArcMain_Left1, {  0,   0, 136, 139}, { 79, 139}}, //9 left 2
-	{Chara_ArcMain_Left2, {  0,   0, 136, 139}, { 79, 139}}, //10 left 1
-	{Chara_ArcMain_Left3, {  0,   0, 136, 139}, { 79, 139}}, //11 left 2
+	{Chara_ArcMain_Left0, { 10,   0, 126, 137}, { 92, 137}}, //8 left 1
+	{Chara_ArcMain_Left1, {  5,   3, 130, 134}, { 96, 134}}, //9 left 2
+	{Chara_ArcMain_Left2, {  3,   5, 131, 133}, { 98, 133}}, //10 left 1
+	{Chara_ArcMain_Left3, {  3,   5, 132, 133}, { 99, 133}}, //11 left 2
 	
-	{Chara_ArcMain_Down0, {  0,   0, 160, 179}, { 66, 158}}, //12 down 1
-	{Chara_ArcMain_Down1, {  0,   0, 160, 179}, { 66, 158}}, //13 down 2
-	{Chara_ArcMain_Down2, {  0,   0, 160, 179}, { 66, 158}}, //14 down 1
-	{Chara_ArcMain_Down3, {  0,   0, 160, 179}, { 66, 158}}, //15 down 2
+	// can i do dis? lol
+	{Chara_ArcMain_Down0, {  0,   0, 0, 0}, { 0, 0}}, //12 down 1
+	{Chara_ArcMain_Down1, {  0,   0, 0, 0}, { 0, 0}}, //13 down 2
+	{Chara_ArcMain_Down2, {  0,   0, 0, 0}, { 0, 0}}, //14 down 1
+	{Chara_ArcMain_Down3, {  0,   0, 0, 0}, { 0, 0}}, //15 down 2
 	
-	{Chara_ArcMain_Up0, {  0,   0,160, 179}, { 68, 165}}, //16 up 1
-	{Chara_ArcMain_Up1, {  0,   0,160, 179}, { 68, 168}}, //17 up 2
-	{Chara_ArcMain_Up2, {  0,   0,160, 179}, { 68, 168}}, //18 up 1
-	{Chara_ArcMain_Up3, {  0,   0,160, 179}, { 68, 168}}, //19 up 2
+	{Chara_ArcMain_Up0, {  0,   0,  84, 163}, { 47, 163}}, //16 up 1
+	{Chara_ArcMain_Up0, { 84,   0,  87, 168}, { 50, 168}}, //17 up 2
+	{Chara_ArcMain_Up1, {  0,   0,  87, 168}, { 49, 168}}, //18 up 1
+	{Chara_ArcMain_Up1, { 87,   0,  87, 168}, { 49, 168}}, //19 up 2
 
-	{Chara_ArcMain_Right0, {  0,   0, 107, 161}, { 41, 155}}, //20 right 1
-	{Chara_ArcMain_Right0, {111,   0, 118, 161}, { 40, 155}}, //21 right 2
-	{Chara_ArcMain_Right1, {  0,   0, 107, 161}, { 41, 155}}, //22 right 1
-	{Chara_ArcMain_Right1, {111,   0, 118, 161}, { 40, 155}}, //23 right 2
+	{Chara_ArcMain_Right0, {  4,   6,  99, 149}, { 56, 149}}, //20 right 1
+	{Chara_ArcMain_Right0, {112,   7, 104, 148}, { 58, 148}}, //21 right 2
+	{Chara_ArcMain_Right1, {  6,   5,  89, 150}, { 55, 150}}, //22 right 1
+	{Chara_ArcMain_Right1, {116,   6,  92, 150}, { 54, 150}}, //23 right 2
 
 };
 
@@ -186,8 +185,6 @@ Character *Char_Chara_New(fixed_t x, fixed_t y)
 		"down3.tim",  //Chara_ArcMain_Down
 		"up0.tim",    //Chara_ArcMain_Up
 		"up1.tim",    //Chara_ArcMain_Up
-		"up2.tim",    //Chara_ArcMain_Up
-		"up3.tim",    //Chara_ArcMain_Up
 		"right0.tim", //Chara_ArcMain_Right
 		"right1.tim", //Chara_ArcMain_Right
 		NULL
