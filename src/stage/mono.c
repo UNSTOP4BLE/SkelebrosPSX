@@ -57,7 +57,7 @@ static const CharFrame paps_frame[12] = {
 };
 
 static const Animation paps_anim[] = {
-	{2, (const u8[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 5, 4, 3, 2, 1, 0, ASCR_BACK, 1}}, //Left
+	{2, (const u8[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 11, 5, 4, 3, 2, 1, 0, ASCR_BACK, 0}}, //Left
 };
 
 //paps functions
@@ -121,7 +121,7 @@ void Back_mono_DrawFG(StageBack *back)
 	
 	if (stage.flag & STAGE_FLAG_JUST_STEP)
 	{
-		switch (stage.song_step & 7)
+		switch (stage.song_step % 0x14)
 		{
 			case 0:
 				Animatable_SetAnim(&this->paps_animatable, 0);
