@@ -25,7 +25,6 @@ enum
 	Chara_ArcMain_Down0,
 	Chara_ArcMain_Down1,
 	Chara_ArcMain_Down2,
-	Chara_ArcMain_Down3,
 	Chara_ArcMain_Up0,
 	Chara_ArcMain_Up1,
 	Chara_ArcMain_Right0,
@@ -62,11 +61,10 @@ static const CharFrame char_chara_frame[] = {
 	{Chara_ArcMain_Left2, {  3,   5, 131, 133}, { 98, 133}}, //10 left 1
 	{Chara_ArcMain_Left3, {  3,   5, 132, 133}, { 99, 133}}, //11 left 2
 	
-	// can i do dis? lol
-	{Chara_ArcMain_Down0, {  0,   0, 0, 0}, { 0, 0}}, //12 down 1
-	{Chara_ArcMain_Down1, {  0,   0, 0, 0}, { 0, 0}}, //13 down 2
-	{Chara_ArcMain_Down2, {  0,   0, 0, 0}, { 0, 0}}, //14 down 1
-	{Chara_ArcMain_Down3, {  0,   0, 0, 0}, { 0, 0}}, //15 down 2
+	{Chara_ArcMain_Down0, { 10,  10, 140, 150}, { 73, 150}}, //12 down 1
+	{Chara_ArcMain_Down1, { 12,  12, 136, 152}, { 72, 152}}, //13 down 2
+	{Chara_ArcMain_Down2, {  0,   0, 117, 172}, { 60, 172}}, //14 down 1
+	{Chara_ArcMain_Down2, {117,   1, 111, 171}, { 63, 171}}, //15 down 2
 	
 	{Chara_ArcMain_Up0, {  0,   0,  84, 163}, { 47, 163}}, //16 up 1
 	{Chara_ArcMain_Up0, { 84,   0,  87, 168}, { 50, 168}}, //17 up 2
@@ -182,7 +180,6 @@ Character *Char_Chara_New(fixed_t x, fixed_t y)
 		"down0.tim",  //Chara_ArcMain_Down
 		"down1.tim",  //Chara_ArcMain_Down
 		"down2.tim",  //Chara_ArcMain_Down
-		"down3.tim",  //Chara_ArcMain_Down
 		"up0.tim",    //Chara_ArcMain_Up
 		"up1.tim",    //Chara_ArcMain_Up
 		"right0.tim", //Chara_ArcMain_Right
