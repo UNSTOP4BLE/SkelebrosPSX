@@ -130,6 +130,7 @@ void Back_mono_DrawFG(StageBack *back)
 				break;
 		}
 	}
+	if (stage.song_step >= 368 && stage.song_step <= 400) 
 	Animatable_Animate(&this->paps_animatable, (void*)this, mono_paps_SetFrame);
 
 	//Draw scream

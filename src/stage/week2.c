@@ -101,12 +101,7 @@ void Back_Week2_DrawBG(StageBack *back)
     
 	//removed bg and add plataform when undertale mode it's true
 	if (stage.utswap == 0)
-		Stage_DrawTex(&this->tex_back0, &back_src, &back_dst, stage.camera.bzoom);
-	
-	else 
 	{
-		Stage_DrawTex(&this->tex_platform, &platform_src, &platform_dst, stage.camera.bzoom);
-		Stage_DrawTex(&this->tex_platform, &platform_src, &platformbf_dst, stage.camera.bzoom);
 		for (int i = 0; i <= 9; i++)
 		{
 		bonex1 = i*60;
@@ -127,6 +122,14 @@ void Back_Week2_DrawBG(StageBack *back)
 		bonex4 = i*25;
 		Week2_Bone4_Draw(this,FIXED_DEC(-117 + bonex4,1) - fx, FIXED_DEC(+110 + movingbone,1) - fy);
 		}
+		Stage_DrawTex(&this->tex_back0, &back_src, &back_dst, stage.camera.bzoom);
+	    
+	}
+	
+	else 
+	{
+		Stage_DrawTex(&this->tex_platform, &platform_src, &platform_dst, stage.camera.bzoom);
+		Stage_DrawTex(&this->tex_platform, &platform_src, &platformbf_dst, stage.camera.bzoom);
 }
 }
 
