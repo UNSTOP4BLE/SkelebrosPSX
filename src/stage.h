@@ -206,6 +206,11 @@ typedef struct
 	const StageDef *stage_def;
 	StageId stage_id;
 	StageDiff stage_diff;
+
+	StageId strid;
+	StageDiff strdiff;
+	
+	boolean seemovie;
 	
 	boolean swap_player;
 	

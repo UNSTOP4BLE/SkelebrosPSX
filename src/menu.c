@@ -17,6 +17,8 @@
 #include "mutil.h"
 #include "network.h"
 
+#include "movie.h"
+
 #include "font.h"
 #include "trans.h"
 #include "loadscr.h"
@@ -273,6 +275,7 @@ static void Menu_DifficultySelector(s32 x, s32 y)
 			else
 				menu.page_param.stage.diff = StageDiff_BF;
 		}
+		stage.strdiff = menu.page_param.stage.diff;
 	}
 	
 	//Draw difficulty arrows
@@ -838,15 +841,18 @@ void Menu_Tick(void)
 						menu.select = 0;
 				}
 				*/
-				
+                Movie movie;
 				//Select option if cross is pressed
 				if (pad_state.press & (PAD_START | PAD_CROSS))
 				{
-					menu.next_page = MenuPage_Stage;
+					menu.next_page = MenuPage_Movie;
 					if (menu.page_param.stage.diff == StageDiff_Chara)
 	                menu.page_param.stage.id = menu_options[menu.select].stagealt;
 					else
 					menu.page_param.stage.id = menu_options[menu.select].stage;
+
+					stage.strid = menu.page_param.stage.id;
+
 					menu.playerm->set_anim(menu.playerm, CharAnim_Special);
 					menu.page_param.stage.story = true;
 					menu.trans_time = FIXED_UNIT;
@@ -1865,6 +1871,17 @@ void Menu_Tick(void)
 			LoadScr_Start();
 			Stage_Load(menu.page_param.stage.id, menu.page_param.stage.diff, menu.page_param.stage.story);
 			gameloop = GameLoop_Stage;
+			LoadScr_End();
+			break;
+		}
+		case MenuPage_Movie:
+		{
+			//Unload
+			Menu_Unload();
+
+			//Play movie
+			LoadScr_Start();
+			gameloop = GameLoop_Movie;
 			LoadScr_End();
 			break;
 		}

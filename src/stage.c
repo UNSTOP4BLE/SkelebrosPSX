@@ -1410,7 +1410,12 @@ void Stage_Unload(void)
 
 static boolean Stage_NextLoad(void)
 {
+	stage.seemovie = false;
 	u8 load = stage.stage_def->next_load;
+
+	if (stage.seemovie == false)
+    gameloop = GameLoop_Movie;
+
 	if (load == 0)
 	{
 		//Do stage transition if full reload
