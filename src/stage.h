@@ -288,7 +288,8 @@ extern Stage stage;
 typedef struct
 {
   u16 buttonpresscount, buttonpresscooldown;
-  boolean bone;
+  boolean bone; 
+  boolean bonejuststarted; 
 
 } BoneSystem;
 

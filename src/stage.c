@@ -1589,6 +1589,14 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			if (stage.song_step == 90) {
+				bonesystem.bone = 1;
+				bonesystem.bonejuststarted = 1;
+			}
+			else if (bonesystem.buttonpresscount >= 10)
+				bonesystem.bone = 0;
+			else 
+				bonesystem.bonejuststarted = 0;
 
 			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10)
 				stage.state = StageState_Dead;
@@ -1635,17 +1643,32 @@ void Stage_Tick(void)
 			//bone mechanic
 			if (bonesystem.bone)
 			{
+				//button press stuff
 				if (pad_state.press & INPUT_TRIGGER && bonesystem.buttonpresscooldown == 0)
 				{	
 					bonesystem.buttonpresscount ++;
 					bonesystem.buttonpresscooldown = 1;
 				}
+
+				//cooldown stuff
+				if (bonesystem.buttonpresscooldown > 0 && bonesystem.buttonpresscooldown <= 20) //the length of the break free anim is the 20
+					bonesystem.buttonpresscooldown ++;
+				else 
+					bonesystem.buttonpresscooldown = 0;
 			}
 
-			if (bonesystem.buttonpresscooldown > 0 && bonesystem.buttonpresscooldown <= 50)
-				bonesystem.buttonpresscooldown ++;
-			else 
+			//draw white flash mogus thingie
+			if ((bonesystem.bonejuststarted == 1) || (bonesystem.buttonpresscount >= 10))
+			{
+				white = FIXED_DEC(255,1);
+				whitespd = FIXED_DEC(200,1);
+			}
+
+			//be a good boy and reset the bone stuff if its not active
+			if (bonesystem.bone == 0) {
 				bonesystem.buttonpresscooldown = 0;
+				bonesystem.buttonpresscount = 0;
+			}
 
 			//shake hud
 			if (noteshake) 
