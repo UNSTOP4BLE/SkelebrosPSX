@@ -2085,11 +2085,9 @@ void Stage_Tick(void)
 				
 				RECT slash_src = {163, 223, 3, 13};
 				RECT_FIXED slash_dst = {FIXED_DEC(-64,1), score_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
-				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
-
 				//shake slash
-				slash_dst.y += stage.noteshakey;
 				slash_dst.x += stage.noteshakex;
+				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
 				
 				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
 				
@@ -2145,6 +2143,7 @@ void Stage_Tick(void)
 				RECT_FIXED score_dst = {FIXED_DEC(39,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(51,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
 					score_dst.y = -score_dst.y - score_dst.h;
+				
 				//shake accurate
 				score_dst.y += stage.noteshakey;
 				score_dst.x += stage.noteshakex;
@@ -2153,8 +2152,8 @@ void Stage_Tick(void)
 				RECT_FIXED slash_dst = {FIXED_DEC(35,1), score_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
 
 				//shake slash
-				slash_dst.y += stage.noteshakey;
 				slash_dst.x += stage.noteshakex;
+
 				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
 				
 				RECT accur_src = {138, 223, 9, 11};
@@ -2167,8 +2166,9 @@ void Stage_Tick(void)
 					accura = 102;
 				
 				RECT_FIXED accur_dst = {FIXED_DEC(accura,1), score_dst.y - FIXED_DEC(1,1), FIXED_DEC(9,1), FIXED_DEC(11,1)};
+				accur_dst.x += stage.noteshakex;	
 				Stage_DrawTex(&stage.tex_hud0, &accur_src, &accur_dst, stage.bump);
-				
+
 				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
 				
 				//Draw number
@@ -2295,8 +2295,6 @@ void Stage_Tick(void)
 				RECT_FIXED slash_dst = {miss_dst.x  - FIXED_DEC(4,1), miss_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
 				
 				//shake slash
-				slash_dst.y += stage.noteshakey;
-				slash_dst.x += stage.noteshakex;
 				Stage_DrawTex(&stage.tex_hud0, &slash_src, &slash_dst, stage.bump);
 				
 				//shake miss
