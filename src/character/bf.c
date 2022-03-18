@@ -328,7 +328,7 @@ void Char_BF_Tick(Character *character)
 	
 	//Animate and draw character
 	Animatable_Animate(&character->animatable, (void*)this, Char_BF_SetFrame);
-	if (character->animatable.anim < PlayerAnim_LeftMiss || animf_count & 2)
+	if (character->animatable.anim < PlayerAnim_LeftMiss && stage.state == StageState_Play|| stage.state != StageState_Play || animf_count & 2 )
 	Character_Draw(character, &this->tex, &char_bf_frame[this->frame]);
 }
 

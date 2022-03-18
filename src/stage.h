@@ -290,6 +290,7 @@ typedef struct
   u16 buttonpresscount, buttonpresscooldown;
   boolean bone; 
   boolean bonejuststarted; 
+  boolean boneactive; 
 
 } BoneSystem;
 

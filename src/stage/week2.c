@@ -20,11 +20,58 @@ typedef struct
 	StageBack back;
 
 	//Textures
+	IO_Data arc_space, arc_space_ptr[1];
+	
 	Gfx_Tex tex_back0; //bg
 	Gfx_Tex tex_platform; //platform
 	Gfx_Tex tex_bones; //bg
 
+	//space state
+	Gfx_Tex tex_space;
+	u8 space_frame, space_tex_id;
+	
+	Animatable space_animatable;
 } Back_Week2;
+
+//space animation and rects
+static const CharFrame space_frame[] = {
+	{0, {  0,   0,  96,  36}, { 1,  0}}, //0 left 1
+	{0, { 96,   0,  95,  35}, { 0,  0}}, //1 left 2
+	{0, {  0,  36,  96,  35}, { 1,  0}}, //2 left 3
+	{0, { 96,  35,  95,  35}, { 0,  0}}, //3 left 4
+};
+
+static const Animation space_anim[] = {
+	{2, (const u8[]){0, 1, 2, 3, ASCR_BACK, 0}}, //Left
+};
+
+//space functions
+void Week2_space_SetFrame(void *user, u8 frame)
+{
+	Back_Week2 *this = (Back_Week2*)user;
+	
+	//Check if this is a new frame
+	if (frame != this->space_frame)
+	{
+		//Check if new art shall be loaded
+		const CharFrame *cframe = &space_frame[this->space_frame = frame];
+		if (cframe->tex != this->space_tex_id)
+			Gfx_LoadTex(&this->tex_space, this->arc_space_ptr[this->space_tex_id = cframe->tex], 0);
+	}
+}
+
+void Week2_space_Draw(Back_Week2 *this, fixed_t x, fixed_t y)
+{
+	//Draw character
+	const CharFrame *cframe = &space_frame[this->space_frame];
+	
+	fixed_t ox = x - ((fixed_t)cframe->off[0] << FIXED_SHIFT);
+	fixed_t oy = y - ((fixed_t)cframe->off[1] << FIXED_SHIFT);
+	
+	RECT src = {cframe->src[0], cframe->src[1], cframe->src[2], cframe->src[3]};
+	RECT_FIXED dst = {ox, oy, src.w << FIXED_SHIFT, src.h << FIXED_SHIFT};
+	Stage_DrawTex(&this->tex_space, &src, &dst, stage.camera.bzoom);
+}
 
 void Week2_Bone1_Draw(Back_Week2 *this, fixed_t x, fixed_t y)
 { 
@@ -55,6 +102,28 @@ void Week2_Bone4_Draw(Back_Week2 *this, fixed_t x, fixed_t y)
 	RECT src = {140,113, 36, 137};
 	RECT_FIXED dst = {x, y, src.w << FIXED_SHIFT, src.h << FIXED_SHIFT};
 	Stage_DrawTex(&this->tex_bones, &src, &dst, stage.camera.bzoom);
+}
+
+void Back_Week2_DrawFG(StageBack *back)
+{
+	Back_Week2 *this = (Back_Week2*)back;
+    fixed_t fx, fy;
+
+	//Animate and draw space
+	if (stage.flag & STAGE_FLAG_JUST_STEP)
+	{
+		switch (stage.song_step % 0x4)
+		{
+			case 0:
+				Animatable_SetAnim(&this->space_animatable, 0);
+				break;
+		}
+	}
+
+	if (bonesystem.bone) {
+		Animatable_Animate(&this->space_animatable, (void*)this, Week2_space_SetFrame);	
+		Week2_space_Draw(this, FIXED_DEC(-45,1), FIXED_DEC(-40,1));
+	}
 }
 
 void Back_Week2_DrawBG(StageBack *back)
@@ -134,6 +203,9 @@ void Back_Week2_Free(StageBack *back)
 {
 	Back_Week2 *this = (Back_Week2*)back;
 	
+	//Free space archive
+	Mem_Free(this->arc_space);
+
 	//Free structure
 	Mem_Free(this);
 }
@@ -146,7 +218,7 @@ StageBack *Back_Week2_New(void)
 		return NULL;
 	
 	//Set background functions
-	this->back.draw_fg = NULL;
+	this->back.draw_fg = Back_Week2_DrawFG;
 	this->back.draw_md = NULL;
 	this->back.draw_bg = Back_Week2_DrawBG;
 	this->back.free = Back_Week2_Free;
@@ -160,6 +232,15 @@ StageBack *Back_Week2_New(void)
 	Mem_Free(arc_back);
 	
 	Gfx_SetClear(0, 0, 0);
+
+	//Load space textures
+	this->arc_space = IO_Read("\\STAGE\\SPACE.ARC;1");
+	this->arc_space_ptr[0] = Archive_Find(this->arc_space, "space.tim");
+
+	//Initialize space state
+	Animatable_Init(&this->space_animatable, space_anim);
+	Animatable_SetAnim(&this->space_animatable, 0);
+	this->space_frame = this->space_tex_id = 0xFF; //Force art load
 
 	return (StageBack*)this;
 }

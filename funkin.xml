@@ -39,6 +39,7 @@
 			
 			<!-- Stage assets -->
 			<dir name = "stage">
+				<file name = "space.arc" type = "data" source = "iso/stage/space.arc"/>
 				<file name = "hud0.tim" type = "data" source = "iso/stage/hud0.tim"/>
 				<file name = "hud1.tim" type = "data" source = "iso/stage/hud1.tim"/>
 				<file name = "sans.tim" type = "data" source = "iso/stage/sans.tim"/>
@@ -87,7 +88,7 @@
 				<file name = "2.3n.cht" type = "data" source = "iso/chart/not-enough-chara.json.cht"/>
 				<file name = "2.3h.cht" type = "data" source = "iso/chart/not-enough-chara.json.cht"/>
 			</dir>
-			
+
 			<!-- Week 3 assets -->
 			<dir name = "week3">
 				<!-- Background art -->

@@ -89,6 +89,8 @@ boolean noteshake;
 //other mogus stuff idk
 boolean nohud;
 
+boolean ball;
+
 #include "character/playerm.h"
 #include "character/spm.h"
 #include "character/bf.h"
@@ -1288,6 +1290,7 @@ static void Stage_LoadState(void)
 		stage.player_state[i].health = 10000;
 		stage.player_state[i].combo = 0;
 		stage.player_state[i].refresh_miss = false;
+		bonesystem.bone = 0;
 		stage.player_state[i].miss = 0;
 		stage.player_state[i].accuracy = 0;
 		stage.player_state[i].max_accuracy = 0;
@@ -1589,15 +1592,30 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
-			if (stage.song_step == 90) {
-				bonesystem.bone = 1;
-				bonesystem.bonejuststarted = 1;
+			//bone mechanic stuff
+			if ((stage.stage_id == StageId_1_3) || (stage.stage_id == StageId_1_3Chara)) 
+			{
+				if (stage.song_step == 128)
+					bonesystem.boneactive = 1;
+				else if (stage.song_step == 260)
+					bonesystem.boneactive = 1;
+				else if (stage.song_step == 520)
+					bonesystem.boneactive = 1;
+				else if (stage.song_step == 897)
+					bonesystem.boneactive = 1;
+				else 
+					bonesystem.boneactive = 0;
 			}
-			else if (bonesystem.buttonpresscount >= 10)
-				bonesystem.bone = 0;
-			else 
-				bonesystem.bonejuststarted = 0;
 
+
+
+
+
+
+
+
+
+			//chara kill
 			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10)
 				stage.state = StageState_Dead;
 
@@ -1646,6 +1664,7 @@ void Stage_Tick(void)
 				//button press stuff
 				if (pad_state.press & INPUT_TRIGGER && bonesystem.buttonpresscooldown == 0)
 				{	
+					stage.player->set_anim(stage.player, CharAnim_Down);
 					bonesystem.buttonpresscount ++;
 					bonesystem.buttonpresscooldown = 1;
 				}
@@ -1656,6 +1675,16 @@ void Stage_Tick(void)
 				else 
 					bonesystem.buttonpresscooldown = 0;
 			}
+			//check if the bone mechanic should be used
+			if (bonesystem.boneactive == 1) 
+			{
+				bonesystem.bone = 1;
+				bonesystem.bonejuststarted = 1;
+			}
+			else if (bonesystem.buttonpresscount >= 10)
+				bonesystem.bone = 0;
+			else 
+				bonesystem.bonejuststarted = 0;
 
 			//draw white flash mogus thingie
 			if ((bonesystem.bonejuststarted == 1) || (bonesystem.buttonpresscount >= 10))
@@ -1668,6 +1697,8 @@ void Stage_Tick(void)
 			if (bonesystem.bone == 0) {
 				bonesystem.buttonpresscooldown = 0;
 				bonesystem.buttonpresscount = 0;
+				bonesystem.bonejuststarted = 0;
+				bonesystem.boneactive = 0;
 			}
 
 			//shake hud

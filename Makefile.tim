@@ -6,6 +6,7 @@ all: \
 	iso/menu/loading.tim \
 	iso/font/boldfont.tim \
 	iso/font/arial.tim \
+	iso/stage/space.arc \
 	iso/stage/hud0.tim \
 	iso/stage/hud1.tim \
 	iso/stage/sans.tim \
@@ -77,3 +78,6 @@ iso/week3/back.arc: iso/week3/back0.tim iso/week3/misses.tim
 
 # monoch
 iso/monoch/back.arc: iso/monoch/paps.tim iso/monoch/ded.tim iso/monoch/nyeh.tim iso/monoch/scream.tim
+
+# Space
+iso/stage/space.arc: iso/stage/space.tim
