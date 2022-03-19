@@ -47,6 +47,14 @@ enum
 	BFSans_ArcMain_BFSans6,
 	BFSans_ArcMain_BFSans7,
 	BFSans_ArcMain_Dead0, //BREAK
+	BFSans_ArcMain_BFBSans0,
+	BFSans_ArcMain_BFBSans1,
+	BFSans_ArcMain_BFBSans2,
+	BFSans_ArcMain_BFBSans3,
+	BFSans_ArcMain_BFBSans4,
+	BFSans_ArcMain_BFBSans5,
+	BFSans_ArcMain_BFBSans6,
+	BFSans_ArcMain_BFBSans7,
 	
 	BFSans_ArcMain_Max,
 };
@@ -137,6 +145,46 @@ static const CharFrame char_bfsans_frame[] = {
 	{BFSans_ArcDead_Dead2, {128,   0, 128, 128}, { 53,  98}}, //40 dead2 body twitch 1
 	{BFSans_ArcDead_Dead2, {  0, 128, 128, 128}, { 53,  98}}, //41 dead2 balls twitch 0
 	{BFSans_ArcDead_Dead2, {128, 128, 128, 128}, { 53,  98}}, //42 dead2 balls twitch 1
+
+	{BFSans_ArcMain_BFBSans0, {  8,   0,  94,  99}, { 50,  93}}, //0 idle 1
+	{BFSans_ArcMain_BFBSans0, {114,   0,  91,  99}, { 48,  93}}, //1 idle 2
+	{BFSans_ArcMain_BFBSans0, { 12, 102,  91,  99}, { 47,  93}}, //2 idle 3
+	{BFSans_ArcMain_BFBSans0, {108, 101,  97, 103}, { 53,  97}}, //3 idle 4
+	{BFSans_ArcMain_BFBSans1, {  4,   1,  98, 103}, { 54,  97}}, //4 idle 5
+	{BFSans_ArcMain_BFBSans2, {  1,   4, 101, 103}, { 57,  97}}, //5 idle 6
+	{BFSans_ArcMain_BFBSans2, {106,   4, 101, 103}, { 56,  97}}, //6 idle 7
+	{BFSans_ArcMain_BFBSans2, {  1, 111, 100, 103}, { 56,  97}}, //7 idle 8
+	{BFSans_ArcMain_BFBSans2, {106, 111, 100, 103}, { 56,  97}}, //8 idle 9
+	
+	{BFSans_ArcMain_BFBSans1, {105,   1,  96, 101}, { 58,  96}}, //52 left 1
+	{BFSans_ArcMain_BFBSans1, {  1, 107,  93, 101}, { 56,  95}}, //10 left 2
+	{BFSans_ArcMain_BFBSans1, {109, 107,  93, 101}, { 55,  95}}, //11 left 3
+	{BFSans_ArcMain_BFBSans3, {  2,   1,  93, 101}, { 55,  96}}, //12 left 4
+	
+	{BFSans_ArcMain_BFBSans3, { 99,  13,  94,  89}, { 56,  84}}, //13 down 1
+	{BFSans_ArcMain_BFBSans3, {  1, 123,  93,  92}, { 54,  87}}, //14 down 2
+	{BFSans_ArcMain_BFBSans3, { 96, 119,  95,  96}, { 55,  91}}, //15 down 3
+	{BFSans_ArcMain_BFBSans4, {  2,   0,  94,  98}, { 55,  93}}, //16 down 4
+	
+	{BFSans_ArcMain_BFBSans4, {115,   1,  92, 111}, { 44, 104}}, //17 up 1
+	{BFSans_ArcMain_BFBSans4, {  3, 100,  94, 111}, { 45, 104}}, //18 up 2
+	{BFSans_ArcMain_BFBSans5, {  5,   1,  96, 109}, { 46, 102}}, //19 up 3
+	
+	{BFSans_ArcMain_BFBSans5, {105,   9, 102, 101}, { 47,  95}}, //20 right 1
+	{BFSans_ArcMain_BFBSans5, {  8, 115, 101, 101}, { 47,  96}}, //21 right 2
+	{BFSans_ArcMain_BFBSans5, {109, 115, 100, 101}, { 47,  96}}, //65 right 3
+	
+	{BFSans_ArcMain_BFBSans6, {  0,   0,  93, 108}, { 52+3, 101+2}}, //66 left miss 1
+	{BFSans_ArcMain_BFBSans6, { 94,   0,  93, 108}, { 52+3, 101+2}}, //24 left miss 2
+	
+	{BFSans_ArcMain_BFBSans6, {  0, 109,  95,  98}, { 50+3,  90+3}}, //25 down miss 1
+	{BFSans_ArcMain_BFBSans6, { 96, 109,  95,  97}, { 50+3,  89+3}}, //26 down miss 2
+	
+	{BFSans_ArcMain_BFBSans7, {  0,   0,  90, 107}, { 44+3,  99+3}}, //27 up miss 1
+	{BFSans_ArcMain_BFBSans7, { 91,   0,  89, 108}, { 44+3, 100+3}}, //28 up miss 2
+	
+	{BFSans_ArcMain_BFBSans7, {  0, 108,  99, 108}, { 43+3, 101+3}}, //29 right miss 1
+	{BFSans_ArcMain_BFBSans7, {100, 109, 101, 108}, { 43+3, 101+3}}, //30 right miss 2
 };
 
 static const Animation char_bfsans_anim[PlayerAnim_Max] = {
@@ -151,11 +199,42 @@ static const Animation char_bfsans_anim[PlayerAnim_Max] = {
 	{2, (const u8[]){20, 21, 22, ASCR_BACK, 1}},             //CharAnim_Right
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_RightAlt
 	
-	{1, (const u8[]){ 9, 23, 23, 24, ASCR_BACK, 1}},     //PlayerAnim_LeftMiss
-	{1, (const u8[]){13, 25, 25, 26, ASCR_BACK, 1}},     //PlayerAnim_DownMiss
-	{1, (const u8[]){17, 27, 27, 28, ASCR_BACK, 1}},     //PlayerAnim_UpMiss
-	{1, (const u8[]){20, 29, 29, 30, ASCR_BACK, 1}},     //PlayerAnim_RightMiss
+	{1, (const u8[]){ 9, 23, 23, 24,  ASCR_BACK, 1}},     //PlayerAnim_LeftMiss
+	{1, (const u8[]){13, 25, 25, 26,  ASCR_BACK, 1}},     //PlayerAnim_DownMiss
+	{1, (const u8[]){17, 27, 27, 28,  ASCR_BACK, 1}},     //PlayerAnim_UpMiss
+	{1, (const u8[]){20, 29, 29, 30,  31,ASCR_BACK, 1}},     //PlayerAnim_RightMiss
 	
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //PlayerAnim_Peace
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},      //PlayerAnim_Sweat
+	
+	{5, (const u8[]){31, 32, 33, 34, 34, 34, 34, 34, 34, 34, ASCR_CHGANI, PlayerAnim_Dead1}}, //PlayerAnim_Dead0
+	{5, (const u8[]){34, ASCR_REPEAT}},                                                       //PlayerAnim_Dead1
+	{3, (const u8[]){35, 36, 37, 38, 38, 38, 38, 38, 38, 38, ASCR_CHGANI, PlayerAnim_Dead3}}, //PlayerAnim_Dead2
+	{3, (const u8[]){38, ASCR_REPEAT}},                                                       //PlayerAnim_Dead3
+	{3, (const u8[]){39, 40, 38, 38, 38, 38, 38, ASCR_CHGANI, PlayerAnim_Dead3}},             //PlayerAnim_Dead4
+	{3, (const u8[]){41, 42, 38, 38, 38, 38, 38, ASCR_CHGANI, PlayerAnim_Dead3}},             //PlayerAnim_Dead5
+	
+	{10, (const u8[]){38, 38, 38, ASCR_BACK, 1}}, //PlayerAnim_Dead4
+	{ 3, (const u8[]){41, 42, 38, ASCR_REPEAT}},  //PlayerAnim_Dead5
+};
+
+static const Animation char_bfsans_animb[PlayerAnim_Max] = {
+	{2, (const u8[]){ 43,  44,  45,  46,  47,  48,  49,  50,  51, ASCR_BACK, 1}}, //CharAnim_Idle
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_Special
+	{2, (const u8[]){ 52, 53, 54, 55, ASCR_BACK, 1}},             //CharAnim_Left
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_LeftAlt
+	{2, (const u8[]){56, 57, 58, 59, ASCR_BACK, 1}},             //CharAnim_Down
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_DownAlt
+	{2, (const u8[]){60, 61, 62, ASCR_BACK, 1}},             //CharAnim_Up
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_UpAlt
+	{2, (const u8[]){63, 64, 65, ASCR_BACK, 1}},             //CharAnim_Right
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_RightAlt
+	
+	{1, (const u8[]){52, 66, 66, 67, ASCR_BACK, 1}},     //PlayerAnim_LeftMiss
+	{1, (const u8[]){56, 68, 68, 69, ASCR_BACK, 1}},     //PlayerAnim_DownMiss
+	{1, (const u8[]){60, 70, 70, 71, ASCR_BACK, 1}},     //PlayerAnim_UpMiss
+	{1, (const u8[]){63, 72, 72, 73, ASCR_BACK, 1}},     //PlayerAnim_RightMiss
+
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //PlayerAnim_Peace
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},      //PlayerAnim_Sweat
 	
@@ -205,6 +284,22 @@ void Char_BFSans_Tick(Character *character)
 	{
 		//Perform idle dance
 		if (Animatable_Ended(&character->animatable) &&
+			(character->animatable.anim != CharAnim_Left &&
+		     character->animatable.anim != CharAnim_LeftAlt &&
+		     character->animatable.anim != PlayerAnim_LeftMiss &&
+		     character->animatable.anim != CharAnim_Down &&
+		     character->animatable.anim != CharAnim_DownAlt &&
+		     character->animatable.anim != PlayerAnim_DownMiss &&
+		     character->animatable.anim != CharAnim_Up &&
+		     character->animatable.anim != CharAnim_UpAlt &&
+		     character->animatable.anim != PlayerAnim_UpMiss &&
+		     character->animatable.anim != CharAnim_Right &&
+		     character->animatable.anim != CharAnim_RightAlt &&
+		     character->animatable.anim != PlayerAnim_RightMiss) &&
+			(stage.song_step & 0x7) == 0)
+			character->set_anim(character, CharAnim_Idle);
+		//Perform idle dance
+		if (Animatable_Ended(&character->animatableb) &&
 			(character->animatable.anim != CharAnim_Left &&
 		     character->animatable.anim != CharAnim_LeftAlt &&
 		     character->animatable.anim != PlayerAnim_LeftMiss &&
@@ -326,7 +421,11 @@ void Char_BFSans_Tick(Character *character)
 	}
 	
 	//Animate and draw character
-	Animatable_Animate(&character->animatable, (void*)this, Char_BFSans_SetFrame);
+	if (stage.utswap)
+		Animatable_Animate(&character->animatableb, (void*)this, Char_BFSans_SetFrame);
+	else
+		Animatable_Animate(&character->animatable, (void*)this, Char_BFSans_SetFrame);
+
 	if (character->animatable.anim < PlayerAnim_LeftMiss && stage.state == StageState_Play|| stage.state != StageState_Play || animf_count & 2 )
 	Character_Draw(character, &this->tex, &char_bfsans_frame[this->frame]);
 }
@@ -369,6 +468,7 @@ void Char_BFSans_SetAnim(Character *character, u8 anim)
 	
 	//Set animation
 	Animatable_SetAnim(&character->animatable, anim);
+	Animatable_SetAnim(&character->animatableb, anim);
 	Character_CheckStartSing(character);
 }
 
@@ -396,8 +496,8 @@ Character *Char_BFSans_New(fixed_t x, fixed_t y)
 	this->character.tick = Char_BFSans_Tick;
 	this->character.set_anim = Char_BFSans_SetAnim;
 	this->character.free = Char_BFSans_Free;
-	
 	Animatable_Init(&this->character.animatable, char_bfsans_anim);
+	Animatable_Init(&this->character.animatableb, char_bfsans_animb);
 	Character_Init((Character*)this, x, y);
 	
 	//Set character information
@@ -424,6 +524,14 @@ Character *Char_BFSans_New(fixed_t x, fixed_t y)
 		"bf6.tim",   //BFSans_ArcMain_BFSans6
 		"bf7.tim",   //BFSans_ArcMain_BFSans7
 		"dead0.tim", //BFSans_ArcMain_Dead0
+		"bfb0.tim",   //BFSans_ArcMain_BFSans0
+		"bfb1.tim",   //BFSans_ArcMain_BFSans1
+		"bfb2.tim",   //BFSans_ArcMain_BFSans2
+		"bfb3.tim",   //BFSans_ArcMain_BFSans3
+		"bfb4.tim",   //BFSans_ArcMain_BFSans4
+		"bfb5.tim",   //BFSans_ArcMain_BFSans5
+		"bfb6.tim",   //BFSans_ArcMain_BFSans6
+		"bfb7.tim",   //BFSans_ArcMain_BFSans7
 		NULL
 	};
 	IO_Data *arc_ptr = this->arc_ptr;
