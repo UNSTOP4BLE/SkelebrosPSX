@@ -26,7 +26,8 @@
 //#define STAGE_FREECAM //Freecam
 
 //normal note x
-static const fixed_t note_x[8] = {
+//normal note x
+static int note_x[8] = {
 	//BF
 	 FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4),
 	 FIXED_DEC(60,1) + FIXED_DEC(SCREEN_WIDEADD,4),//+34
@@ -39,36 +40,18 @@ static const fixed_t note_x[8] = {
 	 FIXED_DEC(-26,1) - FIXED_DEC(SCREEN_WIDEADD,4),
 };
 
-//middle note x
-static const fixed_t note_xmiddle[8] = {
+static int note_y[8] = {
 	//BF
-	 FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(60,1) + FIXED_DEC(SCREEN_WIDEADD,4),//+34
-	 FIXED_DEC(94,1) + FIXED_DEC(SCREEN_WIDEADD,4),
-	FIXED_DEC(128,1) + FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),//+34
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),
 	//Opponent
-	 FIXED_DEC(-50,1) - FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(-16,1) - FIXED_DEC(SCREEN_WIDEADD,4),//+34
-	 FIXED_DEC(170,1) - FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(204,1) - FIXED_DEC(SCREEN_WIDEADD,4),
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),//+34
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),
+	 FIXED_DEC(32 - SCREEN_HEIGHT2, 1),
 };
-
-//monochrome notes
-static const fixed_t note_xmono[8] = {
-	//BF
-	 FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(60,1) + FIXED_DEC(SCREEN_WIDEADD,4),//+34
-	 FIXED_DEC(94,1) + FIXED_DEC(SCREEN_WIDEADD,4),
-	FIXED_DEC(128,1) + FIXED_DEC(SCREEN_WIDEADD,4),
-	//Opponent
-	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),//+34
-	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),
-	 FIXED_DEC(-256,1) - FIXED_DEC(SCREEN_WIDEADD,4),
-};
-
-
-static const fixed_t note_y = FIXED_DEC(32 - SCREEN_HEIGHT2, 1);
 
 static const u16 note_key[] = {INPUT_LEFT, INPUT_DOWN, INPUT_UP, INPUT_RIGHT};
 static const u8 note_anims[4][3] = {
@@ -82,14 +65,10 @@ static const u8 note_anims[4][3] = {
 	fixed_t black,blackspd;
     
 //Stage definitions
-//middlescroll
-u32 arrowposx,middleswitch;
 //shake stuff
 boolean noteshake;
 //other mogus stuff idk
 boolean nohud;
-
-boolean ball;
 
 #include "character/playerm.h"
 #include "character/spm.h"
@@ -306,8 +285,8 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
 		{
 			//Create splash object
 			Obj_Splash *splash = Obj_Splash_New(
-				FIXED_DEC(arrowposx,1) + note_x[type ^ stage.note_swap],
-				note_y * (stage.downscroll ? -1 : 1),
+				note_x[type ^ stage.note_swap],
+				note_y[type ^ stage.note_swap] * (stage.downscroll ? -1 : 1),
 				type & 0x3
 			);
 			if (splash != NULL)
@@ -707,6 +686,75 @@ void Stage_DrawTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_t
 	Stage_DrawTexCol(tex, src, dst, zoom, 0x80, 0x80, 0x80);
 }
 
+void Stage_BlendTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_t zoom, u8 mode)
+{
+	fixed_t xz = dst->x;
+	fixed_t yz = dst->y;
+	fixed_t wz = dst->w;
+	fixed_t hz = dst->h;
+	
+	if (stage.stage_id >= StageId_6_1 && stage.stage_id <= StageId_6_3)
+	{
+		//Handle HUD drawing
+		if (tex == &stage.tex_hud0)
+		{
+			#ifdef STAGE_NOHUD
+				return;
+			#endif
+			if (src->y >= 128 && src->y < 224)
+			{
+				//Pixel perfect scrolling
+				xz &= FIXED_UAND;
+				yz &= FIXED_UAND;
+				wz &= FIXED_UAND;
+				hz &= FIXED_UAND;
+			}
+		}
+		else if (tex == &stage.tex_hud1)
+		{
+			#ifdef STAGE_NOHUD
+				return;
+			#endif
+		}
+		else
+		{
+			//Pixel perfect scrolling
+			xz &= FIXED_UAND;
+			yz &= FIXED_UAND;
+			wz &= FIXED_UAND;
+			hz &= FIXED_UAND;
+		}
+	}
+	else
+	{
+		//Don't draw if HUD and is disabled
+		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
+		{
+			#ifdef STAGE_NOHUD
+				return;
+			#endif
+		}
+	}
+	
+	fixed_t l = (SCREEN_WIDTH2  << FIXED_SHIFT) + FIXED_MUL(xz, zoom);// + FIXED_DEC(1,2);
+	fixed_t t = (SCREEN_HEIGHT2 << FIXED_SHIFT) + FIXED_MUL(yz, zoom);// + FIXED_DEC(1,2);
+	fixed_t r = l + FIXED_MUL(wz, zoom);
+	fixed_t b = t + FIXED_MUL(hz, zoom);
+	
+	l >>= FIXED_SHIFT;
+	t >>= FIXED_SHIFT;
+	r >>= FIXED_SHIFT;
+	b >>= FIXED_SHIFT;
+	
+	RECT sdst = {
+		l,
+		t,
+		r - l,
+		b - t,
+	};
+	Gfx_BlendTex(tex, src, &sdst, mode);
+}
+
 void Stage_DrawTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, const POINT_FIXED *p1, const POINT_FIXED *p2, const POINT_FIXED *p3, fixed_t zoom)
 {
 	//Don't draw if HUD and HUD is disabled
@@ -854,7 +902,7 @@ static void Stage_DrawNotes(void)
 		scroll.start -= scroll.length;
 	}
 	
-	//Draw notes
+		//Draw notes
 	for (Note *note = stage.cur_note; note->pos != 0xFFFF; note++)
 	{
 		//Update scroll
@@ -871,7 +919,7 @@ static void Stage_DrawNotes(void)
 		
 		fixed_t note_fp = (fixed_t)note->pos << FIXED_SHIFT;
 		fixed_t time = (scroll.start - stage.song_time) + (scroll.length * (note->pos - scroll.start_step) / scroll.length_step);
-		fixed_t y = note_y + FIXED_MUL(stage.speed, time * 150);
+		fixed_t y = note_y[(note->type & 0x7) ^ stage.note_swap] + FIXED_MUL(stage.speed, time * 150);
 		
 		//Check if went above screen
 		if (y < FIXED_DEC(-16 - SCREEN_HEIGHT2, 1))
@@ -887,12 +935,9 @@ static void Stage_DrawNotes(void)
 				{
 					//Missed note
 					Stage_CutVocal();
-					if (!(note->type & NOTE_FLAG_SUSTAIN))
-					{
-						Stage_MissNote(this);
-						this->health -= 1000;
-					}
-
+					Stage_MissNote(this);
+					this->health -= 475;
+					
 					//Send miss packet
 					#ifdef PSXF_NETWORK
 						if (stage.mode >= StageMode_Net1)
@@ -918,14 +963,6 @@ static void Stage_DrawNotes(void)
 		}
 		else
 		{
-
-			if (stage.mode != StageMode_2P && stage.stage_id == StageId_3_1)
-				middleswitch = note_xmono[(note->type & 0x7) ^ stage.note_swap];
-			else if (stage.middlescroll)
-		     	middleswitch = note_xmiddle[(note->type & 0x7) ^ stage.note_swap];
-			else
-		    	middleswitch = note_x[(note->type & 0x7) ^ stage.note_swap];
-
 			//Don't draw if below screen
 			RECT note_src;
 			RECT_FIXED note_dst;
@@ -940,7 +977,7 @@ static void Stage_DrawNotes(void)
 				y -= scroll.size;
 				if ((note->type & (bot | NOTE_FLAG_HIT)) || ((this->pad_held & note_key[note->type & 0x3]) && (note_fp + stage.late_sus_safe >= stage.note_scroll)))
 				{
-					clip = FIXED_DEC(32 - SCREEN_HEIGHT2, 1) - y;
+					clip = note_y[(note->type & 0x7) ^ stage.note_swap] - y;
 					if (clip < 0)
 						clip = 0;
 				}
@@ -959,8 +996,8 @@ static void Stage_DrawNotes(void)
 						note_src.w = 32;
 						note_src.h = 28 - (clip >> FIXED_SHIFT);
 						
-						note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
-						note_dst.y =  y + clip;
+						note_dst.x = stage.noteshakex + note_x[(note->type & 0x7) ^ stage.note_swap] - FIXED_DEC(16,1);
+						note_dst.y = stage.noteshakey + y + clip;
 						note_dst.w = note_src.w << FIXED_SHIFT;
 						note_dst.h = (note_src.h << FIXED_SHIFT);
 						
@@ -969,14 +1006,18 @@ static void Stage_DrawNotes(void)
 							note_dst.y = -note_dst.y;
 							note_dst.h = -note_dst.h;
 						}
-						Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+						//draw for opponent
+						if (stage.middlescroll && note->type & NOTE_FLAG_OPPONENT)
+							Stage_BlendTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump, 1);
+						else
+							Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 					}
 				}
 				else
 				{
 					//Get note height
 					fixed_t next_time = (scroll.start - stage.song_time) + (scroll.length * (note->pos + 12 - scroll.start_step) / scroll.length_step);
-					fixed_t next_y = note_y + FIXED_MUL(stage.speed, next_time * 150) - scroll.size;
+					fixed_t next_y = note_y[(note->type & 0x7) ^ stage.note_swap] + FIXED_MUL(stage.speed, next_time * 150) - scroll.size;
 					fixed_t next_size = next_y - y;
 					
 					if (clip < next_size)
@@ -986,14 +1027,18 @@ static void Stage_DrawNotes(void)
 						note_src.w = 32;
 						note_src.h = 16;
 						
-						note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
-						note_dst.y = y + clip;
+						note_dst.x = stage.noteshakex + note_x[(note->type & 0x7) ^ stage.note_swap] - FIXED_DEC(16,1);
+						note_dst.y = stage.noteshakey + y + clip;
 						note_dst.w = note_src.w << FIXED_SHIFT;
 						note_dst.h = (next_y - y) - clip;
 						
 						if (stage.downscroll)
 							note_dst.y = -note_dst.y - note_dst.h;
-						Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+						//draw for opponent
+						if (stage.middlescroll && note->type & NOTE_FLAG_OPPONENT)
+							Stage_BlendTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump, 1);
+						else
+							Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 					}
 				}
 			}
@@ -1009,14 +1054,18 @@ static void Stage_DrawNotes(void)
 				note_src.w = 32;
 				note_src.h = 32;
 				
-				note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
-				note_dst.y = y - FIXED_DEC(16,1);
+				note_dst.x = stage.noteshakex + note_x[(note->type & 0x7) ^ stage.note_swap] - FIXED_DEC(16,1);
+				note_dst.y = stage.noteshakey + y - FIXED_DEC(16,1);
 				note_dst.w = note_src.w << FIXED_SHIFT;
 				note_dst.h = note_src.h << FIXED_SHIFT;
 				
 				if (stage.downscroll)
 					note_dst.y = -note_dst.y - note_dst.h;
-				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+				//draw for opponent
+				if (stage.middlescroll && note->type & NOTE_FLAG_OPPONENT)
+					Stage_BlendTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump, 1);
+				else
+					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				
 				if (stage.stage_id == StageId_Clwn_4)
 				{
@@ -1029,7 +1078,11 @@ static void Stage_DrawNotes(void)
 					note_dst.y -= FIXED_DEC(6,1);
 					note_dst.h >>= 2;
 					
-					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+					//draw for opponent
+					if (stage.middlescroll && note->type & NOTE_FLAG_OPPONENT)
+						Stage_BlendTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump, 1);
+					else
+						Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				}
 				else
 				{
@@ -1048,7 +1101,11 @@ static void Stage_DrawNotes(void)
 					{
 						note_dst.h = note_dst.h * 3 / 2;
 					}
-					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+					//draw for opponent
+					if (stage.middlescroll && note->type & NOTE_FLAG_OPPONENT)
+						Stage_BlendTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump, 1);
+					else
+						Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				}
 			}
 			else
@@ -1063,14 +1120,18 @@ static void Stage_DrawNotes(void)
 				note_src.w = 32;
 				note_src.h = 32;
 				
-				note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + middleswitch - FIXED_DEC(16,1);
-				note_dst.y = y - FIXED_DEC(16,1);
+				note_dst.x = stage.noteshakex + note_x[(note->type & 0x7) ^ stage.note_swap] - FIXED_DEC(16,1);
+				note_dst.y = stage.noteshakey + y - FIXED_DEC(16,1);
 				note_dst.w = note_src.w << FIXED_SHIFT;
 				note_dst.h = note_src.h << FIXED_SHIFT;
 				
 				if (stage.downscroll)
 					note_dst.y = -note_dst.y - note_dst.h;
-				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
+				//draw for opponent
+				if (stage.middlescroll && note->type & NOTE_FLAG_OPPONENT)
+					Stage_BlendTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump, 1);
+				else
+					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 			}
 		}
 	}
@@ -1593,7 +1654,7 @@ void Stage_Tick(void)
 		case StageState_Play:
 		{
 			//bone mechanic stuff
-			if ((stage.stage_id == StageId_1_3) || (stage.stage_id == StageId_1_3Chara)) 
+			if ((stage.stage_id == StageId_1_3 && !stage.botplay) || (stage.stage_id == StageId_1_3Chara && !stage.botplay)) 
 			{
 				if (stage.song_step == 128)
 					bonesystem.boneactive = 1;
@@ -1606,14 +1667,6 @@ void Stage_Tick(void)
 				else 
 					bonesystem.boneactive = 0;
 			}
-
-
-
-
-
-
-
-
 
 			//chara kill
 			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10)
@@ -1747,12 +1800,60 @@ void Stage_Tick(void)
 			}
 
 	
-			if (stage.middlescroll)
-				arrowposx = -78;
-			else
-				arrowposx = 0;
+			//middle note x
+			if(stage.middlescroll && stage.stage_id != StageId_3_1)
+			{
+				//bf
+				note_x[0] = FIXED_DEC(26 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[1] = FIXED_DEC(60 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[2] = FIXED_DEC(94 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[3] = FIXED_DEC(128 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				//opponent
+				note_x[4] = FIXED_DEC(-50 - 78,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[5] = FIXED_DEC(-16 - 78,1) - FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[6] = FIXED_DEC(170 - 78,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[7] = FIXED_DEC(204 - 78,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+			}
+			else if (stage.stage_id == StageId_3_1 && !stage.middlescroll)
+			{
+				//bf
+				note_x[0] = FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[1] = FIXED_DEC(60,1) + FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[2] = FIXED_DEC(94,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[3] = FIXED_DEC(128,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				//opponent
+				note_x[4] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[5] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[6] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[7] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+			}
+			else if (stage.stage_id == StageId_3_1 && stage.middlescroll)
+			{
+				//bf
+				note_x[0] = FIXED_DEC(26 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[1] = FIXED_DEC(60 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[2] = FIXED_DEC(94 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[3] = FIXED_DEC(128 - 78,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				//opponent
+				note_x[4] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[5] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[6] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[7] = FIXED_DEC(256,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+			}
+			else 		
+			{
+				//bf
+				note_x[0] = FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[1] = FIXED_DEC(60,1) + FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[2] = FIXED_DEC(94,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[3] = FIXED_DEC(128,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+				//Opponent
+				note_x[4] = FIXED_DEC(-128,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[5] = FIXED_DEC(-94,1) - FIXED_DEC(SCREEN_WIDEADD,4); //+34
+				note_x[6] = FIXED_DEC(-60,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+				note_x[7] = FIXED_DEC(-26,1) - FIXED_DEC(SCREEN_WIDEADD,4);
+			}
 			
-
 			if (stage.botplay)
 			{
 				//Draw botplay
@@ -2026,37 +2127,36 @@ void Stage_Tick(void)
 			
 			//Draw note HUD
 			RECT note_src = {0, 0, 32, 32};
-			RECT_FIXED note_dst = {0, note_y + stage.noteshakey - FIXED_DEC(16,1), FIXED_DEC(32,1), FIXED_DEC(32,1)};
+			RECT_FIXED note_dst = {0, 0 + stage.noteshakey, FIXED_DEC(32,1), FIXED_DEC(32,1)};
 			if (stage.downscroll)
 				note_dst.y = -note_dst.y - note_dst.h;
 			
 			for (u8 i = 0; i < 4; i++)
 			{
 				//BF
-				note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + note_x[i ^ stage.note_swap] - FIXED_DEC(16,1);
+				note_dst.x = stage.noteshakex + note_x[i ^ stage.note_swap] - FIXED_DEC(16,1);
+				note_dst.y = stage.noteshakey + note_y[i ^ stage.note_swap] - FIXED_DEC(16,1);
+				if (stage.downscroll)
+					note_dst.y = -note_dst.y - note_dst.h;
+				
 				Stage_DrawStrum(i, &note_src, &note_dst);
+
 				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				
 				//Opponent
+				note_dst.x = stage.noteshakex + note_x[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
+				note_dst.y = stage.noteshakey + note_y[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
+				
+				if (stage.downscroll)
+					note_dst.y = -note_dst.y - note_dst.h;
+				Stage_DrawStrum(i | 4, &note_src, &note_dst);
+
 				if (stage.middlescroll)
-				{
-					note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + note_xmiddle[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
-					Stage_DrawStrum(i | 4, &note_src, &note_dst);
-					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
-				}
-				else if (stage.stage_id == StageId_3_1 && stage.mode != StageMode_2P)
-				{
-					note_dst.x = stage.noteshakex + FIXED_DEC(arrowposx,1) + note_xmono[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
-					Stage_DrawStrum(i | 4, &note_src, &note_dst);
-					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
-				}
+					Stage_BlendTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump, 1);
 				else
-				{
-					note_dst.x = stage.noteshakex + note_x[(i | 0x4) ^ stage.note_swap] - FIXED_DEC(16,1);
-					Stage_DrawStrum(i | 4, &note_src, &note_dst);
 					Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
-				}
 			}
+
 			if (stage.mode < StageMode_2P)
 			{
 			 //Draw score
