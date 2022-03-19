@@ -11,6 +11,7 @@
 #include "../stage.h"
 #include "../random.h"
 #include "../main.h"
+#include "../timer.h"
 
 //Boyfriend skull fragments
 static SkullFragment char_bfsans_skull[15] = {
@@ -326,6 +327,7 @@ void Char_BFSans_Tick(Character *character)
 	
 	//Animate and draw character
 	Animatable_Animate(&character->animatable, (void*)this, Char_BFSans_SetFrame);
+	if (character->animatable.anim < PlayerAnim_LeftMiss && stage.state == StageState_Play|| stage.state != StageState_Play || animf_count & 2 )
 	Character_Draw(character, &this->tex, &char_bfsans_frame[this->frame]);
 }
 
