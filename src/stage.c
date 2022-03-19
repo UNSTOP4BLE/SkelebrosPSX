@@ -96,6 +96,9 @@ Stage stage;
 //bone state
 BoneSystem bonesystem;
 
+//dodge state
+DodgeSystem dodgesystem;
+
 //Stage music functions
 static void Stage_StartVocal(void)
 {
@@ -1653,6 +1656,45 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
+			//dodge mechanic
+//			if (stage.song_step == 50)
+//				dodgesystem.dodge = 1;
+//			else
+//				dodgesystem.dodge = 0;
+
+
+			if (dodgesystem.dodge) 
+			{
+
+				if (pad_state.press & INPUT_TRIGGER && dodgesystem.dodgecooldown == 0 && dodgesystem.buttonpressed)
+				{
+					dodgesystem.dodgecooldown = 1;
+					dodgesystem.buttoncooldown = 1;
+					stage.player->set_anim(stage.player, CharAnim_Down);
+				}
+				else 
+					stage.state = StageState_Dead;
+
+				//cooldown stuff
+				if (dodgesystem.dodgecooldown > 0 && dodgesystem.dodgecooldown <= 20) //the length of the dodge anim is the 20
+					dodgesystem.dodgecooldown ++;
+				else 
+					dodgesystem.dodgecooldown = 0;
+
+				//button cooldown stuff
+				if (dodgesystem.buttoncooldown > 0 && dodgesystem.buttoncooldown <= 20) //the length of the dodge anim is the 20
+				{
+					dodgesystem.buttoncooldown ++;
+					dodgesystem.buttonpressed = 1;
+				}
+				else 
+				{
+					dodgesystem.buttoncooldown = 0;
+					dodgesystem.buttonpressed = 0;
+				}
+
+			}
+
 			//bone mechanic stuff
 			if ((stage.stage_id == StageId_1_3 && !stage.botplay) || (stage.stage_id == StageId_1_3Chara && !stage.botplay)) 
 			{
@@ -1708,8 +1750,8 @@ void Stage_Tick(void)
 
 			//debug shit 
 			FntPrint("Step %d", stage.song_step);
-			FntPrint("butn %d", bonesystem.buttonpresscount);
-			FntPrint("butncoold %d", bonesystem.buttonpresscooldown);
+			FntPrint("butn %d", dodgesystem.buttonpressed);
+			FntPrint("butncoold %d", dodgesystem.dodgecooldown);
 
 			//bone mechanic
 			if (bonesystem.bone)

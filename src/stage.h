@@ -294,6 +294,15 @@ typedef struct
 
 } BoneSystem;
 
+typedef struct
+{
+  u16 dodgecooldown;
+  u16 buttoncooldown;
+  boolean dodge;
+  boolean buttonpressed;
+
+} DodgeSystem;
+
 extern BoneSystem bonesystem;
 
 //Stage drawing functions
