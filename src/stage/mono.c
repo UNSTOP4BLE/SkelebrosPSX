@@ -11,13 +11,6 @@
 #include "../stage.h"
 #include "../random.h"
 
-/*
-#include "../pad.h"
-int mog = -159;
-int sog = -119;
-int zog = 320;
-int nog = 240;
-*/
 //mono background structure
 typedef struct
 {
@@ -26,17 +19,65 @@ typedef struct
 
 	//Textures
 	IO_Data arc_paps, arc_paps_ptr[1];
+	IO_Data arc_nyeh, arc_nyeh_ptr[1];
 
 	Gfx_Tex tex_ded; //imdead
 	Gfx_Tex tex_scream; //ded paps
 
 	//paps state
 	Gfx_Tex tex_paps;
+	Gfx_Tex tex_nyeh;
 	u8 paps_frame, paps_tex_id;
+	u8 nyeh_frame, nyeh_tex_id;
 	
+	Animatable nyeh_animatable;
 	Animatable paps_animatable;
 } Back_mono;
 
+//nyeh animation and rects
+static const CharFrame nyeh_frame[9] = {
+	{0, {0, 0, 62, 21}, {96, 187}}, //0
+	{0, {158, 102, 66, 43}, {96, 187}}, //1
+	{0, {62, 0, 72, 51}, {96, 187}}, //2
+	{0, {135, 0, 81, 53}, {96, 187}}, //3
+	{0, {0, 52, 77, 49}, {96, 187}}, //4
+	{0, {78, 54, 72, 40}, {96, 187}}, //5
+	{0, {150, 53, 75, 42}, {96, 187}}, //6
+	{0, {0, 103, 77, 44}, {96, 187}}, //7
+	{0, {77, 94, 76, 49}, {96, 187}}, //8
+};
+
+static const Animation nyeh_anim[] = {
+	{2, (const u8[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 7, 8, 7, 8, 7, 8, 4, 1, 0, ASCR_BACK, 0}}, //Left
+};
+
+//nyeh functions
+void mono_nyeh_SetFrame(void *user, u8 frame)
+{
+	Back_mono *this = (Back_mono*)user;
+	
+	//Check if this is a new frame
+	if (frame != this->nyeh_frame)
+	{
+		//Check if new art shall be loaded
+		const CharFrame *cframe = &nyeh_frame[this->nyeh_frame = frame];
+		if (cframe->tex != this->nyeh_tex_id)
+			Gfx_LoadTex(&this->tex_nyeh, this->arc_nyeh_ptr[this->nyeh_tex_id = cframe->tex], 0);
+	}
+}
+
+void mono_nyeh_Draw(Back_mono *this, fixed_t x, fixed_t y)
+{
+	//Draw character
+	const CharFrame *cframe = &nyeh_frame[this->nyeh_frame];
+	
+	fixed_t ox = x - ((fixed_t)cframe->off[0] << FIXED_SHIFT);
+	fixed_t oy = y - ((fixed_t)cframe->off[1] << FIXED_SHIFT);
+	
+	RECT src = {cframe->src[0], cframe->src[1], cframe->src[2], cframe->src[3]};
+	RECT_FIXED dst = {ox, oy, src.w << FIXED_SHIFT, src.h << FIXED_SHIFT};
+	Stage_DrawTex(&this->tex_nyeh, &src, &dst, stage.camera.bzoom);
+}
 
 //paps animation and rects
 static const CharFrame paps_frame[12] = {
@@ -57,10 +98,8 @@ static const CharFrame paps_frame[12] = {
 };
 
 static const Animation paps_anim[] = {
-	{2, (const u8[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 11, 11,11,11,11,11,11,11,11,11,11,11,11, 5, 4, 3, 2, 1, 0, ASCR_BACK, 0}}, //Left
+	{2, (const u8[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 5, 4, 3, 2, 1, 0, ASCR_BACK, 0}}, //Left
 };
-
-
 
 //paps functions
 void mono_paps_SetFrame(void *user, u8 frame)
@@ -95,43 +134,20 @@ void Back_mono_DrawFG(StageBack *back)
 	Back_mono *this = (Back_mono*)back;
     fixed_t fx, fy;
 
-/*
-	FntPrint("x%d y%d zog %d nog %d", mog, sog, zog, nog);
-
-	if (pad_state.held & PAD_UP)
-		sog --;
-	if (pad_state.held & PAD_DOWN)
-		sog ++;
-	if (pad_state.held & PAD_LEFT)
-		mog --;
-	if (pad_state.held & PAD_RIGHT)
-		mog ++;
-	
-	if (pad_state.held & PAD_TRIANGLE)
-		zog --;
-	if (pad_state.held & PAD_CROSS)
-		zog ++;
-	if (pad_state.held & PAD_SQUARE)
-		nog --;
-	if (pad_state.held & PAD_CIRCLE)
-		nog ++;
-*/
-
 	//Animate and draw paps
 	fx = stage.camera.x;
 	fy = stage.camera.y;
 	
 	if (stage.flag & STAGE_FLAG_JUST_STEP)
 	{
-		switch (stage.song_step % 0x20)
+		switch (stage.song_step & 0x12)
 		{
 			case 0:
 				Animatable_SetAnim(&this->paps_animatable, 0);
+				Animatable_SetAnim(&this->nyeh_animatable, 0);
 				break;
 		}
 	}
-	if (stage.song_step >= 368 && stage.song_step <= 400) 
-	Animatable_Animate(&this->paps_animatable, (void*)this, mono_paps_SetFrame);
 
 	//Draw scream
 	fx = stage.camera.x;
@@ -168,9 +184,15 @@ void Back_mono_DrawFG(StageBack *back)
 		Stage_DrawTex(&this->tex_ded, &ded_src, &ded_dst, stage.camera.bzoom);
 	if (stage.song_step >= 376 && stage.song_step <= 384)
 		Stage_DrawTex(&this->tex_ded, &ded2_src, &ded2_dst, stage.camera.bzoom);
+	
+	if ((stage.song_step >= 368 && stage.song_step <= 368 + 15) || (stage.song_step >= 817 && stage.song_step <= 817 + 15) || (stage.song_step >= 1264 && stage.song_step <= 1264 + 15))
+	{
+		Animatable_Animate(&this->nyeh_animatable, (void*)this, mono_nyeh_SetFrame);
+		mono_nyeh_Draw(this, FIXED_DEC(0,1) - fx, FIXED_DEC(290,1) - fy);
 
-	if (stage.song_step >= 368 && stage.song_step <= 400) 
-		mono_paps_Draw(this, FIXED_DEC(-100,1) - fx, FIXED_DEC(30,1) - fy);
+		Animatable_Animate(&this->paps_animatable, (void*)this, mono_paps_SetFrame);
+		mono_paps_Draw(this, FIXED_DEC(-120,1) - fx, FIXED_DEC(60,1) - fy);
+	}
 }
 
 void Back_mono_Free(StageBack *back)
@@ -180,6 +202,7 @@ void Back_mono_Free(StageBack *back)
 	//Free structure
 	Mem_Free(this);
 	Mem_Free(this->arc_paps);
+	Mem_Free(this->arc_nyeh);
 }
 
 StageBack *Back_mono_New(void)
@@ -204,12 +227,16 @@ StageBack *Back_mono_New(void)
 	//Load paps textures
 	this->arc_paps = IO_Read("\\MONOCH\\BACK.ARC;1");
 	this->arc_paps_ptr[0] = Archive_Find(this->arc_paps, "paps.tim");
+	this->arc_nyeh = IO_Read("\\MONOCH\\BACK.ARC;1");
+	this->arc_nyeh_ptr[0] = Archive_Find(this->arc_nyeh, "nyeh.tim");
 	
 	//Initialize paps state
 	Animatable_Init(&this->paps_animatable, paps_anim);
 	Animatable_SetAnim(&this->paps_animatable, 0);
 	this->paps_frame = this->paps_tex_id = 0xFF; //Force art load
-	
+	Animatable_Init(&this->nyeh_animatable, nyeh_anim);
+	Animatable_SetAnim(&this->nyeh_animatable, 0);
+	this->nyeh_frame = this->nyeh_tex_id = 0xFF; //Force art load	
 
 	Gfx_SetClear(0, 0, 0);
 
