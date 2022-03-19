@@ -35,10 +35,10 @@ typedef struct
 
 //space animation and rects
 static const CharFrame space_frame[] = {
-	{0, {  0,   0,  96,  36}, { 1,  0}}, //0 left 1
-	{0, { 96,   0,  95,  35}, { 0,  0}}, //1 left 2
-	{0, {  0,  36,  96,  35}, { 1,  0}}, //2 left 3
-	{0, { 96,  35,  95,  35}, { 0,  0}}, //3 left 4
+	{0, {  0,   0,  54,  35}, { -20,  0}}, //0 left 1
+	{0, { 54,   0,  54,  35}, { -20,  0}}, //1 left 2
+	{0, {108,   0,  54,  35}, { -20,  0}}, //2 left 3
+	{0, {  0,  35,  54,  35}, { -20,  0}}, //3 left 4
 };
 
 static const Animation space_anim[] = {

@@ -741,7 +741,7 @@ void Menu_Tick(void)
 			 check = false;
 			}
 			 //debug thing
-			FntPrint("moving %d", moving);
+			//FntPrint("moving %d", moving);
             
 			switch(menu.select)
 			{
@@ -1085,6 +1085,7 @@ void Menu_Tick(void)
 			} menu_options[] = {
 				{0xFF9271FD, "PORTED BY",NULL,-1},
 				{0xFF9271FD, "UNSTOPABLE",  "SPRITES CODE OFFSETS",0},
+				{0xFF9271FD, "SPARK", "MADE SICK DODGE LABELS",10},
 				{0xFF9271FD, "IGORSOU", "SPRITES CODE OFFSETS",1},
 				{0xFF9271FD, "",NULL,-1},
 				{0xFF9271FD, "PLAYTESTERS",NULL,-1},
