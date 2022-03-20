@@ -1,3 +1,4 @@
+
 #include "mem.h"
 #include "archive.h"
 #include "stage.h"
@@ -231,8 +232,12 @@ static void strDoPlayback(STRFILE *str) {
 		
 		if(strPlayDone == 1) {
             LoadScr_Start();
+			if (movie.select == 0)
 			Stage_Load(stage.strid, stage.strdiff, true);
+			else
+			Stage_Load(movie.stage_select, stage.strdiff, true);
 			gameloop = GameLoop_Stage;
+			movie.select++;
 			stage.seemovie = false;
 				LoadScr_End();
 				return;

@@ -841,7 +841,7 @@ void Menu_Tick(void)
 						menu.select = 0;
 				}
 				*/
-                Movie movie;
+
 				//Select option if cross is pressed
 				if (pad_state.press & (PAD_START | PAD_CROSS))
 				{

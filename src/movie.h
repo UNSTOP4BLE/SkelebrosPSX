@@ -7,14 +7,19 @@
 #ifndef PSXF_GUARD_MOVIE_H
 #define PSXF_GUARD_MOVIE_H
 
+#include "stage.h"
+
 //Movie interface
 void Movie_Play(const char *path, u32 length);
 
 typedef struct
 {
+  StageId stage_select;
   u8 select;
   u8 playing;
 } Movie;
+
+extern Movie movie;
 
 void Movie_Tick();
 

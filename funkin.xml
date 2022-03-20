@@ -143,6 +143,7 @@
 			    <file name = "intro.str" type = "str" source = "iso/movie/intro.str"/>
 				<file name = "sans.str" type = "str" source = "iso/movie/sans.str"/>
 				<file name = "gaster.str" type = "str" source = "iso/movie/gaster.str"/>
+				<file name = "chara.str" type = "str" source = "iso/movie/chara.str"/>
 			</dir>
 			
 			<!-- Music -->

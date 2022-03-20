@@ -23,6 +23,7 @@
 #define INPUT_DOWN  (PAD_DOWN  | PAD_CROSS)
 #define INPUT_UP    (PAD_UP    | PAD_TRIANGLE)
 #define INPUT_RIGHT (PAD_RIGHT | PAD_CIRCLE)
+#define INPUT_TRIGGER  (PAD_L2 | PAD_L1 | PAD_R1 | PAD_R2)
 
 #define STAGE_FLAG_JUST_STEP     (1 << 0) //Song just stepped this frame
 #define STAGE_FLAG_VOCAL_ACTIVE  (1 << 1) //Song's vocal track is currently active
@@ -296,7 +297,7 @@ typedef struct
 
 typedef struct
 {
-  u16 dodgecooldown;
+  s16 dodgecooldown;
   u16 buttoncooldown;
   boolean dodge;
   boolean buttonpressed;
