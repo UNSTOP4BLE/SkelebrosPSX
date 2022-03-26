@@ -1661,38 +1661,84 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
-		if (stage.stage_id == StageId_1_4)
-		{
-		if (stage.song_step == 50)
-		dodgesystem.dodge = true;
+			#define mogus 9
+			if (stage.stage_id == StageId_1_4)
+			{
+				switch (stage.song_step)
+				{
+					case 280 + mogus:
+						dodgesystem.dodge = true;
+					break;
+					case 294 + mogus:
+						dodgesystem.dodge = true;
+					break;		
+					case 310 + mogus:
+						dodgesystem.dodge = true;
+					break;					
+					case 422 + mogus:
+						dodgesystem.dodge = true;
+					break;				
+					case 478 + mogus:
+						dodgesystem.dodge = true;
+					break;					
+					case 510 + mogus:
+						dodgesystem.dodge = true;
+					break;					
+					case 912 + mogus:
+						dodgesystem.dodge = true;
+					break;					
+					case 1058 + mogus:
+						dodgesystem.dodge = true;
+					break;				
+					case 1160 + mogus:
+						dodgesystem.dodge = true;
+					break;				
+					case 1193 + mogus:
+						dodgesystem.dodge = true;
+					break;					
+					case 1288 + mogus:
+						dodgesystem.dodge = true;
+					break;				
+					case 1304 + mogus:
+						dodgesystem.dodge = true;
+					break;				
+					case 1320 + mogus:
+						dodgesystem.dodge = true;
+					break;			
+					case 1468 + mogus:
+						dodgesystem.dodge = true;
+					break;				
+					
+					default: dodgesystem.dodge = false;
+				}	
 
-		//use dodge animation
-		if (pad_state.press & INPUT_TRIGGER)
-		stage.player->set_anim(stage.player, CharAnim_Up);
+				//use dodge animation
+				if (pad_state.press & INPUT_TRIGGER)
+					stage.player->set_anim(stage.player, CharAnim_Up);
 
-			//dodge mechanic
-		if (dodgesystem.dodge)
-		{
-		dodgesystem.dodgecooldown++;	  
-		  //if bf use trigger during this cooldown he live else he die
-		  if (dodgesystem.dodgecooldown >= 0 && dodgesystem.dodgecooldown <= 20)
-		    {
-			if (pad_state.press & INPUT_TRIGGER)
-			dodgesystem.buttonpressed = true;
+				//dodge mechanic
+				if (dodgesystem.dodge)
+				{
+					dodgesystem.dodgecooldown++;	  
+				//if bf use trigger during this cooldown he live else he die
+					if (dodgesystem.dodgecooldown >= 0 && dodgesystem.dodgecooldown <= 20)
+						{
+						if (pad_state.press & INPUT_TRIGGER)
+						dodgesystem.buttonpressed = true;
+						}
+				//bf die
+					else if (dodgesystem.dodgecooldown > 20 && dodgesystem.buttonpressed != true)
+						stage.state = StageState_Dead;
+					
+				//reset stuff
+					if (dodgesystem.dodgecooldown > 20)
+					{
+						dodgesystem.dodgecooldown = 0;
+						dodgesystem.buttonpressed = false;
+						dodgesystem.dodge = false;
+					}
+				}
 			}
-		   //bf die
-           else if (dodgesystem.dodgecooldown > 20 && dodgesystem.buttonpressed != true)
-		     stage.state = StageState_Dead;
-           
-		   //reset stuff
-		     if  (dodgesystem.dodgecooldown > 20)
-			 {
-			  dodgesystem.dodgecooldown = 0;
-			  dodgesystem.buttonpressed = false;
-			  dodgesystem.dodge = false;
-			 }
-		}
-	}
 
 
 
@@ -1753,6 +1799,7 @@ void Stage_Tick(void)
 			FntPrint("Step %d", stage.song_step);
 			FntPrint("butn %d", dodgesystem.buttonpressed);
 			FntPrint("butncoold %d", dodgesystem.dodgecooldown);
+			FntPrint("dodge %d", dodgesystem.dodge);
 
 			//bone mechanic
 			if (bonesystem.bone)

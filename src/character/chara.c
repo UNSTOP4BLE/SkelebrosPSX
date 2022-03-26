@@ -47,22 +47,22 @@ typedef struct
 
 //Chara character definitions
 static const CharFrame char_chara_frame[] = {
-	{Chara_ArcMain_Idle0, {  2,   1, 101, 154}, { 58, 154}}, //0 idle 1
-	{Chara_ArcMain_Idle0, {105,   0, 102, 155}, { 58, 155}}, //1 idle 2
-	{Chara_ArcMain_Idle1, {  2,   0, 103, 155}, { 58, 155}}, //2 idle 3
-	{Chara_ArcMain_Idle1, {108,   0, 100, 155}, { 56, 155}}, //3 idle 4
-	{Chara_ArcMain_Idle2, {  6,   0,  99, 155}, { 55, 155}}, //4 idle 5
-	{Chara_ArcMain_Idle2, {108,   0, 100, 155}, { 56, 155}}, //5 idle 6
-	{Chara_ArcMain_Idle3, {  4,   0, 101, 156}, { 57, 156}}, //6 idle 7
-	{Chara_ArcMain_Idle3, {108,   0, 100, 155}, { 56, 155}}, //7 idle 8
+	{Chara_ArcMain_Idle0, {  0,   1, 101, 154}, { 58, 154}}, //0 idle 1
+	{Chara_ArcMain_Idle0, {101,   0, 102, 155}, { 58, 155}}, //1 idle 2
+	{Chara_ArcMain_Idle1, {  0,   0, 103, 155}, { 58, 155}}, //2 idle 3
+	{Chara_ArcMain_Idle1, {103,   0, 100, 155}, { 56, 155}}, //3 idle 4
+	{Chara_ArcMain_Idle2, {  0,   0,  99, 155}, { 55, 155}}, //4 idle 5
+	{Chara_ArcMain_Idle2, { 99,   0, 100, 155}, { 56, 155}}, //5 idle 6
+	{Chara_ArcMain_Idle3, {  0,   0, 100, 156}, { 57, 156}}, //6 idle 7
+	{Chara_ArcMain_Idle3, {100,   0, 100, 155}, { 56, 155}}, //7 idle 8
 	
-	{Chara_ArcMain_Left0, { 10,   0, 126, 137}, { 92, 137}}, //8 left 1
-	{Chara_ArcMain_Left1, {  5,   3, 130, 134}, { 96, 134}}, //9 left 2
-	{Chara_ArcMain_Left2, {  3,   5, 131, 133}, { 98, 133}}, //10 left 1
-	{Chara_ArcMain_Left3, {  3,   5, 132, 133}, { 99, 133}}, //11 left 2
+	{Chara_ArcMain_Left0, {  0,   0, 126, 137}, { 92, 137}}, //8 left 1
+	{Chara_ArcMain_Left1, {  0,   0, 130, 134}, { 96, 134}}, //9 left 2
+	{Chara_ArcMain_Left2, {  0,   0, 131, 133}, { 98, 133}}, //10 left 1
+	{Chara_ArcMain_Left3, {  0,   0, 132, 133}, { 99, 133}}, //11 left 2
 	
-	{Chara_ArcMain_Down0, { 10,  10, 140, 150}, { 73, 150}}, //12 down 1
-	{Chara_ArcMain_Down1, { 12,  12, 136, 152}, { 72, 152}}, //13 down 2
+	{Chara_ArcMain_Down0, {  0,   0, 140, 150}, { 73, 150}}, //12 down 1
+	{Chara_ArcMain_Down1, {  0,   0, 136, 152}, { 72, 152}}, //13 down 2
 	{Chara_ArcMain_Down2, {  0,   0, 117, 172}, { 60, 172}}, //14 down 1
 	{Chara_ArcMain_Down2, {117,   1, 111, 171}, { 63, 171}}, //15 down 2
 	
@@ -71,10 +71,10 @@ static const CharFrame char_chara_frame[] = {
 	{Chara_ArcMain_Up1, {  0,   0,  87, 168}, { 49, 168}}, //18 up 1
 	{Chara_ArcMain_Up1, { 87,   0,  87, 168}, { 49, 168}}, //19 up 2
 
-	{Chara_ArcMain_Right0, {  4,   6,  99, 149}, { 56, 149}}, //20 right 1
-	{Chara_ArcMain_Right0, {112,   7, 104, 148}, { 58, 148}}, //21 right 2
-	{Chara_ArcMain_Right1, {  6,   5,  89, 150}, { 55, 150}}, //22 right 1
-	{Chara_ArcMain_Right1, {116,   6,  92, 150}, { 54, 150}}, //23 right 2
+	{Chara_ArcMain_Right0, {  0,   0,  99, 149}, { 56, 149}}, //20 right 1
+	{Chara_ArcMain_Right0, { 99,   1, 104, 148}, { 58, 148}}, //21 right 2
+	{Chara_ArcMain_Right1, {  0,   0,  89, 150}, { 55, 150}}, //22 right 1
+	{Chara_ArcMain_Right1, { 92,   1,  92, 150}, { 54, 150}}, //23 right 2
 
 };
 
