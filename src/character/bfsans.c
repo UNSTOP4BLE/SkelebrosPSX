@@ -55,7 +55,15 @@ enum
 	BFSans_ArcMain_BFBSans5,
 	BFSans_ArcMain_BFBSans6,
 	BFSans_ArcMain_BFBSans7,
-	
+	BFSans_ArcMain_BFBone0,
+	BFSans_ArcMain_BFBone1,
+	BFSans_ArcMain_BFBone2,
+	BFSans_ArcMain_BFBone3,
+	BFSans_ArcMain_BFBone4,
+	BFSans_ArcMain_BFBone5,
+	BFSans_ArcMain_BFBone6,
+
+
 	BFSans_ArcMain_Max,
 };
 
@@ -185,13 +193,23 @@ static const CharFrame char_bfsans_frame[] = {
 	
 	{BFSans_ArcMain_BFBSans7, {  0, 108,  99, 108}, { 43+3, 101+3}}, //29 right miss 1
 	{BFSans_ArcMain_BFBSans7, {100, 109, 101, 108}, { 43+3, 101+3}}, //30 right miss 2
+
+	//bonez               
+	{BFSans_ArcMain_BFBone0, {  0, 0, 136, 144}, { 0, 0}}, //74 right miss 1
+	{BFSans_ArcMain_BFBone1, {  0, 0, 135, 144}, { 0, 0}}, //75 right miss 2
+	{BFSans_ArcMain_BFBone2, {  0, 0, 145, 146}, { 0, 0}}, //76 right miss 1
+	{BFSans_ArcMain_BFBone3, {  0, 0, 135, 144}, { 0, 0}}, //77 right miss 2
+	{BFSans_ArcMain_BFBone4, {  0, 0, 136, 145}, { 0, 0}}, //78 right miss 1
+	{BFSans_ArcMain_BFBone5, {  0, 0, 135, 144}, { 0, 0}}, //79 right miss 2
+	{BFSans_ArcMain_BFBone6, {  0, 0, 135, 144}, { 0, 0}}, //80 right miss 1
+
 };
 
 static const Animation char_bfsans_anim[PlayerAnim_Max] = {
 	{2, (const u8[]){ 0,  1,  2,  3,  4,  5,  6,  7,  8, ASCR_BACK, 1}}, //CharAnim_Idle
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_Special
+	{2, (const u8[]){78, 79, 80, ASCR_CHGANI, CharAnim_Special}},       //CharAnim_Special
 	{2, (const u8[]){ 9, 10, 11, 12, ASCR_BACK, 1}},             //CharAnim_Left
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_LeftAlt
+	{2, (const u8[]){74, 75, 76, 77, ASCR_CHGANI, CharAnim_Special}},       //CharAnim_LeftAlt
 	{2, (const u8[]){13, 14, 15, 16, ASCR_BACK, 1}},             //CharAnim_Down
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_DownAlt
 	{2, (const u8[]){17, 18, 19, ASCR_BACK, 1}},             //CharAnim_Up
@@ -202,7 +220,7 @@ static const Animation char_bfsans_anim[PlayerAnim_Max] = {
 	{1, (const u8[]){ 9, 23, 23, 24,  ASCR_BACK, 1}},     //PlayerAnim_LeftMiss
 	{1, (const u8[]){13, 25, 25, 26,  ASCR_BACK, 1}},     //PlayerAnim_DownMiss
 	{1, (const u8[]){17, 27, 27, 28,  ASCR_BACK, 1}},     //PlayerAnim_UpMiss
-	{1, (const u8[]){20, 29, 29, 30,  31,ASCR_BACK, 1}},     //PlayerAnim_RightMiss
+	{1, (const u8[]){20, 29, 29, 30,  ASCR_BACK, 1}},     //PlayerAnim_RightMiss
 	
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //PlayerAnim_Peace
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},      //PlayerAnim_Sweat
@@ -532,6 +550,13 @@ Character *Char_BFSans_New(fixed_t x, fixed_t y)
 		"bfb5.tim",   //BFSans_ArcMain_BFSans5
 		"bfb6.tim",   //BFSans_ArcMain_BFSans6
 		"bfb7.tim",   //BFSans_ArcMain_BFSans7
+		"bone0.tim",  
+		"bone1.tim", 
+		"bone2.tim", 
+		"bone3.tim", 
+		"bone4.tim", 
+		"bone5.tim",
+		"bone6.tim",  
 		NULL
 	};
 	IO_Data *arc_ptr = this->arc_ptr;
