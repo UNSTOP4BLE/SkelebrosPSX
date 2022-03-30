@@ -29,6 +29,21 @@ enum
 	Chara_ArcMain_Up1,
 	Chara_ArcMain_Right0,
 	Chara_ArcMain_Right1,
+
+	//alt
+	Chara_ArcMain_Idleb0,
+	Chara_ArcMain_Idleb1,
+	Chara_ArcMain_Idleb2,
+	Chara_ArcMain_Idleb3,
+	Chara_ArcMain_Leftb0,
+	Chara_ArcMain_Leftb1,
+	Chara_ArcMain_Downb0,
+	Chara_ArcMain_Downb1,
+	Chara_ArcMain_Upb0,
+	Chara_ArcMain_Upb1,
+	Chara_ArcMain_Rightb0,
+	Chara_ArcMain_Rightb1,
+
 	Chara_Arc_Max,
 };
 
@@ -43,9 +58,6 @@ typedef struct
 	
 	Gfx_Tex tex;
 	u8 frame, tex_id;
-
-	//Chamoy texture
-	Gfx_Tex tex_chamoy;
 
 } Char_Chara;
 
@@ -79,12 +91,55 @@ static const CharFrame char_chara_frame[] = {
 	{Chara_ArcMain_Right0, { 99,   1, 104, 148}, { 58, 148}}, //21 right 2
 	{Chara_ArcMain_Right1, {  0,   0,  89, 150}, { 55, 150}}, //22 right 1
 	{Chara_ArcMain_Right1, { 92,   1,  92, 150}, { 54, 150}}, //23 right 2
+
+	//alt
+	{Chara_ArcMain_Idleb0, {  0,   0, 106, 154}, {  0,   0}}, //0 idle 1
+	{Chara_ArcMain_Idleb0, {106,   0, 106, 154}, {  0,   0}}, //1 idle 2
+	{Chara_ArcMain_Idleb1, {  0,   0, 106, 155}, {  0,   0}}, //2 idle 3
+	{Chara_ArcMain_Idleb1, {106,   0, 104, 155}, {  0,   0}}, //3 idle 4
+	{Chara_ArcMain_Idleb2, {  0,   0, 102, 156}, {  0,   0}}, //4 idle 5
+	{Chara_ArcMain_Idleb2, {102,   0, 103, 156}, {  0,   0}}, //5 idle 6
+	{Chara_ArcMain_Idleb3, {  0,   0, 103, 156}, {  0,   0}}, //6 idle 7
+	{Chara_ArcMain_Idleb3, {103,   0, 103, 156}, {  0,   0}}, //7 idle 8
+	
+	{Chara_ArcMain_Leftb0, {  0,   0, 108, 154}, {  0,   0}}, //8 left 1
+	{Chara_ArcMain_Leftb0, {108,   0, 108, 153}, {  0,   0}}, //9 left 2
+	{Chara_ArcMain_Leftb1, {  0,   0, 105, 156}, {  0,   0}}, //10 left 1
+	{Chara_ArcMain_Leftb1, {105,   0, 109, 156}, {  0,   0}}, //11 left 2
+	
+	{Chara_ArcMain_Downb0, {  0,   0, 102, 150}, {  0,   0}}, //12 down 1
+	{Chara_ArcMain_Downb0, {102,   0, 101, 149}, {  0,   0}}, //13 down 2
+	{Chara_ArcMain_Downb1, {  0,   0, 108, 153}, {  0,   0}}, //14 down 1
+	{Chara_ArcMain_Downb1, {107,   0, 106, 152}, {  0,   0}}, //15 down 2
+	
+	{Chara_ArcMain_Upb0, {  0,   0,   115, 163}, {  0,   0}}, //16 up 1
+	{Chara_ArcMain_Upb0, {115,   0,   114, 164}, {  0,   0}}, //17 up 2
+	{Chara_ArcMain_Upb1, {  0,   0,   112, 168}, {  0,   0}}, //18 up 1
+	{Chara_ArcMain_Upb1, {112,   0,   114, 167}, {  0,   0}}, //19 up 2
+
+	{Chara_ArcMain_Rightb0, {  0,   0,  88, 152}, {  0,   0}}, //20 right 1
+	{Chara_ArcMain_Rightb0, { 88,   0,  89, 152}, {  0,   0}}, //21 right 2
+	{Chara_ArcMain_Rightb1, {  0,   0,  90, 155}, {  0,   0}}, //22 right 1
+	{Chara_ArcMain_Rightb1, { 91,   0,  89, 154}, {  0,   0}}, //23 right 2
 };
 
 static const Animation char_chara_anim[CharAnim_Max] = {
 	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, 6, 7, ASCR_BACK, 1}}, //CharAnim_Idle
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
-	{2, (const u8[]){ 8, 9,10,11, ASCR_BACK, 1}},         //CharAnim_Left
+	{2, (const u8[]){ 8, 9, 10, 11, ASCR_BACK, 1}},         //CharAnim_Left
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
+	{2, (const u8[]){ 12, 13, 14, 15, ASCR_BACK, 1}},         //CharAnim_Down
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
+	{2, (const u8[]){ 16, 17, 18, 19, ASCR_BACK, 1}},         //CharAnim_Up
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
+	{2, (const u8[]){ 20, 21, 22, 23, ASCR_BACK, 1}},         //CharAnim_Right
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_RightAlt
+};
+
+static const Animation char_chara_animb[CharAnim_Max] = {
+	{2, (const u8[]){ 0+24, 1+24, 2+24, 3+24, 4+24, 5+24, 6+24, 7+24, ASCR_BACK, 1}}, //CharAnim_Idle
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
+	{2, (const u8[]){ 8, 9, 10, 11, ASCR_BACK, 1}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 12, 13, 14, 15, ASCR_BACK, 1}},         //CharAnim_Down
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
@@ -130,6 +185,7 @@ void Char_Chara_SetAnim(Character *character, u8 anim)
 {
 	//Set animation
 	Animatable_SetAnim(&character->animatable, anim);
+	Animatable_SetAnim(&character->animatableb, anim);
 	Character_CheckStartSing(character);
 }
 
@@ -158,6 +214,7 @@ Character *Char_Chara_New(fixed_t x, fixed_t y)
 	this->character.free = Char_Chara_Free;
 	
 	Animatable_Init(&this->character.animatable, char_chara_anim);
+	Animatable_Init(&this->character.animatableb, char_chara_animb);
 	Character_Init((Character*)this, x, y);
 	
 	//Set character information
@@ -188,6 +245,19 @@ Character *Char_Chara_New(fixed_t x, fixed_t y)
 		"up1.tim",    //Chara_ArcMain_Up
 		"right0.tim", //Chara_ArcMain_Right
 		"right1.tim", //Chara_ArcMain_Right
+
+		"idleb0.tim", //Chara_ArcMain_Idle0
+		"idleb1.tim", //Chara_ArcMain_Idle1
+		"idleb2.tim", //Chara_ArcMain_Idle2
+		"idleb3.tim", //Chara_ArcMain_Idle3
+		"leftb0.tim",  //Chara_ArcMain_Left
+		"leftb1.tim",  //Chara_ArcMain_Left
+		"downb0.tim",  //Chara_ArcMain_Down
+		"downb1.tim",  //Chara_ArcMain_Down
+		"upb0.tim",    //Chara_ArcMain_Up
+		"upb1.tim",    //Chara_ArcMain_Up
+		"rightb0.tim", //Chara_ArcMain_Right
+		"rightb1.tim", //Chara_ArcMain_Right
 		NULL
 	};
 	IO_Data *arc_ptr = this->arc_ptr;
