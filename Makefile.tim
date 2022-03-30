@@ -18,6 +18,7 @@ all: \
 	iso/dad/main.arc \
 	iso/sans/main.arc \
 	iso/chara/main.arc \
+	iso/chara/chamoy.tim \
 	iso/gold/main.arc \
 	iso/gf/main.arc \
 	iso/gf/tut.arc \

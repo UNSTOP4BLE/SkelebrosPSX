@@ -43,6 +43,10 @@ typedef struct
 	
 	Gfx_Tex tex;
 	u8 frame, tex_id;
+
+	//Chamoy texture
+	Gfx_Tex tex_chamoy;
+
 } Char_Chara;
 
 //Chara character definitions
@@ -75,7 +79,6 @@ static const CharFrame char_chara_frame[] = {
 	{Chara_ArcMain_Right0, { 99,   1, 104, 148}, { 58, 148}}, //21 right 2
 	{Chara_ArcMain_Right1, {  0,   0,  89, 150}, { 55, 150}}, //22 right 1
 	{Chara_ArcMain_Right1, { 92,   1,  92, 150}, { 54, 150}}, //23 right 2
-
 };
 
 static const Animation char_chara_anim[CharAnim_Max] = {
@@ -121,6 +124,7 @@ void Char_Chara_Tick(Character *character)
 	Animatable_Animate(&character->animatable, (void*)this, Char_Chara_SetFrame);
 	Character_Draw(character, &this->tex, &char_chara_frame[this->frame]);
 }
+
 
 void Char_Chara_SetAnim(Character *character, u8 anim)
 {
