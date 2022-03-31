@@ -44,6 +44,11 @@ enum
 	Chara_ArcMain_Rightb0,
 	Chara_ArcMain_Rightb1,
 
+	Chara_ArcMain_Spec0,
+	Chara_ArcMain_Spec1,
+	Chara_ArcMain_Spec2,
+	Chara_ArcMain_Spec3,
+
 	Chara_Arc_Max,
 };
 
@@ -90,37 +95,49 @@ static const CharFrame char_chara_frame[] = {
 	{Chara_ArcMain_Right0, {  0,   0,  99, 149}, { 56, 149}}, //20 right 1
 	{Chara_ArcMain_Right0, { 99,   1, 104, 148}, { 58, 148}}, //21 right 2
 	{Chara_ArcMain_Right1, {  0,   0,  89, 150}, { 55, 150}}, //22 right 1
-	{Chara_ArcMain_Right1, { 92,   1,  92, 150}, { 54, 150}}, //23 right 2
+	{Chara_ArcMain_Right1, { 89,   1,  92, 150}, { 54, 150}}, //23 right 2
 
 	//alt
-	{Chara_ArcMain_Idleb0, {  0,   0, 106, 154}, {  0,   0}}, //0 idle 1
-	{Chara_ArcMain_Idleb0, {106,   0, 106, 154}, {  0,   0}}, //1 idle 2
-	{Chara_ArcMain_Idleb1, {  0,   0, 106, 155}, {  0,   0}}, //2 idle 3
-	{Chara_ArcMain_Idleb1, {106,   0, 104, 155}, {  0,   0}}, //3 idle 4
-	{Chara_ArcMain_Idleb2, {  0,   0, 102, 156}, {  0,   0}}, //4 idle 5
-	{Chara_ArcMain_Idleb2, {102,   0, 103, 156}, {  0,   0}}, //5 idle 6
-	{Chara_ArcMain_Idleb3, {  0,   0, 103, 156}, {  0,   0}}, //6 idle 7
-	{Chara_ArcMain_Idleb3, {103,   0, 103, 156}, {  0,   0}}, //7 idle 8
+	{Chara_ArcMain_Idleb0, {  0,   0, 106, 154}, { 58, 153}}, //0 idle 1
+	{Chara_ArcMain_Idleb0, {106,   0, 106, 154}, { 58, 153}}, //1 idle 2
+	{Chara_ArcMain_Idleb1, {  0,   0, 106, 155}, { 57, 154}}, //2 idle 3
+	{Chara_ArcMain_Idleb1, {106,   0, 104, 155}, { 55, 154}}, //3 idle 4
+	{Chara_ArcMain_Idleb2, {  0,   0, 102, 156}, { 54, 154}}, //4 idle 5
+	{Chara_ArcMain_Idleb2, {102,   0, 103, 156}, { 55, 154}}, //5 idle 6
+	{Chara_ArcMain_Idleb3, {  0,   0, 103, 156}, { 55, 154}}, //6 idle 7
+	{Chara_ArcMain_Idleb3, {103,   0, 103, 156}, { 55, 154}}, //7 idle 8
 	
-	{Chara_ArcMain_Leftb0, {  0,   0, 108, 154}, {  0,   0}}, //8 left 1
-	{Chara_ArcMain_Leftb0, {108,   0, 108, 153}, {  0,   0}}, //9 left 2
-	{Chara_ArcMain_Leftb1, {  0,   0, 105, 156}, {  0,   0}}, //10 left 1
-	{Chara_ArcMain_Leftb1, {105,   0, 109, 156}, {  0,   0}}, //11 left 2
+	{Chara_ArcMain_Leftb0, {  0,   0, 108, 154}, { 70, 155}}, //8 left 1
+	{Chara_ArcMain_Leftb0, {108,   0, 108, 153}, { 67, 155}}, //9 left 2
+	{Chara_ArcMain_Leftb1, {  0,   0, 105, 156}, { 60, 152}}, //10 left 1
+	{Chara_ArcMain_Leftb1, {105,   0, 109, 156}, { 63, 152}}, //11 left 2
 	
-	{Chara_ArcMain_Downb0, {  0,   0, 102, 150}, {  0,   0}}, //12 down 1
-	{Chara_ArcMain_Downb0, {102,   0, 101, 149}, {  0,   0}}, //13 down 2
-	{Chara_ArcMain_Downb1, {  0,   0, 108, 153}, {  0,   0}}, //14 down 1
-	{Chara_ArcMain_Downb1, {107,   0, 106, 152}, {  0,   0}}, //15 down 2
+	{Chara_ArcMain_Downb0, {  0,   0, 102, 150}, { 45, 149}}, //12 down 1
+	{Chara_ArcMain_Downb0, {102,   0, 101, 149}, { 44, 149}}, //13 down 2
+	{Chara_ArcMain_Downb1, {  0,   0, 107, 153}, { 49, 151}}, //14 down 1
+	{Chara_ArcMain_Downb1, {107,   0, 106, 152}, { 49, 150}}, //15 down 2
 	
-	{Chara_ArcMain_Upb0, {  0,   0,   115, 163}, {  0,   0}}, //16 up 1
-	{Chara_ArcMain_Upb0, {115,   0,   114, 164}, {  0,   0}}, //17 up 2
-	{Chara_ArcMain_Upb1, {  0,   0,   112, 168}, {  0,   0}}, //18 up 1
-	{Chara_ArcMain_Upb1, {112,   0,   114, 167}, {  0,   0}}, //19 up 2
+	{Chara_ArcMain_Upb0, {  0,   0,   115, 163}, { 47, 162}}, //16 up 1
+	{Chara_ArcMain_Upb0, {115,   0,   114, 164}, { 47, 164}}, //17 up 2
+	{Chara_ArcMain_Upb1, {  0,   0,   112, 168}, { 50, 168}}, //18 up 1
+	{Chara_ArcMain_Upb1, {112,   0,   114, 167}, { 48, 167}}, //19 up 2
 
-	{Chara_ArcMain_Rightb0, {  0,   0,  88, 152}, {  0,   0}}, //20 right 1
-	{Chara_ArcMain_Rightb0, { 88,   0,  89, 152}, {  0,   0}}, //21 right 2
-	{Chara_ArcMain_Rightb1, {  0,   0,  90, 155}, {  0,   0}}, //22 right 1
-	{Chara_ArcMain_Rightb1, { 91,   0,  89, 154}, {  0,   0}}, //23 right 2
+	{Chara_ArcMain_Rightb0, {  0,   0,  88, 152}, { 35, 151}}, //20 right 1
+	{Chara_ArcMain_Rightb0, { 88,   0,  89, 152}, { 32, 152}}, //21 right 2
+	{Chara_ArcMain_Rightb1, {  0,   0,  90, 155}, { 41, 153}}, //22 right 1
+	{Chara_ArcMain_Rightb1, { 91,   0,  89, 154}, { 39, 153}}, //23 right 2
+
+	{Chara_ArcMain_Spec0, {  0,   0, 100, 154}, { 54, 153}}, //23 right 2
+	{Chara_ArcMain_Spec0, {100,   0, 104, 154}, { 55, 153}}, //23 right 2
+	{Chara_ArcMain_Spec1, {  0,   0, 106, 160}, { 55, 158}}, //23 right 2
+	{Chara_ArcMain_Spec1, {106,   0, 119, 156}, { 55, 155}}, //23 right 2
+	{Chara_ArcMain_Spec2, {  0,   0, 115, 156}, { 55, 155}}, //23 right 2
+	{Chara_ArcMain_Spec2, {115,   0, 123, 157}, { 54, 155}}, //23 right 2
+	{Chara_ArcMain_Spec3, {  0,   0, 123, 157}, { 55, 155}}, //23 right 2
+	{Chara_ArcMain_Spec3, {123,   0, 121, 157}, { 0, 155}}, //23 right 2
+
+
+
 };
 
 static const Animation char_chara_anim[CharAnim_Max] = {
@@ -176,7 +193,7 @@ void Char_Chara_Tick(Character *character)
 	this->character.swap_i = stage.song_step  % 0xD;
 	this->character.swapdeath_i = stage.song_step *2 % 0x6;
     
-	if (stage.song_step >= 528 && stage.song_step <= 710 && stage.stage_id == StageId_1_4)
+	if (stage.song_step >= 528 && stage.song_step <= 720 && stage.stage_id == StageId_1_4)
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
 	else
 		Animatable_Animate(&character->animatable, (void*)this, Char_Chara_SetFrame);
@@ -262,6 +279,15 @@ Character *Char_Chara_New(fixed_t x, fixed_t y)
 		"upb1.tim",    //Chara_ArcMain_Up
 		"rightb0.tim", //Chara_ArcMain_Right
 		"rightb1.tim", //Chara_ArcMain_Right
+
+		"spec0.tim", //Chara_ArcMain_Right
+		"spec1.tim", 
+		"spec2.tim", 
+		"spec3.tim", 
+
+		
+		
+		
 		NULL
 	};
 	IO_Data *arc_ptr = this->arc_ptr;

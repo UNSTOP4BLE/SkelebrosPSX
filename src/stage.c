@@ -1662,8 +1662,11 @@ void Stage_Tick(void)
 		case StageState_Play:
 		{
 			#define mogus 9
+
+			
 			if (stage.stage_id == StageId_1_4)
 			{
+				/*
 				switch (stage.song_step)
 				{
 					case 280 + mogus:
@@ -1711,6 +1714,7 @@ void Stage_Tick(void)
 					
 					default: dodgesystem.dodge = false;
 				}	
+				*/
 
 				//use dodge animation
 				if (pad_state.press & INPUT_TRIGGER)
