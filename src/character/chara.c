@@ -139,14 +139,14 @@ static const Animation char_chara_anim[CharAnim_Max] = {
 static const Animation char_chara_animb[CharAnim_Max] = {
 	{2, (const u8[]){ 0+24, 1+24, 2+24, 3+24, 4+24, 5+24, 6+24, 7+24, ASCR_BACK, 1}}, //CharAnim_Idle
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
-	{2, (const u8[]){ 8, 9, 10, 11, ASCR_BACK, 1}},         //CharAnim_Left
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
-	{2, (const u8[]){ 12, 13, 14, 15, ASCR_BACK, 1}},         //CharAnim_Down
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_DownAlt
-	{2, (const u8[]){ 16, 17, 18, 19, ASCR_BACK, 1}},         //CharAnim_Up
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_UpAlt
-	{2, (const u8[]){ 20, 21, 22, 23, ASCR_BACK, 1}},         //CharAnim_Right
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_RightAlt
+	{2, (const u8[]){ 8+24, 9+24, 10+24, 11+24, ASCR_BACK, 1}},         //CharAnim_Left
+	{2, (const u8[]){ 8+24, 9+24, 10+24, 11+24, ASCR_BACK, 1}},   //CharAnim_LeftAlt
+	{2, (const u8[]){ 12+24, 13+24, 14+24, 15+24, ASCR_BACK, 1}},         //CharAnim_Down
+	{2, (const u8[]){ 12+24, 13+24, 14+24, 15+24, ASCR_BACK, 1}},   //CharAnim_DownAlt
+	{2, (const u8[]){ 16+24, 17+24, 18+24, 19+24, ASCR_BACK, 1}},         //CharAnim_Up
+	{2, (const u8[]){ 16+24, 17+24, 18+24, 19+24, ASCR_BACK, 1}},   //CharAnim_UpAlt
+	{2, (const u8[]){ 20+24, 21+24, 22+24, 23+24, ASCR_BACK, 1}},         //CharAnim_Right
+	{2, (const u8[]){ 20+24, 21+24, 22+24, 23+24, ASCR_BACK, 1}},   //CharAnim_RightAlt
 };
 
 //Chara character functions
@@ -176,7 +176,11 @@ void Char_Chara_Tick(Character *character)
 	this->character.swap_i = stage.song_step  % 0xD;
 	this->character.swapdeath_i = stage.song_step *2 % 0x6;
     
-	Animatable_Animate(&character->animatable, (void*)this, Char_Chara_SetFrame);
+	if (stage.song_step >= 528 && stage.song_step <= 710 && stage.stage_id == StageId_1_4)
+		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
+	else
+		Animatable_Animate(&character->animatable, (void*)this, Char_Chara_SetFrame);
+
 	Character_Draw(character, &this->tex, &char_chara_frame[this->frame]);
 }
 
