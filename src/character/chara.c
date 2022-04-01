@@ -134,7 +134,7 @@ static const CharFrame char_chara_frame[] = {
 	{Chara_ArcMain_Spec2, {  0,   0, 115, 156}, { 55, 155}}, //23 right 2
 	{Chara_ArcMain_Spec2, {115,   0, 123, 157}, { 54, 155}}, //23 right 2
 	{Chara_ArcMain_Spec3, {  0,   0, 123, 157}, { 55, 155}}, //23 right 2
-	{Chara_ArcMain_Spec3, {123,   0, 121, 157}, { 0, 155}}, //23 right 2
+	{Chara_ArcMain_Spec3, {123,   0, 121, 157}, { 54, 155}}, //23 right 2
 
 
 
@@ -155,7 +155,7 @@ static const Animation char_chara_anim[CharAnim_Max] = {
 
 static const Animation char_chara_animb[CharAnim_Max] = {
 	{2, (const u8[]){ 0+24, 1+24, 2+24, 3+24, 4+24, 5+24, 6+24, 7+24, ASCR_BACK, 1}}, //CharAnim_Idle
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
+	{2, (const u8[]){ 24+24, 24+24, 24+24, 25+24, 26+24, 27+24, 28+24, 29+24, 29+24, 29+24, 30+24, 31+24, 24+24, ASCR_BACK, 1}}, //CharAnim_Special
 	{2, (const u8[]){ 8+24, 9+24, 10+24, 11+24, ASCR_BACK, 1}},         //CharAnim_Left
 	{2, (const u8[]){ 8+24, 9+24, 10+24, 11+24, ASCR_BACK, 1}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 12+24, 13+24, 14+24, 15+24, ASCR_BACK, 1}},         //CharAnim_Down
@@ -185,6 +185,10 @@ void Char_Chara_Tick(Character *character)
 {
 	Char_Chara *this = (Char_Chara*)character;
 	
+	if (stage.song_step >= 208 && stage.song_step <= 209 && stage.stage_id == StageId_1_4)
+		this->character.focus_zoom = FIXED_DEC(15,10);
+	else 
+		this->character.focus_zoom = FIXED_DEC(9,10);
 	//Perform idle dance
 	if ((character->pad_held & (INPUT_LEFT | INPUT_DOWN | INPUT_UP | INPUT_RIGHT)) == 0)
 		Character_PerformIdle(character);
@@ -195,9 +199,18 @@ void Char_Chara_Tick(Character *character)
     
 	if (stage.song_step >= 528 && stage.song_step <= 720 && stage.stage_id == StageId_1_4)
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
+
+	else if (stage.song_step >= 197 && stage.song_step <= 207 && stage.stage_id == StageId_1_4)
+		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
+
+	else if (stage.song_step >= 1080 && stage.song_step <= 1088 && stage.stage_id == StageId_1_4)
+		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
+
 	else
 		Animatable_Animate(&character->animatable, (void*)this, Char_Chara_SetFrame);
-
+	
+	if ((stage.song_step == 197 && stage.stage_id == StageId_1_4) || (stage.song_step == 1080 && stage.stage_id == StageId_1_4))
+		character->set_anim(character, CharAnim_Special);
 	Character_Draw(character, &this->tex, &char_chara_frame[this->frame]);
 }
 
