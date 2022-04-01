@@ -49,6 +49,11 @@ enum
 	Chara_ArcMain_Spec2,
 	Chara_ArcMain_Spec3,
 
+	Chara_ArcMain_Knife0,
+	Chara_ArcMain_Knife1,
+	Chara_ArcMain_Knife2,
+	Chara_ArcMain_Knife3,
+
 	Chara_Arc_Max,
 };
 
@@ -136,13 +141,17 @@ static const CharFrame char_chara_frame[] = {
 	{Chara_ArcMain_Spec3, {  0,   0, 123, 157}, { 55, 155}}, //23 right 2
 	{Chara_ArcMain_Spec3, {123,   0, 121, 157}, { 54, 155}}, //23 right 2
 
-
+	{Chara_ArcMain_Knife0, {  0,   0, 106, 173}, { 61, 172}}, //23 right 2
+	{Chara_ArcMain_Knife0, {106,   0, 116, 169}, { 59, 169}}, //23 right 2
+	{Chara_ArcMain_Knife1, {  0,   0, 190, 145}, { 58, 143}}, //23 right 2
+	{Chara_ArcMain_Knife2, {  0,   0, 226, 153}, { 58, 152}}, //23 right 2
+	{Chara_ArcMain_Knife3, {  0,   0, 117, 145}, { 58, 144}}, //23 right 2
 
 };
 
 static const Animation char_chara_anim[CharAnim_Max] = {
 	{2, (const u8[]){ 0, 1, 2, 3, 4, 5, 6, 7, ASCR_BACK, 1}}, //CharAnim_Idle
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
+	{2, (const u8[]){ 32+24, 32+24, 32+24, 32+24, 33+24, 34+24, 35+24, 36+24, 36+24, 36+24, 36+24, ASCR_BACK, 1}}, //CharAnim_Special
 	{2, (const u8[]){ 8, 9, 10, 11, ASCR_BACK, 1}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
 	{2, (const u8[]){ 12, 13, 14, 15, ASCR_BACK, 1}},         //CharAnim_Down
@@ -185,6 +194,12 @@ void Char_Chara_Tick(Character *character)
 {
 	Char_Chara *this = (Char_Chara*)character;
 	
+	if (stage.song_step == 275)
+		character->set_anim(character, CharAnim_Special);
+
+
+
+
 	if (stage.song_step >= 208 && stage.song_step <= 209 && stage.stage_id == StageId_1_4)
 		this->character.focus_zoom = FIXED_DEC(15,10);
 	else 
@@ -199,13 +214,10 @@ void Char_Chara_Tick(Character *character)
     
 	if (stage.song_step >= 528 && stage.song_step <= 720 && stage.stage_id == StageId_1_4)
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
-
 	else if (stage.song_step >= 197 && stage.song_step <= 207 && stage.stage_id == StageId_1_4)
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
-
 	else if (stage.song_step >= 1080 && stage.song_step <= 1088 && stage.stage_id == StageId_1_4)
 		Animatable_Animate(&character->animatableb, (void*)this, Char_Chara_SetFrame);
-
 	else
 		Animatable_Animate(&character->animatable, (void*)this, Char_Chara_SetFrame);
 	
@@ -298,8 +310,10 @@ Character *Char_Chara_New(fixed_t x, fixed_t y)
 		"spec2.tim", 
 		"spec3.tim", 
 
-		
-		
+		"knife0.tim", //Chara_ArcMain_Right
+		"knife1.tim", 
+		"knife2.tim", 
+		"knife3.tim", 
 		
 		NULL
 	};
