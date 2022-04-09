@@ -67,7 +67,7 @@ static const u8 note_anims[4][3] = {
 //Stage definitions
 //shake stuff
 boolean noteshake;
-//other mogus stuff idk
+//oth stuff idk
 boolean nohud;
 
 #include "character/playerm.h"
@@ -1661,60 +1661,54 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
-			#define mogus 9
-
 			
 			if (stage.stage_id == StageId_1_4)
 			{
-				/*
 				switch (stage.song_step)
 				{
-					case 280 + mogus:
+					case 280:
 						dodgesystem.dodge = true;
 					break;
-					case 294 + mogus:
+					case 294:
 						dodgesystem.dodge = true;
 					break;		
-					case 310 + mogus:
+					case 310:
 						dodgesystem.dodge = true;
 					break;					
-					case 422 + mogus:
+					case 422:
 						dodgesystem.dodge = true;
 					break;				
-					case 478 + mogus:
+					case 478:
 						dodgesystem.dodge = true;
 					break;					
-					case 510 + mogus:
+					case 510:
 						dodgesystem.dodge = true;
 					break;					
-					case 912 + mogus:
+					case 912:
 						dodgesystem.dodge = true;
 					break;					
-					case 1058 + mogus:
+					case 1058:
 						dodgesystem.dodge = true;
 					break;				
-					case 1160 + mogus:
+					case 1160:
 						dodgesystem.dodge = true;
 					break;				
-					case 1193 + mogus:
+					case 1193:
 						dodgesystem.dodge = true;
 					break;					
-					case 1288 + mogus:
+					case 1288:
 						dodgesystem.dodge = true;
 					break;				
-					case 1304 + mogus:
+					case 1304:
 						dodgesystem.dodge = true;
 					break;				
-					case 1320 + mogus:
+					case 1320:
 						dodgesystem.dodge = true;
 					break;			
-					case 1468 + mogus:
+					case 1468:
 						dodgesystem.dodge = true;
 					break;				
-					
-					default: dodgesystem.dodge = false;
 				}	
-				*/
 
 				//use dodge animation
 				if (pad_state.press & INPUT_TRIGGER)
@@ -1725,17 +1719,17 @@ void Stage_Tick(void)
 				{
 					dodgesystem.dodgecooldown++;	  
 				//if bf use trigger during this cooldown he live else he die
-					if (dodgesystem.dodgecooldown >= 0 && dodgesystem.dodgecooldown <= 20)
+					if (dodgesystem.dodgecooldown >= 0 && dodgesystem.dodgecooldown <= 40)
 						{
 						if (pad_state.press & INPUT_TRIGGER)
 						dodgesystem.buttonpressed = true;
 						}
 				//bf die
-					else if (dodgesystem.dodgecooldown > 20 && dodgesystem.buttonpressed != true)
+					else if (dodgesystem.dodgecooldown > 40 && dodgesystem.buttonpressed != true)
 						stage.state = StageState_Dead;
 					
 				//reset stuff
-					if (dodgesystem.dodgecooldown > 20)
+					if (dodgesystem.dodgecooldown > 40)
 					{
 						dodgesystem.dodgecooldown = 0;
 						dodgesystem.buttonpressed = false;
@@ -1771,7 +1765,7 @@ void Stage_Tick(void)
 			else
 				nohud = 0;
 
-			//do da susi black and white mogus swap
+			//do da susi black and whi swap
 			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 640 && stage.song_step <= 1163) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 640 && stage.song_step <= 1163))
 				stage.utswap = 1;
 			else 
@@ -1792,7 +1786,7 @@ void Stage_Tick(void)
 			    white -= FIXED_MUL(whitespd, timer_dt);
 			}
 
-			//draw white flash mogus thingie
+			//draw white fla thingie
 			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 895))
 			{
 				white = FIXED_DEC(255,1);
@@ -1833,7 +1827,7 @@ void Stage_Tick(void)
 			else 
 				bonesystem.bonejuststarted = 0;
 
-			//draw white flash mogus thingie
+			//draw white fla thingie
 			if ((bonesystem.bonejuststarted == 1) || (bonesystem.buttonpresscount >= 10))
 			{
 				white = FIXED_DEC(255,1);
