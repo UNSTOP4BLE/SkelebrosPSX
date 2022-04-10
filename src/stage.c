@@ -344,6 +344,7 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 			//Hit the note
 			note->type |= NOTE_FLAG_HIT;
 			
+			if (this->character->animatable.anim != CharAnim_Special)
 			this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
 			u8 hit_type = Stage_HitNote(this, type, stage.note_scroll - note_fp);
 			this->arrow_hitan[type & 0x3] = stage.step_time;
@@ -481,6 +482,7 @@ static void Stage_SustainCheck(PlayerState *this, u8 type)
 		//Hit the note
 		note->type |= NOTE_FLAG_HIT;
 		
+		if (this->character->animatable.anim != CharAnim_Special)
 		this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
 		
 		Stage_StartVocal();
@@ -1711,17 +1713,20 @@ void Stage_Tick(void)
 				}	
 
 				//use dodge animation
-				if (pad_state.press & INPUT_TRIGGER)
-					stage.player->set_anim(stage.player, CharAnim_Up);
+				if (pad_state.press & INPUT_TRIGGER && stage.player->animatable.anim != CharAnim_Special)
+					stage.player->set_anim(stage.player, CharAnim_Special);
 
 				//dodge mechanic
 				if (dodgesystem.dodge)
 				{
+					if (dodgesystem.dodgecooldown == 0)
+					stage.opponent->set_anim(stage.opponent, CharAnim_Special);
+
 					dodgesystem.dodgecooldown++;	  
 				//if bf use trigger during this cooldown he live else he die
 					if (dodgesystem.dodgecooldown >= 0 && dodgesystem.dodgecooldown <= 40)
 						{
-						if (pad_state.press & INPUT_TRIGGER)
+						if (pad_state.press & INPUT_TRIGGER && stage.player->animatable.anim == CharAnim_Special)
 						dodgesystem.buttonpressed = true;
 						}
 				//bf die

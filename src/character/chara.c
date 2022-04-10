@@ -193,59 +193,7 @@ void Char_Chara_SetFrame(void *user, u8 frame)
 void Char_Chara_Tick(Character *character)
 {
 	Char_Chara *this = (Char_Chara*)character;
-
-	if (stage.flag & STAGE_FLAG_JUST_STEP)
-	{
-     switch (stage.song_step)
-	 {
-		case 280:
-		character->set_anim(character, CharAnim_Special);
-		break;
-		case 294:
-		character->set_anim(character, CharAnim_Special);
-		break;		
-		case 310:
-		character->set_anim(character, CharAnim_Special);
-		break;					
-		case 422:
-		character->set_anim(character, CharAnim_Special);
-		break;				
-		case 478:
-		character->set_anim(character, CharAnim_Special);
-		break;					
-		case 510:
-		character->set_anim(character, CharAnim_Special);
-		break;					
-		case 912:
-		character->set_anim(character, CharAnim_Special);
-		break;					
-		case 1058:
-		character->set_anim(character, CharAnim_Special);
-		break;				
-		case 1160:
-		character->set_anim(character, CharAnim_Special);
-		break;				
-		case 1193:
-		character->set_anim(character, CharAnim_Special);
-		break;					
-		case 1288:
-		character->set_anim(character, CharAnim_Special);
-		break;				
-		case 1304:
-		character->set_anim(character, CharAnim_Special);
-		break;				
-		case 1320:
-		character->set_anim(character, CharAnim_Special);
-		break;			
-		case 1468:
-		character->set_anim(character, CharAnim_Special);
-		break;								
-		}
-}
-
-
-
-
+	
 	if (stage.song_step >= 208 && stage.song_step <= 209 && stage.stage_id == StageId_1_4)
 		this->character.focus_zoom = FIXED_DEC(15,10);
 	else 
