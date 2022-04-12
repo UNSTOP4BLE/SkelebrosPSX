@@ -12,6 +12,7 @@ all: \
 	iso/stage/sans.tim \
 	iso/stage/chara.tim \
     iso/stage/bf.tim \
+    iso/stage/monos.tim \
 	iso/stage/hud0weeb.tim \
 	iso/bf/main.arc \
 	iso/bf/dead.arc \

@@ -125,9 +125,9 @@ void Char_gold_Tick(Character *character)
 		character->set_anim(character, CharAnim_DownAlt);
 	
 	//Animate and draw
-	this->character.number_i = 3;
-	this->character.swap_i = stage.song_step % 0x3;
-	this->character.swapdeath_i = stage.song_step % 0x3;
+	this->character.number_i = 7;
+	this->character.swap_i = stage.song_step % 0x7;
+	this->character.swapdeath_i = stage.song_step % 0x7;
 
 	Animatable_Animate(&character->animatable, (void*)this, Char_gold_SetFrame);
 	if (stage.song_step > 5 && stage.song_step < 1564)

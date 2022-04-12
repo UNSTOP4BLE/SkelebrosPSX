@@ -45,6 +45,7 @@
 				<file name = "sans.tim" type = "data" source = "iso/stage/sans.tim"/>
 				<file name = "chara.tim" type = "data" source = "iso/stage/chara.tim"/>
                 <file name = "bf.tim" type = "data" source = "iso/stage/bf.tim"/>
+                <file name = "monos.tim" type = "data" source = "iso/stage/monos.tim"/>
             </dir>
 			
 			<!-- Week 1 assets -->
@@ -110,10 +111,10 @@
 
 			<!-- Character assets -->
 			<dir name = "char">
-			<!-- Boyfriend And Chara assets -->
+			    <!-- Boyfriend And Chara assets -->
 				<file name = "playerm.arc" type = "data" source = "iso/playerm/main.arc"/>
 
-			<!-- Sans And Papyruss assets -->
+			    <!-- Sans And Papyruss assets -->
 				<file name = "spm.arc" type = "data" source = "iso/oppom/main.arc"/>
 
 				<!-- Boyfriend assets -->
