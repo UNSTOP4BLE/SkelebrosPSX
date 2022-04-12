@@ -41,6 +41,12 @@ enum
 	BF_ArcIdle_BF0,
 	BF_ArcIdle_BF1,
 	BF_ArcIdle_BF2,
+
+	BF_ArcIdle_Max,
+};
+
+enum
+{
 	BF_ArcMain_BF3,
 	BF_ArcMain_BF4,
 	BF_ArcMain_BF5,
@@ -68,7 +74,7 @@ typedef struct
 	Character character;
 	
 	//Render data and state
-	IO_Data arc_main, arc_idle, arc_dead;
+	IO_Data arc_idle, arc_main, arc_dead;
 	CdlFILE file_dead_arc; //dead.arc file position
 	IO_Data arc_ptr[BF_Arc_Max];
 	
@@ -348,10 +354,13 @@ void Char_BF_SetAnim(Character *character, u8 anim)
 			break;
 		case PlayerAnim_Dead2:
 			//Unload main.arc
+			Mem_Free(this->arc_idle);
 			Mem_Free(this->arc_main);
+			
 			this->arc_main = this->arc_dead;
 			this->arc_dead = NULL;
-			
+			this->arc_idle = NULL;
+
 			//Find dead.arc files
 			const char **pathp = (const char *[]){
 				"dead1.tim", //BF_ArcDead_Dead1
@@ -378,8 +387,8 @@ void Char_BF_Free(Character *character)
 	Char_BF *this = (Char_BF*)character;
 	
 	//Free art
-	Mem_Free(this->arc_main);
 	Mem_Free(this->arc_idle);
+	Mem_Free(this->arc_main);
 	Mem_Free(this->arc_dead);
 }
 
@@ -410,16 +419,14 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 	this->character.focus_x = FIXED_DEC(-45,1);
 	this->character.focus_y =  FIXED_DEC(-85,1);
 	this->character.focus_zoom = FIXED_DEC(9,10);
-	
+
 	//Load art
+	this->arc_idle = NULL;
 	this->arc_main = IO_Read("\\CHAR\\BF.ARC;1");
 	this->arc_dead = NULL;
 	IO_FindFile(&this->file_dead_arc, "\\CHAR\\BFDEAD.ARC;1");
 	
 	const char **pathp = (const char *[]){
-		"bf0.tim",   //BF_ArcMain_BF0
-		"bf1.tim",   //BF_ArcMain_BF1
-		"bf2.tim",   //BF_ArcMain_BF2
 		"bf3.tim",   //BF_ArcMain_BF3
 		"bf4.tim",   //BF_ArcMain_BF4
 		"bf5.tim",   //BF_ArcMain_BF5
@@ -431,7 +438,9 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 	IO_Data *arc_ptr = this->arc_ptr;
 	for (; *pathp != NULL; pathp++)
 		*arc_ptr++ = Archive_Find(this->arc_main, *pathp);
-	
+
+		
+		
 	//Load scene specific art
 	switch (stage.stage_id)
 	{
@@ -445,7 +454,7 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 				"bfb2.tim", //BF_ArcIdle_2
 				NULL
 			};
-			IO_Data *arc_ptr = &this->arc_ptr[BF_ArcIdle_BF0];
+			IO_Data *arc_ptr = this->arc_ptr;
 			for (; *pathp != NULL; pathp++)
 				*arc_ptr++ = Archive_Find(this->arc_idle, *pathp);
 			break;
@@ -460,13 +469,13 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 				"bf2.tim", //BF_ArcIdle_2
 				NULL
 			};
-			IO_Data *arc_ptr = &this->arc_ptr[BF_ArcIdle_BF0];
+			IO_Data *arc_ptr = this->arc_ptr;
 			for (; *pathp != NULL; pathp++)
 				*arc_ptr++ = Archive_Find(this->arc_idle, *pathp);
 			break;
 		}
 	}
-
+	
 	//Initialize render state
 	this->tex_id = this->frame = 0xFF;
 	
