@@ -201,7 +201,7 @@ typedef struct
 	u32 offset;
 	
 	//HUD textures
-	Gfx_Tex tex_hud0, tex_hud1, tex_sans;
+	Gfx_Tex tex_hud0, tex_hud1, tex_bf;
 	
 	//Stage data
 	const StageDef *stage_def;
@@ -305,6 +305,7 @@ typedef struct
 } DodgeSystem;
 
 extern BoneSystem bonesystem;
+extern DodgeSystem dodgesystem;
 
 //Stage drawing functions
 void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_t zoom, u8 r, u8 g, u8 b);

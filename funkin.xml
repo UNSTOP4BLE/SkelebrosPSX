@@ -44,8 +44,8 @@
 				<file name = "hud1.tim" type = "data" source = "iso/stage/hud1.tim"/>
 				<file name = "sans.tim" type = "data" source = "iso/stage/sans.tim"/>
 				<file name = "chara.tim" type = "data" source = "iso/stage/chara.tim"/>
-				<file name = "hud0weeb.tim" type = "data" source = "iso/stage/hud0weeb.tim"/>
-			</dir>
+                <file name = "bf.tim" type = "data" source = "iso/stage/bf.tim"/>
+            </dir>
 			
 			<!-- Week 1 assets -->
 			<dir name = "week1">

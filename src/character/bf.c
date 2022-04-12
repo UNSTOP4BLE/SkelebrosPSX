@@ -221,9 +221,9 @@ void Char_BF_Tick(Character *character)
 			character->set_anim(character, CharAnim_Idle);
 	}
     
-	this->character.number_i = 3;
-	this->character.swap_i = stage.song_step % 0x3;
-	this->character.swapdeath_i = stage.song_step % 0x3;
+	this->character.number_i = 1;
+	this->character.swap_i = stage.song_step % 0x1;
+	this->character.swapdeath_i = stage.song_step *2 % 0x1;
 
 	
 	//Retry screen
@@ -328,7 +328,7 @@ void Char_BF_Tick(Character *character)
 	
 	//Animate and draw character
 	Animatable_Animate(&character->animatable, (void*)this, Char_BF_SetFrame);
-	if (character->animatable.anim < PlayerAnim_LeftMiss && stage.state == StageState_Play|| stage.state != StageState_Play || animf_count & 2 )
+	if ((character->animatable.anim < PlayerAnim_LeftMiss && stage.state == StageState_Play) || (stage.state != StageState_Play) || (animf_count & 2))
 	Character_Draw(character, &this->tex, &char_bf_frame[this->frame]);
 }
 
@@ -404,7 +404,7 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 	//Set character information
 	this->character.spec = CHAR_SPEC_MISSANIM;
 
-	this->character.health_i = stage.tex_sans;
+	this->character.health_i = stage.tex_bf;
 	
 	this->character.focus_x = FIXED_DEC(-45,1);
 	this->character.focus_y =  FIXED_DEC(-85,1);

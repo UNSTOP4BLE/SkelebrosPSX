@@ -239,7 +239,7 @@ Character *Char_sans_New(fixed_t x, fixed_t y)
 	//Set character information
 	this->character.spec = 0;
 	
-	this->character.health_i = stage.tex_sans;
+	this->character.health_i = stage.tex_hud1;
 	
 	this->character.focus_x = FIXED_DEC(65,1);
 	this->character.focus_y = FIXED_DEC(-103,1);

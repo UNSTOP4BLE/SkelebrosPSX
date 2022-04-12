@@ -26,7 +26,6 @@
 //#define STAGE_FREECAM //Freecam
 
 //normal note x
-//normal note x
 static int note_x[8] = {
 	//BF
 	 FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4),
@@ -61,8 +60,8 @@ static const u8 note_anims[4][3] = {
 	{CharAnim_Right, CharAnim_RightAlt, PlayerAnim_RightMiss},
 };  	
 
-	fixed_t white,whitespd;
-	fixed_t black,blackspd;
+fixed_t white,whitespd;
+fixed_t black,blackspd;
     
 //Stage definitions
 //shake stuff
@@ -660,7 +659,7 @@ void Stage_DrawTexCol(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixe
 	else
 	{
 		//Don't draw if HUD and is disabled
-		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1 || tex == &stage.tex_sans)
+		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
 		{
 			if (nohud)
 				return;
@@ -703,9 +702,8 @@ void Stage_BlendTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_
 		//Handle HUD drawing
 		if (tex == &stage.tex_hud0)
 		{
-			#ifdef STAGE_NOHUD
+			if (nohud)
 				return;
-			#endif
 			if (src->y >= 128 && src->y < 224)
 			{
 				//Pixel perfect scrolling
@@ -717,9 +715,8 @@ void Stage_BlendTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_
 		}
 		else if (tex == &stage.tex_hud1)
 		{
-			#ifdef STAGE_NOHUD
+			if (nohud)
 				return;
-			#endif
 		}
 		else
 		{
@@ -735,9 +732,8 @@ void Stage_BlendTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_
 		//Don't draw if HUD and is disabled
 		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
 		{
-			#ifdef STAGE_NOHUD
+			if (nohud)
 				return;
-			#endif
 		}
 	}
 	
@@ -764,7 +760,7 @@ void Stage_DrawTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, cons
 {
 	//Don't draw if HUD and HUD is disabled
 	if (nohud)
-		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1  || tex == &stage.tex_sans)
+		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
 			return;
 	
 	//Get screen-space points
@@ -780,7 +776,7 @@ void Stage_BlendTexArb(Gfx_Tex *tex, const RECT *src, const POINT_FIXED *p0, con
 {
 	//Don't draw if HUD and HUD is disabled
 	if (nohud)
-		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1  || tex == &stage.tex_sans)
+		if (tex == &stage.tex_hud0 || tex == &stage.tex_hud1)
 			return;
 
 	//Get screen-space points
@@ -801,19 +797,18 @@ static void Stage_DrawHealth(s16 health, Gfx_Tex i, s8 ox, s16 swap_icon, s16 sw
     
 	//animate code
 	if (stage.song_step >= 1)
-{
-	if ((ox < 0 && health < 18000)|| (ox > 0 && health > 2000))
-	animicons = (stage.utswap) ? (swap_icon + number *2)*50 : swap_icon*50;
+    {
+        if ((ox < 0 && health < 18000)|| (ox > 0 && health > 2000))
+            animicons = (stage.utswap) ? (swap_icon + number *2)*50 : swap_icon*50;
+        else
+            animicons =  (stage.utswap) ? (swap_deathicon + number*3)*50 : (number + swap_deathicon)*50;
 
-	else
-    animicons =  (stage.utswap) ? (swap_deathicon + number*3)*50 : (number + swap_deathicon)*50;
-
-	while (animicons > 200)
-	 {
-	  animicons -= 250;
-	  animicony += 50;
-	 }
-}
+        while (animicons > 200)
+        {
+            animicons -= 250;
+            animicony += 50;
+        }
+    }
 
     //FntPrint("Ded %d", animicons);
 
@@ -840,7 +835,7 @@ static void Stage_DrawHealth(s16 health, Gfx_Tex i, s8 ox, s16 swap_icon, s16 sw
 
 	//Draw health icon
 	if (!(nohud))
-	Stage_DrawTex(&i, &src, &dst, FIXED_MUL(stage.bump, stage.sbump));
+	    Stage_DrawTex(&i, &src, &dst, FIXED_MUL(stage.bump, stage.sbump));
 }
 
 static void Stage_DrawStrum(u8 i, RECT *note_src, RECT_FIXED *note_dst)
@@ -1385,15 +1380,16 @@ void Stage_Load(StageId id, StageDiff difficulty, boolean story)
 	stage.story = story;
 	
 	//Load HUD textures
-	if (id >= StageId_6_1 && id <= StageId_6_3)
-		Gfx_LoadTex(&stage.tex_hud0, IO_Read("\\STAGE\\HUD0WEEB.TIM;1"), GFX_LOADTEX_FREE);
+	Gfx_LoadTex(&stage.tex_hud0, IO_Read("\\STAGE\\HUD0.TIM;1"), GFX_LOADTEX_FREE);
+	
+    if (((id == StageId_1_2) || (id == StageId_1_3)) || ((id == StageId_1_2Chara) || (id == StageId_1_3Chara)))
+    	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\SANS.TIM;1"), GFX_LOADTEX_FREE);
+    else if (id == StageId_1_4)
+    	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\CHARA.TIM;1"), GFX_LOADTEX_FREE);
 	else
-		Gfx_LoadTex(&stage.tex_hud0, IO_Read("\\STAGE\\HUD0.TIM;1"), GFX_LOADTEX_FREE);
-	if (id == StageId_1_4)
-	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\CHARA.TIM;1"), GFX_LOADTEX_FREE);
-	else
-	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\HUD1.TIM;1"), GFX_LOADTEX_FREE);
-	Gfx_LoadTex(&stage.tex_sans, IO_Read("\\STAGE\\SANS.TIM;1"), GFX_LOADTEX_FREE);
+	    Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\HUD1.TIM;1"), GFX_LOADTEX_FREE);
+    Gfx_LoadTex(&stage.tex_bf, IO_Read("\\STAGE\\BF.TIM;1"), GFX_LOADTEX_FREE);
+	
 	
 	//Load stage background
 	Stage_LoadStage();
@@ -1664,7 +1660,7 @@ void Stage_Tick(void)
 		case StageState_Play:
 		{
 			
-			if (stage.stage_id == StageId_1_4)
+			if (stage.stage_id == StageId_1_4 && stage.botplay == 0)
 			{
 				switch (stage.song_step)
 				{

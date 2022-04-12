@@ -188,9 +188,18 @@ void Char_Dad_Tick(Character *character)
 
 	Character_Draw(character, &this->tex, &char_dad_frame[this->frame]);
 
-	this->character.number_i = 3;
-	this->character.swap_i = stage.song_step % 0x3;
-	this->character.swapdeath_i = stage.song_step % 0x6;
+    if (stage.song_step >= 336 && stage.song_step <= 895)
+    {
+        this->character.number_i = 13;
+        this->character.swap_i = 10 + stage.song_step % 0x3;
+        this->character.swapdeath_i = stage.song_step % 0x6;
+    }
+    else
+    {
+        this->character.number_i = 3;
+        this->character.swap_i = stage.song_step % 0x3; 
+        this->character.swapdeath_i = stage.song_step % 0x6;
+    }
 }
 
 void Char_Dad_SetAnim(Character *character, u8 anim)
