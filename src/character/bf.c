@@ -35,18 +35,11 @@ static SkullFragment char_bf_skull[15] = {
 	{26 * 8, -67 * 8, 15, -3},
 };
 
-//Boyfriend player types
 enum
 {
-	BF_ArcIdle_BF0,
-	BF_ArcIdle_BF1,
-	BF_ArcIdle_BF2,
-
-	BF_ArcIdle_Max,
-};
-
-enum
-{
+    BF_ArcMain_BF0,
+	BF_ArcMain_BF1,
+	BF_ArcMain_BF2,
 	BF_ArcMain_BF3,
 	BF_ArcMain_BF4,
 	BF_ArcMain_BF5,
@@ -74,7 +67,7 @@ typedef struct
 	Character character;
 	
 	//Render data and state
-	IO_Data arc_idle, arc_main, arc_dead;
+	IO_Data arc_main, arc_dead;
 	CdlFILE file_dead_arc; //dead.arc file position
 	IO_Data arc_ptr[BF_Arc_Max];
 	
@@ -89,19 +82,19 @@ typedef struct
 
 //Boyfriend player definitions
 static const CharFrame char_bf_frame[] = {
-	{BF_ArcIdle_BF0, {  8,   0,  94,  99}, { 50,  93}}, //0 idle 1
-	{BF_ArcIdle_BF0, {114,   0,  91,  99}, { 48,  93}}, //1 idle 2
-	{BF_ArcIdle_BF0, { 12, 102,  91,  99}, { 47,  93}}, //2 idle 3
-	{BF_ArcIdle_BF0, {108, 101,  97, 103}, { 53,  97}}, //3 idle 4
-	{BF_ArcIdle_BF1, {  4,   1,  98, 103}, { 54,  97}}, //4 idle 5
-	{BF_ArcIdle_BF2, {  1,   4, 101, 103}, { 57,  97}}, //5 idle 6
-	{BF_ArcIdle_BF2, {106,   4, 101, 103}, { 56,  97}}, //6 idle 7
-	{BF_ArcIdle_BF2, {  1, 111, 100, 103}, { 56,  97}}, //7 idle 8
-	{BF_ArcIdle_BF2, {106, 111, 100, 103}, { 56,  97}}, //8 idle 9
+	{BF_ArcMain_BF0, {  8,   0,  94,  99}, { 50,  93}}, //0 idle 1
+	{BF_ArcMain_BF0, {114,   0,  91,  99}, { 48,  93}}, //1 idle 2
+	{BF_ArcMain_BF0, { 12, 102,  91,  99}, { 47,  93}}, //2 idle 3
+	{BF_ArcMain_BF0, {108, 101,  97, 103}, { 53,  97}}, //3 idle 4
+	{BF_ArcMain_BF1, {  4,   1,  98, 103}, { 54,  97}}, //4 idle 5
+	{BF_ArcMain_BF2, {  1,   4, 101, 103}, { 57,  97}}, //5 idle 6
+	{BF_ArcMain_BF2, {106,   4, 101, 103}, { 56,  97}}, //6 idle 7
+	{BF_ArcMain_BF2, {  1, 111, 100, 103}, { 56,  97}}, //7 idle 8
+	{BF_ArcMain_BF2, {106, 111, 100, 103}, { 56,  97}}, //8 idle 9
 	
-	{BF_ArcIdle_BF1, {105,   1,  96, 101}, { 58,  96}}, //9 left 1
-	{BF_ArcIdle_BF1, {  1, 107,  93, 101}, { 56,  95}}, //10 left 2
-	{BF_ArcIdle_BF1, {109, 107,  93, 101}, { 55,  95}}, //11 left 3
+	{BF_ArcMain_BF1, {105,   1,  96, 101}, { 58,  96}}, //9 left 1
+	{BF_ArcMain_BF1, {  1, 107,  93, 101}, { 56,  95}}, //10 left 2
+	{BF_ArcMain_BF1, {109, 107,  93, 101}, { 55,  95}}, //11 left 3
 	{BF_ArcMain_BF3, {  2,   1,  93, 101}, { 55,  96}}, //12 left 4
 	
 	{BF_ArcMain_BF3, { 99,  13,  94,  89}, { 56,  84}}, //13 down 1
@@ -354,12 +347,10 @@ void Char_BF_SetAnim(Character *character, u8 anim)
 			break;
 		case PlayerAnim_Dead2:
 			//Unload main.arc
-			Mem_Free(this->arc_idle);
 			Mem_Free(this->arc_main);
 			
 			this->arc_main = this->arc_dead;
 			this->arc_dead = NULL;
-			this->arc_idle = NULL;
 
 			//Find dead.arc files
 			const char **pathp = (const char *[]){
@@ -387,7 +378,6 @@ void Char_BF_Free(Character *character)
 	Char_BF *this = (Char_BF*)character;
 	
 	//Free art
-	Mem_Free(this->arc_idle);
 	Mem_Free(this->arc_main);
 	Mem_Free(this->arc_dead);
 }
@@ -421,23 +411,6 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 	this->character.focus_zoom = FIXED_DEC(9,10);
 
 	//Load art
-	this->arc_idle = NULL;
-	this->arc_main = IO_Read("\\CHAR\\BF.ARC;1");
-	this->arc_dead = NULL;
-	IO_FindFile(&this->file_dead_arc, "\\CHAR\\BFDEAD.ARC;1");
-	
-	const char **pathp = (const char *[]){
-		"bf3.tim",   //BF_ArcMain_BF3
-		"bf4.tim",   //BF_ArcMain_BF4
-		"bf5.tim",   //BF_ArcMain_BF5
-		"bf6.tim",   //BF_ArcMain_BF6
-		"bf7.tim",   //BF_ArcMain_BF7
-		"dead0.tim", //BF_ArcMain_Dead0
-		NULL
-	};
-	IO_Data *arc_ptr = this->arc_ptr;
-	for (; *pathp != NULL; pathp++)
-		*arc_ptr++ = Archive_Find(this->arc_main, *pathp);
 
 		
 		
@@ -446,33 +419,49 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 	{
 		case StageId_1_4:
 		{
-			this->arc_idle = IO_Read("\\CHAR\\IDLEB.ARC;1");
-			
-			const char **pathp = (const char *[]){
-				"bfb0.tim", //BF_ArcIdle_0
-				"bfb1.tim", //BF_ArcIdle_1
-				"bfb2.tim", //BF_ArcIdle_2
-				NULL
-			};
-			IO_Data *arc_ptr = this->arc_ptr;
-			for (; *pathp != NULL; pathp++)
-				*arc_ptr++ = Archive_Find(this->arc_idle, *pathp);
-			break;
+			this->arc_main = IO_Read("\\CHAR\\BF.ARC;1");
+            this->arc_dead = NULL;
+            IO_FindFile(&this->file_dead_arc, "\\CHAR\\BFDEAD.ARC;1");
+            
+            const char **pathp = (const char *[]){
+                "bf0.tim", //BF_ArcIdle_0
+                "bf1.tim", //BF_ArcIdle_1
+                "bf2.tim", //BF_ArcIdle_2
+                "bf3.tim",   //BF_ArcMain_BF3
+                "bf4.tim",   //BF_ArcMain_BF4
+                "bf5.tim",   //BF_ArcMain_BF5
+                "bf6.tim",   //BF_ArcMain_BF6
+                "bf7.tim",   //BF_ArcMain_BF7
+                "dead0.tim", //BF_ArcMain_Dead0
+                NULL
+            };
+            IO_Data *arc_ptr = this->arc_ptr;
+            for (; *pathp != NULL; pathp++)
+                *arc_ptr++ = Archive_Find(this->arc_main, *pathp);
+            break;
 		}
 		default:
 		{
-			this->arc_idle = IO_Read("\\CHAR\\IDLE.ARC;1");
-			
-			const char **pathp = (const char *[]){
-				"bf0.tim", //BF_ArcIdle_0
-				"bf1.tim", //BF_ArcIdle_1
-				"bf2.tim", //BF_ArcIdle_2
-				NULL
-			};
-			IO_Data *arc_ptr = this->arc_ptr;
-			for (; *pathp != NULL; pathp++)
-				*arc_ptr++ = Archive_Find(this->arc_idle, *pathp);
-			break;
+			this->arc_main = IO_Read("\\CHAR\\BF.ARC;1");
+            this->arc_dead = NULL;
+            IO_FindFile(&this->file_dead_arc, "\\CHAR\\BFDEAD.ARC;1");
+            
+            const char **pathp = (const char *[]){
+                "bf0.tim", //BF_ArcIdle_0
+                "bf1.tim", //BF_ArcIdle_1
+                "bf2.tim", //BF_ArcIdle_2
+                "bf3.tim",   //BF_ArcMain_BF3
+                "bf4.tim",   //BF_ArcMain_BF4
+                "bf5.tim",   //BF_ArcMain_BF5
+                "bf6.tim",   //BF_ArcMain_BF6
+                "bf7.tim",   //BF_ArcMain_BF7
+                "dead0.tim", //BF_ArcMain_Dead0
+                NULL
+            };
+            IO_Data *arc_ptr = this->arc_ptr;
+            for (; *pathp != NULL; pathp++)
+                *arc_ptr++ = Archive_Find(this->arc_main, *pathp);
+            break;
 		}
 	}
 	
