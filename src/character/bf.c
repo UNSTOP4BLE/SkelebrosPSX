@@ -419,14 +419,14 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
 	{
 		case StageId_1_4:
 		{
-			this->arc_main = IO_Read("\\CHAR\\BF.ARC;1");
+			this->arc_main = IO_Read("\\CHAR\\BFB.ARC;1");
             this->arc_dead = NULL;
             IO_FindFile(&this->file_dead_arc, "\\CHAR\\BFDEAD.ARC;1");
             
             const char **pathp = (const char *[]){
-                "bf0.tim", //BF_ArcIdle_0
-                "bf1.tim", //BF_ArcIdle_1
-                "bf2.tim", //BF_ArcIdle_2
+                "bfb0.tim", //BF_ArcIdle_0
+                "bfb1.tim", //BF_ArcIdle_1
+                "bfb2.tim", //BF_ArcIdle_2
                 "bf3.tim",   //BF_ArcMain_BF3
                 "bf4.tim",   //BF_ArcMain_BF4
                 "bf5.tim",   //BF_ArcMain_BF5
