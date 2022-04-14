@@ -1808,7 +1808,7 @@ void Stage_Tick(void)
 				//button press stuff
 				if (pad_state.press & INPUT_TRIGGER && bonesystem.buttonpresscooldown == 0)
 				{	
-					stage.player->set_anim(stage.player, CharAnim_Down);
+					stage.player->set_anim(stage.player, CharAnim_LeftAlt);
 					bonesystem.buttonpresscount ++;
 					bonesystem.buttonpresscooldown = 1;
 				}

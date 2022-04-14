@@ -195,19 +195,19 @@ static const CharFrame char_bfsans_frame[] = {
 	{BFSans_ArcMain_BFBSans7, {100, 109, 101, 108}, { 43+3, 101+3}}, //30 right miss 2
 
 	//bonez               
-	{BFSans_ArcMain_BFBone0, {  0, 0, 136, 144}, { 0, 0}}, //74 right miss 1
-	{BFSans_ArcMain_BFBone1, {  0, 0, 135, 144}, { 0, 0}}, //75 right miss 2
-	{BFSans_ArcMain_BFBone2, {  0, 0, 145, 146}, { 0, 0}}, //76 right miss 1
-	{BFSans_ArcMain_BFBone3, {  0, 0, 135, 144}, { 0, 0}}, //77 right miss 2
-	{BFSans_ArcMain_BFBone4, {  0, 0, 136, 145}, { 0, 0}}, //78 right miss 1
-	{BFSans_ArcMain_BFBone5, {  0, 0, 135, 144}, { 0, 0}}, //79 right miss 2
-	{BFSans_ArcMain_BFBone6, {  0, 0, 135, 144}, { 0, 0}}, //80 right miss 1
+	{BFSans_ArcMain_BFBone0, {  0, 0, 136, 144}, {110, 134}}, //74 right miss 1
+	{BFSans_ArcMain_BFBone1, {  0, 0, 135, 144}, {108, 135}}, //75 right miss 2
+	{BFSans_ArcMain_BFBone2, {  0, 0, 145, 146}, {109, 136}}, //76 right miss 1
+	{BFSans_ArcMain_BFBone3, {  0, 0, 135, 144}, {109, 135}}, //77 right miss 2
+	{BFSans_ArcMain_BFBone4, {  0, 0, 136, 145}, {109, 135}}, //78 right miss 1
+	{BFSans_ArcMain_BFBone5, {  0, 0, 135, 144}, {109, 135}}, //79 right miss 2
+	{BFSans_ArcMain_BFBone6, {  0, 0, 135, 144}, {108, 135}}, //80 right miss 1
 
 };
 
 static const Animation char_bfsans_anim[PlayerAnim_Max] = {
 	{2, (const u8[]){ 0,  1,  2,  3,  4,  5,  6,  7,  8, ASCR_BACK, 1}}, //CharAnim_Idle
-	{2, (const u8[]){78, 79, 80, ASCR_CHGANI, CharAnim_Special}},       //CharAnim_Special
+	{2, (const u8[]){ 78, 79, 80, ASCR_BACK,  1}},       //CharAnim_Special
 	{2, (const u8[]){ 9, 10, 11, 12, ASCR_BACK, 1}},             //CharAnim_Left
 	{2, (const u8[]){74, 75, 76, 77, ASCR_CHGANI, CharAnim_Special}},       //CharAnim_LeftAlt
 	{2, (const u8[]){13, 14, 15, 16, ASCR_BACK, 1}},             //CharAnim_Down
@@ -301,7 +301,7 @@ void Char_BFSans_Tick(Character *character)
 	if (stage.flag & STAGE_FLAG_JUST_STEP)
 	{
 		//Perform idle dance
-		if (Animatable_Ended(&character->animatable) &&
+		if ((Animatable_Ended(&character->animatable) || Animatable_Ended(&character->animatableb)) &&
 			(character->animatable.anim != CharAnim_Left &&
 		     character->animatable.anim != CharAnim_LeftAlt &&
 		     character->animatable.anim != PlayerAnim_LeftMiss &&
@@ -315,24 +315,8 @@ void Char_BFSans_Tick(Character *character)
 		     character->animatable.anim != CharAnim_RightAlt &&
 		     character->animatable.anim != PlayerAnim_RightMiss) &&
 			(stage.song_step & 0x7) == 0)
-			character->set_anim(character, CharAnim_Idle);
-		//Perform idle dance
-		if (Animatable_Ended(&character->animatableb) &&
-			(character->animatable.anim != CharAnim_Left &&
-		     character->animatable.anim != CharAnim_LeftAlt &&
-		     character->animatable.anim != PlayerAnim_LeftMiss &&
-		     character->animatable.anim != CharAnim_Down &&
-		     character->animatable.anim != CharAnim_DownAlt &&
-		     character->animatable.anim != PlayerAnim_DownMiss &&
-		     character->animatable.anim != CharAnim_Up &&
-		     character->animatable.anim != CharAnim_UpAlt &&
-		     character->animatable.anim != PlayerAnim_UpMiss &&
-		     character->animatable.anim != CharAnim_Right &&
-		     character->animatable.anim != CharAnim_RightAlt &&
-		     character->animatable.anim != PlayerAnim_RightMiss) &&
-			(stage.song_step & 0x7) == 0)
-			character->set_anim(character, CharAnim_Idle);
-	}
+			character->set_anim(character, (bonesystem.bone == 1 && bonesystem.buttonpresscount != 10 ) ? CharAnim_Special : CharAnim_Idle);
+}
 
 	this->character.number_i = 1;
 	this->character.swap_i = stage.song_step % 0x1;
