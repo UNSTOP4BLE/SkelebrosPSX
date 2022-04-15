@@ -1663,12 +1663,13 @@ void Stage_Tick(void)
 		case StageState_Play:
 		{
 			//Pick what healthbar to use
-			if (stage.utswap && stage.stage_id == StageId_1_3Chara)
-				healthtopy = 222;
-			else if (stage.utswap && stage.stage_id == StageId_1_3)
+            if (stage.utswap == 0 && (stage.stage_id == StageId_1_2Chara || stage.stage_id == StageId_1_3Chara))
+                healthtopy = 206;
+            else if ((stage.utswap == 0 && stage.stage_id == StageId_1_1Chara) || (stage.utswap && stage.stage_id == StageId_1_3))
 				healthtopy = 239;
-			if (stage.utswap == 0 && (stage.stage_id == StageId_1_3Chara || stage.stage_id == StageId_1_2Chara))
-				healthtopy = 206;
+            else if (stage.utswap && stage.stage_id == StageId_1_3Chara)
+				healthtopy = 222;
+            
 			else
 				healthtopy = 0;
 
