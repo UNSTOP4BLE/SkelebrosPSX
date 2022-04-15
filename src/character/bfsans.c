@@ -62,7 +62,13 @@ enum
 	BFSans_ArcMain_BFBone4,
 	BFSans_ArcMain_BFBone5,
 	BFSans_ArcMain_BFBone6,
-
+	BFSans_ArcMain_BFBoneb0,
+	BFSans_ArcMain_BFBoneb1,
+	BFSans_ArcMain_BFBoneb2,
+	BFSans_ArcMain_BFBoneb3,
+	BFSans_ArcMain_BFBoneb4,
+	BFSans_ArcMain_BFBoneb5,
+	BFSans_ArcMain_BFBoneb6,
 
 	BFSans_ArcMain_Max,
 };
@@ -203,6 +209,14 @@ static const CharFrame char_bfsans_frame[] = {
 	{BFSans_ArcMain_BFBone5, {  0, 0, 135, 144}, {109, 135}}, //79 right miss 2
 	{BFSans_ArcMain_BFBone6, {  0, 0, 135, 144}, {108, 135}}, //80 right miss 1
 
+	{BFSans_ArcMain_BFBoneb0, {  0, 0, 136, 144}, {110, 134}}, //74 right miss 1
+	{BFSans_ArcMain_BFBoneb1, {  0, 0, 135, 144}, {108, 135}}, //75 right miss 2
+	{BFSans_ArcMain_BFBoneb2, {  0, 0, 145, 146}, {109, 136}}, //76 right miss 1
+	{BFSans_ArcMain_BFBoneb3, {  0, 0, 135, 144}, {109, 135}}, //77 right miss 2
+	{BFSans_ArcMain_BFBoneb4, {  0, 0, 136, 145}, {109, 135}}, //78 right miss 1
+	{BFSans_ArcMain_BFBoneb5, {  0, 0, 135, 144}, {109, 135}}, //79 right miss 2
+	{BFSans_ArcMain_BFBoneb6, {  0, 0, 135, 144}, {108, 135}}, //80 right miss 1
+
 };
 
 static const Animation char_bfsans_anim[PlayerAnim_Max] = {
@@ -238,9 +252,9 @@ static const Animation char_bfsans_anim[PlayerAnim_Max] = {
 
 static const Animation char_bfsans_animb[PlayerAnim_Max] = {
 	{2, (const u8[]){ 43,  44,  45,  46,  47,  48,  49,  50,  51, ASCR_BACK, 1}}, //CharAnim_Idle
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_Special
+	{2, (const u8[]){85, 86, 87, ASCR_BACK, 1}},       //CharAnim_Special
 	{2, (const u8[]){ 52, 53, 54, 55, ASCR_BACK, 1}},             //CharAnim_Left
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_LeftAlt
+	{2, (const u8[]){81, 82, 83, 84, ASCR_CHGANI, CharAnim_Special}},       //CharAnim_LeftAlt
 	{2, (const u8[]){56, 57, 58, 59, ASCR_BACK, 1}},             //CharAnim_Down
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_DownAlt
 	{2, (const u8[]){60, 61, 62, ASCR_BACK, 1}},             //CharAnim_Up
@@ -316,7 +330,7 @@ void Char_BFSans_Tick(Character *character)
 		     character->animatable.anim != PlayerAnim_RightMiss) &&
 			(stage.song_step & 0x7) == 0)
 			character->set_anim(character, (bonesystem.bone == 1 && bonesystem.buttonpresscount != 10 ) ? CharAnim_Special : CharAnim_Idle);
-}
+	}
 
 	this->character.number_i = 1;
 	this->character.swap_i = stage.song_step % 0x1;
@@ -541,6 +555,14 @@ Character *Char_BFSans_New(fixed_t x, fixed_t y)
 		"bone4.tim", 
 		"bone5.tim",
 		"bone6.tim",  
+		"boneb0.tim",  
+		"boneb1.tim", 
+		"boneb2.tim", 
+		"boneb3.tim", 
+		"boneb4.tim", 
+		"boneb5.tim",
+		"boneb6.tim", 
+
 		NULL
 	};
 	IO_Data *arc_ptr = this->arc_ptr;

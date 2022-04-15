@@ -68,6 +68,7 @@ fixed_t black,blackspd;
 boolean noteshake;
 //oth stuff idk
 boolean nohud;
+int healthtopy;
 
 #include "character/playerm.h"
 #include "character/spm.h"
@@ -1661,7 +1662,17 @@ void Stage_Tick(void)
 	{
 		case StageState_Play:
 		{
-			
+			//Pick what healthbar to use
+			if (stage.utswap && stage.stage_id == StageId_1_3Chara)
+				healthtopy = 222;
+			else if (stage.utswap && stage.stage_id == StageId_1_3)
+				healthtopy = 239;
+			if (stage.utswap == 0 && (stage.stage_id == StageId_1_3Chara || stage.stage_id == StageId_1_2Chara))
+				healthtopy = 206;
+			else
+				healthtopy = 0;
+
+			//Chara dodge stuff
 			if (stage.stage_id == StageId_1_4 && stage.botplay == 0)
 			{
 				switch (stage.song_step)
@@ -2646,8 +2657,8 @@ void Stage_Tick(void)
 				Stage_DrawHealth(stage.player_state[0].health, stage.opponent->health_i, -1, stage.opponent->swap_i, stage.opponent->swapdeath_i, stage.opponent->number_i);
 				
 				//Draw health bar
-				RECT health_fill = {0, 0, 256 - (256 * stage.player_state[0].health / 20000), 8};
-				RECT health_back = {0, 8, 256, 8};
+				RECT health_fill = {0, healthtopy, 256 - (256 * stage.player_state[0].health / 20000), 8};
+				RECT health_back = {0, healthtopy + 8, 256, 8};
 				RECT_FIXED health_dst = {FIXED_DEC(-128,1), (SCREEN_HEIGHT2 - 37) << FIXED_SHIFT, 0, FIXED_DEC(8,1)};
 				if (stage.downscroll)
 					health_dst.y = -health_dst.y - health_dst.h;

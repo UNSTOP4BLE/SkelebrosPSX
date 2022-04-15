@@ -53,7 +53,7 @@ iso/menuchar/mchar.arc: iso/menuchar/mchar0.tim iso/menuchar/mchar1.tim iso/menu
 iso/bf/main.arc: iso/bf/bf0.tim iso/bf/bf1.tim iso/bf/bf2.tim iso/bf/bf3.tim iso/bf/bf4.tim iso/bf/bf5.tim iso/bf/bf6.tim iso/bf/bf7.tim iso/bf/dead0.tim 
 iso/bf/mainb.arc: iso/bf/bfb0.tim iso/bf/bfb1.tim iso/bf/bfb2.tim iso/bf/bf3.tim iso/bf/bf4.tim iso/bf/bf5.tim iso/bf/bf6.tim iso/bf/bf7.tim iso/bf/dead0.tim 
 
-iso/bfsans/main.arc: iso/bfsans/bf0.tim iso/bfsans/bf1.tim iso/bfsans/bf2.tim iso/bfsans/bf3.tim iso/bfsans/bf4.tim iso/bfsans/bf5.tim iso/bfsans/bf6.tim iso/bfsans/bf7.tim iso/bfsans/dead0.tim iso/bfsans/bfb0.tim iso/bfsans/bfb1.tim iso/bfsans/bfb2.tim iso/bfsans/bfb3.tim iso/bfsans/bfb4.tim iso/bfsans/bfb5.tim iso/bfsans/bfb6.tim iso/bfsans/bfb7.tim iso/bfsans/bone0.tim iso/bfsans/bone1.tim iso/bfsans/bone2.tim iso/bfsans/bone3.tim iso/bfsans/bone4.tim iso/bfsans/bone5.tim iso/bfsans/bone6.tim
+iso/bfsans/main.arc: iso/bfsans/bf0.tim iso/bfsans/bf1.tim iso/bfsans/bf2.tim iso/bfsans/bf3.tim iso/bfsans/bf4.tim iso/bfsans/bf5.tim iso/bfsans/bf6.tim iso/bfsans/bf7.tim iso/bfsans/dead0.tim iso/bfsans/bfb0.tim iso/bfsans/bfb1.tim iso/bfsans/bfb2.tim iso/bfsans/bfb3.tim iso/bfsans/bfb4.tim iso/bfsans/bfb5.tim iso/bfsans/bfb6.tim iso/bfsans/bfb7.tim iso/bfsans/bone0.tim iso/bfsans/bone1.tim iso/bfsans/bone2.tim iso/bfsans/bone3.tim iso/bfsans/bone4.tim iso/bfsans/bone5.tim iso/bfsans/bone6.tim iso/bfsans/boneb0.tim iso/bfsans/boneb1.tim iso/bfsans/boneb2.tim iso/bfsans/boneb3.tim iso/bfsans/boneb4.tim iso/bfsans/boneb5.tim iso/bfsans/boneb6.tim
 
 iso/bf/dead.arc: iso/bf/dead1.tim iso/bf/dead2.tim iso/bf/retry.tim
 
