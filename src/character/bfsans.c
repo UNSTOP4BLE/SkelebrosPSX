@@ -201,21 +201,21 @@ static const CharFrame char_bfsans_frame[] = {
 	{BFSans_ArcMain_BFBSans7, {100, 109, 101, 108}, { 43+3, 101+3}}, //30 right miss 2
 
 	//bonez               
-	{BFSans_ArcMain_BFBone0, {  0, 0, 136, 144}, {110, 134}}, //74 right miss 1
-	{BFSans_ArcMain_BFBone1, {  0, 0, 135, 144}, {108, 135}}, //75 right miss 2
-	{BFSans_ArcMain_BFBone2, {  0, 0, 145, 146}, {109, 136}}, //76 right miss 1
-	{BFSans_ArcMain_BFBone3, {  0, 0, 135, 144}, {109, 135}}, //77 right miss 2
-	{BFSans_ArcMain_BFBone4, {  0, 0, 136, 145}, {109, 135}}, //78 right miss 1
-	{BFSans_ArcMain_BFBone5, {  0, 0, 135, 144}, {109, 135}}, //79 right miss 2
-	{BFSans_ArcMain_BFBone6, {  0, 0, 135, 144}, {108, 135}}, //80 right miss 1
+	{BFSans_ArcMain_BFBone0, {  0, 0, 136, 144}, {110 - 50, 134 - 5}}, //74 right miss 1
+	{BFSans_ArcMain_BFBone1, {  0, 0, 135, 144}, {108 - 50, 135 - 5}}, //75 right miss 2
+	{BFSans_ArcMain_BFBone2, {  0, 0, 145, 146}, {109 - 50, 136 - 5}}, //76 right miss 1
+	{BFSans_ArcMain_BFBone3, {  0, 0, 135, 144}, {109 - 50, 135 - 5}}, //77 right miss 2
+	{BFSans_ArcMain_BFBone4, {  0, 0, 136, 145}, {109 - 50, 135 - 5}}, //78 right miss 1
+	{BFSans_ArcMain_BFBone5, {  0, 0, 135, 144}, {109 - 50, 135 - 5}}, //79 right miss 2
+	{BFSans_ArcMain_BFBone6, {  0, 0, 135, 144}, {108 - 50, 135 - 5}}, //80 right miss 1
 
-	{BFSans_ArcMain_BFBoneb0, {  0, 0, 136, 144}, {110, 134}}, //74 right miss 1
-	{BFSans_ArcMain_BFBoneb1, {  0, 0, 135, 144}, {108, 135}}, //75 right miss 2
-	{BFSans_ArcMain_BFBoneb2, {  0, 0, 145, 146}, {109, 136}}, //76 right miss 1
-	{BFSans_ArcMain_BFBoneb3, {  0, 0, 135, 144}, {109, 135}}, //77 right miss 2
-	{BFSans_ArcMain_BFBoneb4, {  0, 0, 136, 145}, {109, 135}}, //78 right miss 1
-	{BFSans_ArcMain_BFBoneb5, {  0, 0, 135, 144}, {109, 135}}, //79 right miss 2
-	{BFSans_ArcMain_BFBoneb6, {  0, 0, 135, 144}, {108, 135}}, //80 right miss 1
+	{BFSans_ArcMain_BFBoneb0, {  0, 0, 136, 144}, {110 - 50, 134 - 5}}, //74 right miss 1
+	{BFSans_ArcMain_BFBoneb1, {  0, 0, 135, 144}, {108 - 50, 135 - 5}}, //75 right miss 2
+	{BFSans_ArcMain_BFBoneb2, {  0, 0, 145, 146}, {109 - 50, 136 - 5}}, //76 right miss 1
+	{BFSans_ArcMain_BFBoneb3, {  0, 0, 135, 144}, {109 - 50, 135 - 5}}, //77 right miss 2
+	{BFSans_ArcMain_BFBoneb4, {  0, 0, 136, 145}, {109 - 50, 135 - 5}}, //78 right miss 1
+	{BFSans_ArcMain_BFBoneb5, {  0, 0, 135, 144}, {109 - 50, 135 - 5}}, //79 right miss 2
+	{BFSans_ArcMain_BFBoneb6, {  0, 0, 135, 144}, {108 - 50, 135 - 5}}, //80 right miss 1
 
 };
 

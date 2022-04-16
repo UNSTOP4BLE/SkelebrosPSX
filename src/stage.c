@@ -1818,9 +1818,9 @@ void Stage_Tick(void)
 			{
 				//make sure use special anim
                 if (bonesystem.buttonpresscount == 0)
-				stage.player->set_anim(stage.player, CharAnim_Special);
+					stage.player->set_anim(stage.player, CharAnim_Special);
 				//button press stuff
-				if (pad_state.press & INPUT_TRIGGER && bonesystem.buttonpresscooldown == 0)
+				if ((pad_state.press & INPUT_TRIGGER) && bonesystem.buttonpresscooldown == 0)
 				{	
 					stage.player->set_anim(stage.player, CharAnim_LeftAlt);
 					bonesystem.buttonpresscount++;
@@ -1847,7 +1847,7 @@ void Stage_Tick(void)
 			else 
 				bonesystem.bonejuststarted = 0;
 
-			//draw white fla thingie
+			//draw white flash thingie
 			if ((bonesystem.bonejuststarted == 1) || (bonesystem.buttonpresscount >= 10))
 			{
 				white = FIXED_DEC(255,1);
