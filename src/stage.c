@@ -690,7 +690,6 @@ void Stage_DrawTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_t
 {
 	Stage_DrawTexCol(tex, src, dst, zoom, 0x80, 0x80, 0x80);
 }
-
 void Stage_BlendTex(Gfx_Tex *tex, const RECT *src, const RECT_FIXED *dst, fixed_t zoom, u8 mode)
 {
 	fixed_t xz = dst->x;
@@ -1817,11 +1816,14 @@ void Stage_Tick(void)
 			//bone mechanic
 			if (bonesystem.bone)
 			{
+				//make sure use special anim
+                if (bonesystem.buttonpresscount == 0)
+				stage.player->set_anim(stage.player, CharAnim_Special);
 				//button press stuff
 				if (pad_state.press & INPUT_TRIGGER && bonesystem.buttonpresscooldown == 0)
 				{	
 					stage.player->set_anim(stage.player, CharAnim_LeftAlt);
-					bonesystem.buttonpresscount ++;
+					bonesystem.buttonpresscount++;
 					bonesystem.buttonpresscooldown = 1;
 				}
 
@@ -1838,7 +1840,10 @@ void Stage_Tick(void)
 				bonesystem.bonejuststarted = 1;
 			}
 			else if (bonesystem.buttonpresscount >= 10)
+			{
 				bonesystem.bone = 0;
+				stage.player->set_anim(stage.player, CharAnim_Idle);
+			}
 			else 
 				bonesystem.bonejuststarted = 0;
 
