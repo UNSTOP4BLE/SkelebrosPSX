@@ -12,7 +12,7 @@
 		1, 1,
 		XA_Bopeebo, 0,
 		
-		StageId_1_2, STAGE_LOAD_PLAYER | STAGE_LOAD_OPPONENT | STAGE_LOAD_STAGE
+		StageId_1_2, 0
 	},
 	{ //StageId_1_2 (Bonely One)
 		//Characters
@@ -44,7 +44,7 @@
 		1, 3,
 		XA_Dadbattle, 0,
 		
-		StageId_1_4, STAGE_LOAD_FLAG
+		StageId_1_4, 0
 	},
 	{ //StageId_1_4 (No More Deals)
 		//Characters

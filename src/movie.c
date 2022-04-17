@@ -18,10 +18,10 @@ Movie movie;
 
 STRFILE StrFile[] = {
 	// File name	Resolution		Frame count
-	"\\STR\\INTRO.STR;1", 320, 240, 464,
-    "\\STR\\SANS.STR;1", 320, 240, 242,
-    "\\STR\\GASTER.STR;1", 320, 240, 202,
-    "\\STR\\CHARA.STR;1", 320, 240, 520
+	{"\\STR\\INTRO.STR;1", 320, 240, 464},
+    {"\\STR\\SANS.STR;1", 320, 240, 242},
+    {"\\STR\\GASTER.STR;1", 320, 240, 202},
+    {"\\STR\\CHARA.STR;1", 320, 240, 520},
 };
 
 void PlayMovie() {

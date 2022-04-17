@@ -801,6 +801,7 @@ void Menu_Tick(void)
 			//Initialize page
 			if (menu.page_swap)
 			{
+				movie.select = 0;
 				menu.scroll = 0;
 				menu.page_param.stage.diff = StageDiff_BF;
 				menu.page_state.title.fade = FIXED_DEC(0,1);
@@ -845,16 +846,25 @@ void Menu_Tick(void)
 				//Select option if cross is pressed
 				if (pad_state.press & (PAD_START | PAD_CROSS))
 				{
+					if (stage.stage_id == StageId_1_1)
 					menu.next_page = MenuPage_Movie;
+					else
+					menu.next_page = MenuPage_Stage;
+
 					if (menu.page_param.stage.diff == StageDiff_Chara)
 	                menu.page_param.stage.id = menu_options[menu.select].stagealt;
 					else
 					menu.page_param.stage.id = menu_options[menu.select].stage;
 
-					stage.strid = menu.page_param.stage.id;
-
 					menu.playerm->set_anim(menu.playerm, CharAnim_Special);
 					menu.page_param.stage.story = true;
+                    
+					//movie stuff
+					movie.id = menu.page_param.stage.id;
+					movie.story = menu.page_param.stage.story;
+					movie.diff = menu.page_param.stage.diff;
+					movie.startmovie = true;
+
 					menu.trans_time = FIXED_UNIT;
 				}
 				

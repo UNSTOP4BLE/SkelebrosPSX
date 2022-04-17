@@ -231,14 +231,18 @@ static void strDoPlayback(STRFILE *str) {
 		SetDispMask(1);		// Remove the display mask
 		
 		if(strPlayDone == 1) {
+			//Load next song
+			Stage_Unload();
+
             LoadScr_Start();
 			if (movie.select == 0)
-			Stage_Load(stage.strid, stage.strdiff, true);
+			Stage_Load(movie.id, movie.diff, movie.story);
 			else
-			Stage_Load(movie.stage_select, stage.strdiff, true);
+			Stage_Load(stage.stage_def->next_stage - 1, movie.diff, movie.story);
+
 			gameloop = GameLoop_Stage;
 			movie.select++;
-			stage.seemovie = false;
+			movie.startmovie = false;
 				LoadScr_End();
 				return;
 		}

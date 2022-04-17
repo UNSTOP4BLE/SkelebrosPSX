@@ -1477,27 +1477,20 @@ void Stage_Unload(void)
 
 static boolean Stage_NextLoad(void)
 {
-	if (movie.select != 4)
-	stage.seemovie = false;
 	u8 load = stage.stage_def->next_load;
-    
-	if (stage.seemovie == false)
-    gameloop = GameLoop_Movie;
 
 	if (load == 0)
 	{
 		//Do stage transition if full reload
 		stage.trans = StageTrans_NextSong;
 		Trans_Start();
+		movie.startmovie = true;
 		return false;
 	}
 	else
 	{
 		//Get stage definition
-		if (movie.select == 0)
 		stage.stage_def = &stage_defs[stage.stage_id = stage.stage_def->next_stage];
-		else
-		stage.stage_def = &stage_defs[movie.stage_select = stage.stage_def->next_stage];
 		
 		//Load stage background
 		if (load & STAGE_LOAD_STAGE)
@@ -1545,8 +1538,11 @@ static boolean Stage_NextLoad(void)
 		
 		//Reset timer
 		Timer_Reset();
+		movie.startmovie = true;
 		return true;
 	}
+	if (movie.startmovie == true)
+    gameloop = GameLoop_Movie;
 }
 
 void Stage_Tick(void)
@@ -1627,7 +1623,6 @@ void Stage_Tick(void)
 				Stage_Unload();
 				
 				LoadScr_Start();
-				if (stage.seemovie != false)
 				Stage_Load(stage.stage_def->next_stage, stage.stage_diff, stage.story);
 				LoadScr_End();
 				break;
@@ -1816,9 +1811,8 @@ void Stage_Tick(void)
 			//bone mechanic
 			if (bonesystem.bone)
 			{
-				//make sure use special anim
-                if (bonesystem.buttonpresscount == 0)
-					stage.player->set_anim(stage.player, CharAnim_Special);
+                //make sure use special anim
+
 				//button press stuff
 				if ((pad_state.press & INPUT_TRIGGER) && bonesystem.buttonpresscooldown == 0)
 				{	
@@ -1828,7 +1822,7 @@ void Stage_Tick(void)
 				}
 
 				//cooldown stuff
-				if (bonesystem.buttonpresscooldown > 0 && bonesystem.buttonpresscooldown <= 20) //the length of the break free anim is the 20
+				if (bonesystem.buttonpresscooldown > 0 && bonesystem.buttonpresscooldown <= 20) //the length of the break free anim is 20
 					bonesystem.buttonpresscooldown ++;
 				else 
 					bonesystem.buttonpresscooldown = 0;
@@ -1842,20 +1836,27 @@ void Stage_Tick(void)
 			else if (bonesystem.buttonpresscount >= 10)
 			{
 				bonesystem.bone = 0;
-				stage.player->set_anim(stage.player, CharAnim_Idle);
 			}
 			else 
 				bonesystem.bonejuststarted = 0;
 
 			//draw white flash thingie
-			if ((bonesystem.bonejuststarted == 1) || (bonesystem.buttonpresscount >= 10))
+			if (bonesystem.bonejuststarted == 1)
 			{
+				stage.player->set_anim(stage.player, CharAnim_Special);
+				white = FIXED_DEC(255,1);
+				whitespd = FIXED_DEC(200,1);
+			}
+			if (bonesystem.buttonpresscount >= 10)
+			{
+				stage.player->set_anim(stage.player, CharAnim_Idle);
 				white = FIXED_DEC(255,1);
 				whitespd = FIXED_DEC(200,1);
 			}
 
 			//be a good boy and reset the bone stuff if its not active
-			if (bonesystem.bone == 0) {
+			if (bonesystem.bone == 0) 
+			{
 				bonesystem.buttonpresscooldown = 0;
 				bonesystem.buttonpresscount = 0;
 				bonesystem.bonejuststarted = 0;

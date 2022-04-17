@@ -211,8 +211,6 @@ typedef struct
 	StageId strid;
 	StageDiff strdiff;
 	
-	boolean seemovie;
-	
 	boolean swap_player;
 	
 	IO_Data chart_data;

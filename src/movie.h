@@ -14,9 +14,13 @@ void Movie_Play(const char *path, u32 length);
 
 typedef struct
 {
-  StageId stage_select;
+  u8 id;
+  u8 diff;
+  boolean story;
   u8 select;
   u8 playing;
+  boolean startmovie;
+  u8 next;
 } Movie;
 
 extern Movie movie;
