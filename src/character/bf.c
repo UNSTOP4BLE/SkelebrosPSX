@@ -45,6 +45,7 @@ enum
 	BF_ArcMain_BF5,
 	BF_ArcMain_BF6,
 	BF_ArcMain_BF7,
+	BF_ArcMain_Dodge,
 	BF_ArcMain_Dead0, //BREAK
 
 	BF_ArcMain_Max,
@@ -122,6 +123,10 @@ static const CharFrame char_bf_frame[] = {
 	{BF_ArcMain_BF7, {  0, 108,  99, 108}, { 43+3, 101+3}}, //29 right miss 1
 	{BF_ArcMain_BF7, {100, 109, 101, 108}, { 43+3, 101+3}}, //30 right miss 2
 	
+	{BF_ArcMain_Dodge, {  0,   0,  84, 101}, { 83-37, 101-7}}, //30 right miss 2
+	{BF_ArcMain_Dodge, { 84,   0,  84, 100}, { 84-37, 100-7}}, //30 right miss 2
+	{BF_ArcMain_Dodge, {169,   0,  85, 100}, { 84-37, 100-7}}, //30 right miss 2
+	
 	{BF_ArcMain_Dead0, {  0,   0, 128, 128}, { 53,  98}}, //31 dead0 0
 	{BF_ArcMain_Dead0, {128,   0, 128, 128}, { 53,  98}}, //32 dead0 1
 	{BF_ArcMain_Dead0, {  0, 128, 128, 128}, { 53,  98}}, //33 dead0 2
@@ -140,7 +145,7 @@ static const CharFrame char_bf_frame[] = {
 
 static const Animation char_bf_anim[PlayerAnim_Max] = {
 	{2, (const u8[]){ 0,  1,  2,  3,  4,  5,  6,  7,  8, ASCR_BACK, 1}}, //CharAnim_Idle
-	{2, (const u8[]){17, 18, 19, ASCR_BACK, 1}},       //CharAnim_Special
+	{2, (const u8[]){31, 32, 33, ASCR_BACK, 0}},       //CharAnim_Special
 	{2, (const u8[]){ 9, 10, 11, 12, ASCR_BACK, 1}},             //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},       //CharAnim_LeftAlt
 	{2, (const u8[]){13, 14, 15, 16, ASCR_BACK, 1}},             //CharAnim_Down
@@ -155,18 +160,18 @@ static const Animation char_bf_anim[PlayerAnim_Max] = {
 	{1, (const u8[]){17, 27, 27, 28, ASCR_BACK, 1}},     //PlayerAnim_UpMiss
 	{1, (const u8[]){20, 29, 29, 30, ASCR_BACK, 1}},     //PlayerAnim_RightMiss
 	
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},         //PlayerAnim_Peace
-	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},      //PlayerAnim_Sweat
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},     //PlayerAnim_Peace
+	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},     //PlayerAnim_Sweat
 	
-	{5, (const u8[]){31, 32, 33, 34, 34, 34, 34, 34, 34, 34, ASCR_CHGANI, PlayerAnim_Dead1}}, //PlayerAnim_Dead0
-	{5, (const u8[]){34, ASCR_REPEAT}},                                                       //PlayerAnim_Dead1
-	{3, (const u8[]){35, 36, 37, 38, 38, 38, 38, 38, 38, 38, ASCR_CHGANI, PlayerAnim_Dead3}}, //PlayerAnim_Dead2
-	{3, (const u8[]){38, ASCR_REPEAT}},                                                       //PlayerAnim_Dead3
-	{3, (const u8[]){39, 40, 38, 38, 38, 38, 38, ASCR_CHGANI, PlayerAnim_Dead3}},             //PlayerAnim_Dead4
-	{3, (const u8[]){41, 42, 38, 38, 38, 38, 38, ASCR_CHGANI, PlayerAnim_Dead3}},             //PlayerAnim_Dead5
+	{5, (const u8[]){31+3, 32+3, 33+3, 34+3, 34+3, 34+3, 34+3, 34+3, 34+3, 34+3, ASCR_CHGANI, PlayerAnim_Dead1}}, //PlayerAnim_Dead0
+	{5, (const u8[]){34+3, ASCR_REPEAT}},                                                       //PlayerAnim_Dead1
+	{3, (const u8[]){35+3, 36+3, 37+3, 38+3, 38+3, 38+3, 38+3, 38+3, 38+3, 38+3, ASCR_CHGANI, PlayerAnim_Dead3}}, //PlayerAnim_Dead2
+	{3, (const u8[]){38+3, ASCR_REPEAT}},                                                       //PlayerAnim_Dead3
+	{3, (const u8[]){39+3, 40+3, 38+3, 38+3, 38+3, 38+3, 38+3, ASCR_CHGANI, PlayerAnim_Dead3}},             //PlayerAnim_Dead4
+	{3, (const u8[]){41+3, 42+3, 38+3, 38+3, 38+3, 38+3, 38+3, ASCR_CHGANI, PlayerAnim_Dead3}},             //PlayerAnim_Dead5
 	
-	{10, (const u8[]){38, 38, 38, ASCR_BACK, 1}}, //PlayerAnim_Dead4
-	{ 3, (const u8[]){41, 42, 38, ASCR_REPEAT}},  //PlayerAnim_Dead5
+	{10, (const u8[]){38+3, 38+3, 38+3, ASCR_BACK, 1}}, //PlayerAnim_Dead4
+	{ 3, (const u8[]){41+3, 42+3, 38+3, ASCR_REPEAT}},  //PlayerAnim_Dead5
 };
 
 //Boyfriend player functions
@@ -328,7 +333,7 @@ void Char_BF_Tick(Character *character)
 	//Animate and draw character
 	Animatable_Animate(&character->animatable, (void*)this, Char_BF_SetFrame);
 	if ((character->animatable.anim < PlayerAnim_LeftMiss && stage.state == StageState_Play) || (stage.state != StageState_Play) || (animf_count & 2))
-	Character_Draw(character, &this->tex, &char_bf_frame[this->frame]);
+		Character_Draw(character, &this->tex, &char_bf_frame[this->frame]);
 }
 
 void Char_BF_SetAnim(Character *character, u8 anim)
@@ -432,6 +437,7 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
                 "bf5.tim",   //BF_ArcMain_BF5
                 "bf6.tim",   //BF_ArcMain_BF6
                 "bf7.tim",   //BF_ArcMain_BF7
+				"dodge.tim",   //BF_ArcMain_BF7
                 "dead0.tim", //BF_ArcMain_Dead0
                 NULL
             };
@@ -455,6 +461,7 @@ Character *Char_BF_New(fixed_t x, fixed_t y)
                 "bf5.tim",   //BF_ArcMain_BF5
                 "bf6.tim",   //BF_ArcMain_BF6
                 "bf7.tim",   //BF_ArcMain_BF7
+				"bf7.tim",   //using this as a filler cus im fucking stupid
                 "dead0.tim", //BF_ArcMain_Dead0
                 NULL
             };
