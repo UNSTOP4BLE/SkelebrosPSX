@@ -1484,7 +1484,6 @@ static boolean Stage_NextLoad(void)
 		//Do stage transition if full reload
 		stage.trans = StageTrans_NextSong;
 		Trans_Start();
-		movie.startmovie = true;
 		return false;
 	}
 	else
@@ -1538,7 +1537,6 @@ static boolean Stage_NextLoad(void)
 		
 		//Reset timer
 		Timer_Reset();
-		movie.startmovie = true;
 		return true;
 	}
 	if (movie.startmovie == true)

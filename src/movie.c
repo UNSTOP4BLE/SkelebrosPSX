@@ -18,10 +18,11 @@ Movie movie;
 
 STRFILE StrFile[] = {
 	// File name	Resolution		Frame count
-	{"\\STR\\INTRO.STR;1", 320, 240, 464},
+	{"\\STR\\INTRO.STR;1", 320, 240, 508},
     {"\\STR\\SANS.STR;1", 320, 240, 242},
     {"\\STR\\GASTER.STR;1", 320, 240, 202},
     {"\\STR\\CHARA.STR;1", 320, 240, 520},
+    {"\\STR\\FINAL.STR;1", 320, 240, 435},
 };
 
 void PlayMovie() {
@@ -59,6 +60,13 @@ void Movie_Tick(void)
             case 3:
             PlayMovie();
             PlayStr(320, 240, 0, 0, &StrFile[3]);
+            break;
+            case 4:
+            PlayMovie();
+            PlayStr(320, 240, 0, 0, &StrFile[4]);
+            break;
+            default:
+            movie.select = 0;
             break;
 
   }

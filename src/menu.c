@@ -801,7 +801,6 @@ void Menu_Tick(void)
 			//Initialize page
 			if (menu.page_swap)
 			{
-				movie.select = 0;
 				menu.scroll = 0;
 				menu.page_param.stage.diff = StageDiff_BF;
 				menu.page_state.title.fade = FIXED_DEC(0,1);
@@ -860,6 +859,7 @@ void Menu_Tick(void)
 					menu.page_param.stage.story = true;
                     
 					//movie stuff
+					movie.select = 0;
 					movie.id = menu.page_param.stage.id;
 					movie.story = menu.page_param.stage.story;
 					movie.diff = menu.page_param.stage.diff;
