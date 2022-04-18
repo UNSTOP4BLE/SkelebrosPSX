@@ -107,8 +107,7 @@ void Week2_Bone4_Draw(Back_Week2 *this, fixed_t x, fixed_t y)
 void Back_Week2_DrawFG(StageBack *back)
 {
 	Back_Week2 *this = (Back_Week2*)back;
-    fixed_t fx, fy;
-
+	
 	//Animate and draw space
 	if (stage.flag & STAGE_FLAG_JUST_STEP)
 	{
