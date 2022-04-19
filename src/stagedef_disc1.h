@@ -65,7 +65,7 @@
 	
 	{ //StageId_1_1 Chara (Nyeh heh heh)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 90,1)},
+		{Char_charap_New,    FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 90,1)},
 		{Char_Dad_New, FIXED_DEC(-120 + 150,1),  FIXED_DEC(100 + 90,1)},
 		{NULL},
 		
@@ -81,7 +81,7 @@
 	},
 	{ //StageId_1_2 Chara (Bonely One)
 		//Characters
-		{Char_BFSans_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BFSans_New,  FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
@@ -97,7 +97,7 @@
 	},
 	{ //StageId_1_3 Chara (Not Enough)
 		//Characters
-		{Char_BFSans_New,      FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BFSans_New,  FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
@@ -130,8 +130,8 @@
 	},
 	{ //StageId_3_2 (Parasite Sans)
 		//Characters
-		{Char_BFSans_New,     FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
-		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
+		{Char_BFSans_New,   FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_sans_New,   FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
 		//Stage background

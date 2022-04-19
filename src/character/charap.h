@@ -4,12 +4,12 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-#ifndef PSXF_GUARD_GF_H
-#define PSXF_GUARD_GF_H
+#ifndef PSXF_GUARD_CHARAP_H
+#define PSXF_GUARD_CHARAP_H
 
-#include "../character.h"
+#include "../player.h"
 
-//GF character functions
-Character *Char_GF_New(fixed_t x, fixed_t y);
+//Boyfriend player functions
+Character *Char_charap_New(fixed_t x, fixed_t y);
 
 #endif

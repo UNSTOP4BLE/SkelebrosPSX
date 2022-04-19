@@ -28,12 +28,11 @@ SRCS = src/main.c \
        src/character/spm.c \
        src/character/bf.c \
        src/character/bfsans.c \
-       src/character/speaker.c \
        src/character/dad.c \
        src/character/sans.c \
        src/character/chara.c \
        src/character/gold.c \
-       src/character/gf.c \
+       src/character/charap.c \
        src/object.c \
        src/object/combo.c \
        src/object/splash.c \

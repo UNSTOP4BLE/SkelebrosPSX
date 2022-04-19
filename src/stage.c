@@ -78,7 +78,7 @@ int healthtopy;
 #include "character/sans.h"
 #include "character/chara.h"
 #include "character/gold.h"
-#include "character/gf.h"
+#include "character/charap.h"
 
 #include "stage/week1.h"
 #include "stage/week2.h"
