@@ -23,7 +23,7 @@
 #include "object/splash.h"
 
 //Stage constants
-//#define STAGE_FREECAM //Freecam
+#define STAGE_FREECAM //Freecam
 
 //normal note x
 static int note_x[8] = {
@@ -1752,8 +1752,8 @@ void Stage_Tick(void)
 			}
 
 			//bone mechanic stuff
-			if ((stage.stage_id == StageId_1_3 && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P) || (stage.stage_id == StageId_1_3Chara && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P)) 
-			{
+		//	if ((stage.stage_id == StageId_1_3 && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P) || (stage.stage_id == StageId_1_3Chara && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P)) 
+		//	{
 				if (stage.song_step == 128)
 					bonesystem.boneactive = 1;
 				else if (stage.song_step == 260)
@@ -1764,7 +1764,7 @@ void Stage_Tick(void)
 					bonesystem.boneactive = 1;
 				else 
 					bonesystem.boneactive = 0;
-			}
+		//	}
 
 			//chara kill
 			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10 && stage.mode != StageMode_2P)

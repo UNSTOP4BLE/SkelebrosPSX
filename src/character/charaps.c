@@ -164,21 +164,21 @@ static const CharFrame char_charaps_frame[] = {
 
     //bone
 
-    {charaps_ArcMain_Bone0, {  0,   0, 135, 144}, { 61 - 25, 141}}, //9 left 1
-    {charaps_ArcMain_Bone1, {  0,   1, 136, 143}, { 60 - 25, 141}}, //9 left 1
-    {charaps_ArcMain_Bone2, {  1,   0, 144, 145}, { 60 - 25, 142}}, //9 left 1
-    {charaps_ArcMain_Bone3, {  0,   1, 135, 143}, { 61 - 25, 141}}, //9 left 1
-    {charaps_ArcMain_Bone4, {  0,   0, 135, 145}, { 61 - 25, 141}}, //9 left 1
-    {charaps_ArcMain_Bone5, {  0,   0, 135, 144}, { 61 - 25, 140}}, //9 left 1
-    {charaps_ArcMain_Bone6, {  0,   0, 140, 144}, { 61 - 25, 141}}, //9 left 1
+    {charaps_ArcMain_Bone0, {  0,   0, 135, 144}, { 61, 141 - 10}}, //9 left 1
+    {charaps_ArcMain_Bone1, {  0,   1, 136, 143}, { 60, 141 - 10}}, //9 left 1
+    {charaps_ArcMain_Bone2, {  1,   0, 144, 145}, { 60, 142 - 10}}, //9 left 1
+    {charaps_ArcMain_Bone3, {  0,   1, 135, 143}, { 61, 141 - 10}}, //9 left 1
+    {charaps_ArcMain_Bone4, {  0,   0, 135, 145}, { 61, 141 - 10}}, //9 left 1
+    {charaps_ArcMain_Bone5, {  0,   0, 135, 144}, { 61, 140 - 10}}, //9 left 1
+    {charaps_ArcMain_Bone6, {  0,   0, 140, 144}, { 61, 141 - 10}}, //9 left 1
 
-    {charaps_ArcMain_Boneb0, {  5,   0, 127, 136}, { 56 - 25, 132}}, //9 left 1
-    {charaps_ArcMain_Boneb1, {  6,   1, 127, 138}, { 53 - 25, 134}}, //9 left 1
-    {charaps_ArcMain_Boneb2, {  3,   3, 143, 139}, { 53 - 25, 135}}, //9 left 1
-    {charaps_ArcMain_Boneb3, {  4,   1, 127, 136}, { 54 - 25, 132}}, //9 left 1
-    {charaps_ArcMain_Boneb4, {  3,   3, 130, 136}, { 55 - 25, 132}}, //9 left 1
-    {charaps_ArcMain_Boneb5, {  2,   2, 134, 136}, { 55 - 25, 132}}, //9 left 1
-    {charaps_ArcMain_Boneb6, {  1,   3, 139, 136}, { 55 - 25, 132}}, //9 left 1
+    {charaps_ArcMain_Boneb0, {  5,   0, 127, 136}, { 56 + 10, 132 - 3}}, //9 left 1
+    {charaps_ArcMain_Boneb1, {  6,   1, 127, 138}, { 53 + 10, 134 - 3}}, //9 left 1
+    {charaps_ArcMain_Boneb2, {  3,   3, 143, 139}, { 53 + 10, 135 - 3}}, //9 left 1
+    {charaps_ArcMain_Boneb3, {  4,   1, 127, 136}, { 54 + 10, 132 - 3}}, //9 left 1
+    {charaps_ArcMain_Boneb4, {  3,   3, 130, 136}, { 55 + 10, 132 - 3}}, //9 left 1
+    {charaps_ArcMain_Boneb5, {  2,   2, 134, 136}, { 55 + 10, 132 - 3}}, //9 left 1
+    {charaps_ArcMain_Boneb6, {  1,   3, 139, 136}, { 55 + 10, 132 - 3}}, //9 left 1
 
     //ded 
 	{charaps_ArcMain_Dead0, {  0,   0, 128, 128}, { 53,  98}}, //31 dead0 0
