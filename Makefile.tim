@@ -11,6 +11,7 @@ all: \
 	iso/stage/hud1.tim \
 	iso/stage/sans.tim \
 	iso/stage/chara.tim \
+	iso/stage/charap.tim \
     iso/stage/bf.tim \
     iso/stage/monos.tim \
 	iso/stage/hud0weeb.tim \

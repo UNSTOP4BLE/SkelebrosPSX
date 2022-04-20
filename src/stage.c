@@ -23,7 +23,7 @@
 #include "object/splash.h"
 
 //Stage constants
-#define STAGE_FREECAM //Freecam
+//#define STAGE_FREECAM //Freecam
 
 //normal note x
 static int note_x[8] = {
@@ -800,9 +800,9 @@ static void Stage_DrawHealth(s16 health, Gfx_Tex i, s8 ox, s16 swap_icon, s16 sw
 	if (stage.song_step >= 1)
     {
         if ((ox < 0 && health < 18000)|| (ox > 0 && health > 2000))
-            animicons = (stage.utswap) ? (swap_icon + number *2)*50 : swap_icon*50;
+            animicons = swap_icon*50;
         else
-            animicons =  (stage.utswap) ? (swap_deathicon + number*3)*50 : (number + swap_deathicon)*50;
+            animicons = (number + swap_deathicon)*50;
 
         while (animicons > 200)
         {
@@ -1391,7 +1391,11 @@ void Stage_Load(StageId id, StageDiff difficulty, boolean story)
     	Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\MONOS.TIM;1"), GFX_LOADTEX_FREE);
 	else
 	    Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\HUD1.TIM;1"), GFX_LOADTEX_FREE);
-    Gfx_LoadTex(&stage.tex_bf, IO_Read("\\STAGE\\BF.TIM;1"), GFX_LOADTEX_FREE);
+
+	if ((id == StageId_1_1Chara) || (id == StageId_1_2Chara) || (id == StageId_1_3Chara))
+        Gfx_LoadTex(&stage.tex_bf, IO_Read("\\STAGE\\CHARAP.TIM;1"), GFX_LOADTEX_FREE);
+    else
+        Gfx_LoadTex(&stage.tex_bf, IO_Read("\\STAGE\\BF.TIM;1"), GFX_LOADTEX_FREE);
 	
 	
 	//Load stage background
@@ -1752,8 +1756,8 @@ void Stage_Tick(void)
 			}
 
 			//bone mechanic stuff
-		//	if ((stage.stage_id == StageId_1_3 && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P) || (stage.stage_id == StageId_1_3Chara && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P)) 
-		//	{
+			if ((stage.stage_id == StageId_1_3 && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P) || (stage.stage_id == StageId_1_3Chara && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P)) 
+			{
 				if (stage.song_step == 128)
 					bonesystem.boneactive = 1;
 				else if (stage.song_step == 260)
@@ -1764,7 +1768,7 @@ void Stage_Tick(void)
 					bonesystem.boneactive = 1;
 				else 
 					bonesystem.boneactive = 0;
-		//	}
+			}
 
 			//chara kill
 			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10 && stage.mode != StageMode_2P)

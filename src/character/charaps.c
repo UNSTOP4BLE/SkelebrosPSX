@@ -329,10 +329,18 @@ void Char_charaps_Tick(Character *character)
 			character->set_anim(character, (bonesystem.bone == 1 && bonesystem.buttonpresscount != 10 ) ? CharAnim_Special : CharAnim_Idle);
 	}
     
-	this->character.number_i = 1;
-	this->character.swap_i = stage.song_step % 0x1;
-	this->character.swapdeath_i = stage.song_step *2 % 0x1;
-
+	if (stage.utswap)
+    {
+        this->character.number_i = 18;
+        this->character.swap_i = 16 + stage.song_step % 0x2;
+		this->character.swapdeath_i = stage.song_step % 0x2;
+    }
+    else
+	{
+		this->character.number_i = 11;
+		this->character.swap_i = stage.song_step % 0xB;
+		this->character.swapdeath_i = stage.song_step *2 % 0x5;
+	}
 	
 	//Retry screen
 	if (character->animatable.anim >= PlayerAnim_Dead3)

@@ -351,10 +351,18 @@ void Char_BFSans_Tick(Character *character)
 			character->set_anim(character, (bonesystem.bone == 1 && bonesystem.buttonpresscount != 10 ) ? CharAnim_Special : CharAnim_Idle);
 	}
 
-	this->character.number_i = 1;
-	this->character.swap_i = stage.song_step % 0x1;
-	this->character.swapdeath_i = stage.song_step *2 % 0x1;
-
+	if (stage.utswap)
+	{
+		this->character.number_i = 3;
+		this->character.swap_i = 2 + stage.song_step % 0x1;
+		this->character.swapdeath_i = stage.song_step *2 % 0x1;
+	}
+	else     
+	{
+		this->character.number_i = 1;
+		this->character.swap_i = stage.song_step % 0x1;
+		this->character.swapdeath_i = stage.song_step *2 % 0x1;
+	}
 	//Retry screen
 	if (character->animatable.anim >= PlayerAnim_Dead3)
 	{

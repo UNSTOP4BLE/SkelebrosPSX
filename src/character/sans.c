@@ -192,10 +192,18 @@ void Char_sans_Tick(Character *character)
 	else
 		Animatable_Animate(&character->animatable, (void*)this, Char_sans_SetFrame);
 
-	this->character.number_i = 3;
-	this->character.swap_i = stage.song_step % 0x3;
-	this->character.swapdeath_i = stage.song_step % 0x3;
-
+	if (stage.utswap)
+	{
+		this->character.number_i = 9;
+		this->character.swap_i = 6 + stage.song_step % 0x3;
+		this->character.swapdeath_i = stage.song_step % 0x3;
+	}
+	else
+	{
+		this->character.number_i = 3;
+		this->character.swap_i = stage.song_step % 0x3;
+		this->character.swapdeath_i = stage.song_step % 0x3;
+	}
 	Character_Draw(character, &this->tex, &char_sans_frame[this->frame]);
 }
 
