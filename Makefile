@@ -33,6 +33,7 @@ SRCS = src/main.c \
        src/character/chara.c \
        src/character/gold.c \
        src/character/charap.c \
+	   src/character/charaps.c \
        src/object.c \
        src/object/combo.c \
        src/object/splash.c \

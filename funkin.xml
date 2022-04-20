@@ -132,9 +132,8 @@
 
 				<!-- Chara assets -->
 				<file name = "chara.arc" type = "data" source = "iso/chara/main.arc"/>
-				
-				<!-- Girlfriend assets -->
 				<file name = "charap.arc" type = "data" source = "iso/charap/main.arc"/>
+                <file name = "charaps.arc" type = "data" source = "iso/charap/mainb.arc"/>
 				
 			</dir>
 

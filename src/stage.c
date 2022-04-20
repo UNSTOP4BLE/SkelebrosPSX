@@ -79,6 +79,7 @@ int healthtopy;
 #include "character/chara.h"
 #include "character/gold.h"
 #include "character/charap.h"
+#include "character/charaps.h"
 
 #include "stage/week1.h"
 #include "stage/week2.h"
@@ -1671,7 +1672,7 @@ void Stage_Tick(void)
 				healthtopy = 0;
 
 			//Chara dodge stuff
-			if (stage.stage_id == StageId_1_4 && stage.botplay == 0)
+			if (stage.stage_id == StageId_1_4 && stage.botplay == 0 && stage.mode != StageMode_2P)
 			{
 				switch (stage.song_step)
 				{
@@ -1730,17 +1731,17 @@ void Stage_Tick(void)
 					stage.opponent->set_anim(stage.opponent, CharAnim_Special);
 
 					dodgesystem.dodgecooldown++;	  
-				//if bf use trigger during this cooldown he live else he die
+				    //if bf use trigger during this cooldown he live else he die
 					if (dodgesystem.dodgecooldown >= 0 && dodgesystem.dodgecooldown <= 40)
 						{
 						if (pad_state.press & INPUT_TRIGGER && stage.player->animatable.anim == CharAnim_Special)
 						dodgesystem.buttonpressed = true;
 						}
-				//bf die
+				    //bf die
 					else if (dodgesystem.dodgecooldown > 40 && dodgesystem.buttonpressed != true)
 						stage.state = StageState_Dead;
 					
-				//reset stuff
+			    	//reset stuff
 					if (dodgesystem.dodgecooldown > 40)
 					{
 						dodgesystem.dodgecooldown = 0;
@@ -1750,10 +1751,8 @@ void Stage_Tick(void)
 				}
 			}
 
-
-
 			//bone mechanic stuff
-			if ((stage.stage_id == StageId_1_3 && !stage.botplay) || (stage.stage_id == StageId_1_3Chara && !stage.botplay)) 
+			if ((stage.stage_id == StageId_1_3 && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P) || (stage.stage_id == StageId_1_3Chara && !stage.botplay && stage.mode != StageMode_Swap && stage.mode != StageMode_2P)) 
 			{
 				if (stage.song_step == 128)
 					bonesystem.boneactive = 1;
@@ -1768,7 +1767,7 @@ void Stage_Tick(void)
 			}
 
 			//chara kill
-			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10)
+			if (stage.stage_id == StageId_1_4 && stage.player_state->miss >= 10 && stage.mode != StageMode_2P)
 				stage.state = StageState_Dead;
 
 			//nohud when bad time
@@ -1777,7 +1776,7 @@ void Stage_Tick(void)
 			else
 				nohud = 0;
 
-			//do da susi black and whi swap
+			//do da susi black and white swap
 			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 640 && stage.song_step <= 1163) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 640 && stage.song_step <= 1163))
 				stage.utswap = 1;
 			else 
@@ -1806,10 +1805,10 @@ void Stage_Tick(void)
 			}
 
 			//debug shit 
-			FntPrint("Step %d", stage.song_step);
-			FntPrint("butn %d", dodgesystem.buttonpressed);
-			FntPrint("butncoold %d", dodgesystem.dodgecooldown);
-			FntPrint("dodge %d", dodgesystem.dodge);
+			//FntPrint("Step %d", stage.song_step);
+			//FntPrint("butn %d", dodgesystem.buttonpressed);
+			//FntPrint("butncoold %d", dodgesystem.dodgecooldown);
+			//FntPrint("dodge %d", dodgesystem.dodge);
 
 			//bone mechanic
 			if (bonesystem.bone)

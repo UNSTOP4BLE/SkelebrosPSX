@@ -23,6 +23,7 @@ all: \
 	iso/chara/main.arc \
 	iso/gold/main.arc \
 	iso/charap/main.arc \
+    iso/charap/mainb.arc \
 	iso/week1/back.arc \
 	iso/week2/back.arc \
 	iso/week3/back.arc \
@@ -66,7 +67,9 @@ iso/chara/main.arc: iso/chara/idle0.tim iso/chara/idle1.tim iso/chara/idle2.tim 
 
 iso/charap/main.arc: iso/charap/ch0.tim iso/charap/ch1.tim iso/charap/ch2.tim iso/charap/ch3.tim iso/charap/ch4.tim iso/charap/ch5.tim iso/charap/dead0.tim
 
-# gold
+iso/charap/mainb.arc: iso/charap/ch0.tim iso/charap/ch1.tim iso/charap/ch2.tim iso/charap/ch3.tim iso/charap/ch4.tim iso/charap/ch5.tim iso/charap/chb0.tim iso/charap/chb1.tim iso/charap/chb2.tim iso/charap/chb3.tim iso/charap/bone0.tim iso/charap/bone1.tim iso/charap/bone2.tim iso/charap/bone3.tim iso/charap/bone4.tim iso/charap/bone5.tim iso/charap/bone6.tim iso/charap/boneb0.tim iso/charap/boneb1.tim iso/charap/boneb2.tim iso/charap/boneb3.tim iso/charap/boneb4.tim iso/charap/boneb5.tim iso/charap/boneb6.tim iso/charap/dead0.tim
+
+# gold 
 iso/gold/main.arc: iso/gold/idle.tim iso/gold/down.tim iso/gold/left0.tim iso/gold/left1.tim iso/gold/right0.tim iso/gold/right1.tim iso/gold/up0.tim iso/gold/up1.tim iso/gold/spec0.tim iso/gold/spec1.tim iso/gold/spec2.tim
 
 # GF

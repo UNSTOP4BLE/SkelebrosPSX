@@ -81,7 +81,7 @@
 	},
 	{ //StageId_1_2 Chara (Bonely One)
 		//Characters
-		{Char_BFSans_New,  FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_charaps_New,  FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		
@@ -97,7 +97,7 @@
 	},
 	{ //StageId_1_3 Chara (Not Enough)
 		//Characters
-		{Char_BFSans_New,  FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
+		{Char_charaps_New,  FIXED_DEC(60 + 150,1),  FIXED_DEC(100 + 100,1)},
 		{Char_sans_New,  FIXED_DEC(-120 + 110,1),  FIXED_DEC(100 + 100,1)},
 		{NULL},
 		

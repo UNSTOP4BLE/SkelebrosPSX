@@ -80,42 +80,42 @@ typedef struct
 
 //Boyfriend player definitions
 static const CharFrame char_charap_frame[] = {
-    {charap_ArcMain_CH0, {  0,   0,  66, 112}, { 36, 111}}, //9 left 1
-    {charap_ArcMain_CH0, { 66,   0,  66, 111}, { 37, 110}}, //9 left 1
-    {charap_ArcMain_CH0, {132,   0,  66, 116}, { 37, 115}}, //9 left 1
-    {charap_ArcMain_CH0, {  0, 112,  65, 115}, { 37, 114}}, //9 left 1
-    {charap_ArcMain_CH0, { 65, 111,  67, 115}, { 38, 114}}, //9 left 1
+    {charap_ArcMain_CH0, {  0,   0,  66, 112}, { 36 - 25, 111}}, //9 left 1
+    {charap_ArcMain_CH0, { 66,   0,  66, 111}, { 37 - 25, 110}}, //9 left 1
+    {charap_ArcMain_CH0, {132,   0,  66, 116}, { 37 - 25, 115}}, //9 left 1
+    {charap_ArcMain_CH0, {  0, 112,  65, 115}, { 37 - 25, 114}}, //9 left 1
+    {charap_ArcMain_CH0, { 65, 111,  67, 115}, { 38 - 25, 114}}, //9 left 1
 
-    {charap_ArcMain_CH1, {125, 100,  89, 113}, { 72, 112}}, //9 left 1
-    {charap_ArcMain_CH2, {  0,   0,  96, 112}, { 76, 111}}, //9 left 1
-    {charap_ArcMain_CH2, { 96,   0,  93, 113}, { 76, 112}}, //9 left 1
-    {charap_ArcMain_CH2, {  0, 112,  93, 113}, { 76, 112}}, //9 left 1
+    {charap_ArcMain_CH1, {125, 100,  89, 113}, { 72 - 25, 112}}, //9 left 1
+    {charap_ArcMain_CH2, {  0,   0,  96, 112}, { 76 - 25, 111}}, //9 left 1
+    {charap_ArcMain_CH2, { 96,   0,  93, 113}, { 76 - 25, 112}}, //9 left 1
+    {charap_ArcMain_CH2, {  0, 112,  93, 113}, { 76 - 25, 112}}, //9 left 1
 
-    {charap_ArcMain_CH1, {  0,   0, 131, 100}, { 68,   99}}, //9 left 1
-    {charap_ArcMain_CH0, {132, 116, 116, 100}, { 68,   99}}, //9 left 1
-    {charap_ArcMain_CH1, {131,   0, 119, 100}, { 68,   99}}, //9 left 1
-    {charap_ArcMain_CH1, {  0, 100, 125, 100}, { 69,   99}}, //9 left 1
+    {charap_ArcMain_CH1, {  0,   0, 131, 100}, { 68 - 25,   99}}, //9 left 1
+    {charap_ArcMain_CH0, {132, 116, 116, 100}, { 68 - 25,   99}}, //9 left 1
+    {charap_ArcMain_CH1, {131,   0, 119, 100}, { 68 - 25,   99}}, //9 left 1
+    {charap_ArcMain_CH1, {  0, 100, 125, 100}, { 69 - 25,   99}}, //9 left 1
 
-    {charap_ArcMain_CH3, {174,   0,  82, 105}, { 47, 105}}, //9 left 1
-    {charap_ArcMain_CH3, { 89, 106,  81, 105}, { 47, 104}}, //9 left 1
-    {charap_ArcMain_CH3, {170, 105,  82, 105}, { 47, 104}}, //9 left 1
+    {charap_ArcMain_CH3, {174,   0,  82, 105}, { 47 - 25, 105}}, //9 left 1
+    {charap_ArcMain_CH3, { 89, 106,  81, 105}, { 47 - 25, 104}}, //9 left 1
+    {charap_ArcMain_CH3, {170, 105,  82, 105}, { 47 - 25, 104}}, //9 left 1
 
-    {charap_ArcMain_CH2, { 93, 113,  90, 101}, { 45, 101}}, //9 left 1
-    {charap_ArcMain_CH3, {  0,   0,  87, 108}, { 47, 108}}, //9 left 1
-    {charap_ArcMain_CH3, { 87,   0,  87, 106}, { 46, 106}}, //9 left 1
-    {charap_ArcMain_CH3, {  0, 108,  89, 106}, { 47, 106}}, //9 left 1
+    {charap_ArcMain_CH2, { 93, 113,  90, 101}, { 45 - 25, 101}}, //9 left 1
+    {charap_ArcMain_CH3, {  0,   0,  87, 108}, { 47 - 25, 108}}, //9 left 1
+    {charap_ArcMain_CH3, { 87,   0,  87, 106}, { 46 - 25, 106}}, //9 left 1
+    {charap_ArcMain_CH3, {  0, 108,  89, 106}, { 47 - 25, 106}}, //9 left 1
 	
-	{charap_ArcMain_CH5, {  0,   0,  80, 111}, { 62, 110}}, //23 left miss 1
-	{charap_ArcMain_CH5, { 80,   0,  77, 116}, { 60, 115}}, //24 left miss 2
+	{charap_ArcMain_CH5, {  0,   0,  80, 111}, { 62 - 25, 110}}, //23 left miss 1
+	{charap_ArcMain_CH5, { 80,   0,  77, 116}, { 60 - 25, 115}}, //24 left miss 2
 	
-	{charap_ArcMain_CH4, {  0,   0, 116,  94}, { 64,  93}}, //25 down miss 1
-	{charap_ArcMain_CH4, {116,   0, 113, 101}, { 63, 100}}, //26 down miss 2
+	{charap_ArcMain_CH4, {  0,   0, 116,  94}, { 64 - 25,  93}}, //25 down miss 1
+	{charap_ArcMain_CH4, {116,   0, 113, 101}, { 63 - 25, 100}}, //26 down miss 2
 	
-	{charap_ArcMain_CH5, {  0, 116,  90, 104}, { 49, 103}}, //27 up miss 1
-	{charap_ArcMain_CH5, { 90, 116,  85, 107}, { 50, 106}}, //28 up miss 2
+	{charap_ArcMain_CH5, {  0, 116,  90, 104}, { 49 - 25, 103}}, //27 up miss 1
+	{charap_ArcMain_CH5, { 90, 116,  85, 107}, { 50 - 25, 106}}, //28 up miss 2
 	
-	{charap_ArcMain_CH4, {  0, 101,  89, 102}, { 42, 102}}, //29 right miss 1
-	{charap_ArcMain_CH4, { 89, 101,  90,  98}, { 47,  98}}, //30 right miss 2
+	{charap_ArcMain_CH4, {  0, 101,  89, 102}, { 42 - 25, 102}}, //29 right miss 1
+	{charap_ArcMain_CH4, { 89, 101,  90,  98}, { 47 - 25,  98}}, //30 right miss 2
 	
 	{charap_ArcMain_Dead0, {  0,   0, 128, 128}, { 53,  98}}, //31 dead0 0
 	{charap_ArcMain_Dead0, {128,   0, 128, 128}, { 53,  98}}, //32 dead0 1
