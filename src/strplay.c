@@ -230,34 +230,29 @@ static void strDoPlayback(STRFILE *str) {
 		PutDispEnv(&disp);	// Apply the video parameters
 		SetDispMask(1);		// Remove the display mask
 		
-		if(strPlayDone == 1) {
+		if(strPlayDone == 1) 
+		{
 			//Load next song
 			Stage_Unload();
+			CdInit();
 
             LoadScr_Start();
-			if (movie.select == 0)
-			Stage_Load(movie.id, movie.diff, movie.story);
-			else
-			Stage_Load(stage.stage_def->next_stage - 1, movie.diff, movie.story);
-
+			if (movie.select != 4)
+			{
+			Stage_Load((movie.select == 0) ? movie.id : stage.stage_def->next_stage, movie.diff, movie.story);
 			gameloop = GameLoop_Stage;
+			}
+			else 
+			{
+			 Menu_Load(MenuPage_Story);
+			 gameloop = GameLoop_Menu;
+			}
 			movie.select++;
-			movie.startmovie = false;
 				LoadScr_End();
+			movie.startmovie = true;
 				return;
 		}
-		
-		if (pad_state.press & PAD_START)  // stop button pressed exit animation routine
-		{
-			LoadScr_Start();	
-			Menu_Load(MenuPage_Story);
-			gameloop = GameLoop_Menu;
-				LoadScr_End();
-				return;
-		}
-		
-	}
-	
+}
 	// Shutdown streaming
 	DecDCToutCallback(0);
 	StUnSetRing();

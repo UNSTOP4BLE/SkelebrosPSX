@@ -18,9 +18,7 @@ typedef struct
   u8 diff;
   boolean story;
   u8 select;
-  u8 playing;
   boolean startmovie;
-  u8 next;
 } Movie;
 
 extern Movie movie;

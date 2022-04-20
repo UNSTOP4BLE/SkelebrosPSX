@@ -28,7 +28,7 @@
 		1, 2,
 		XA_Fresh, 2,
 		
-		StageId_1_3, STAGE_LOAD_FLAG
+		StageId_1_3, 0
 	},
 	{ //StageId_1_3 (Not Enough)
 		//Characters
@@ -77,7 +77,7 @@
 		2, 1,
 		XA_Spookeez, 0,
 		
-		StageId_1_2Chara, STAGE_LOAD_PLAYER | STAGE_LOAD_OPPONENT | STAGE_LOAD_STAGE
+		StageId_1_2Chara, 0
 	},
 	{ //StageId_1_2 Chara (Bonely One)
 		//Characters

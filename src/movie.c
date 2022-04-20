@@ -26,21 +26,17 @@ STRFILE StrFile[] = {
 };
 
 void PlayMovie() {
-    // Reset and initialize stuff
+     // Reset and initialize stuff
 	ResetCallback();
 	CdInit();
 	ResetGraph(0);
 	SetGraphDebug(0);
-    
-    movie.playing = 1;
 
 }
 
 void Movie_Tick(void) 
 {
     Gfx_SetClear(0, 0, 0);
-
-
         switch (movie.select)
         {
             case 0:
@@ -66,7 +62,8 @@ void Movie_Tick(void)
             PlayStr(320, 240, 0, 0, &StrFile[4]);
             break;
             default:
-            movie.select = 0;
+            PlayMovie();
+            PlayStr(320, 240, 0, 0, &StrFile[4]);
             break;
 
   }

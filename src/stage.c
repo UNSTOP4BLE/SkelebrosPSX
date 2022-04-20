@@ -1481,6 +1481,9 @@ static boolean Stage_NextLoad(void)
 
 	if (load == 0)
 	{
+		if (movie.startmovie == true)
+    	gameloop = GameLoop_Movie;
+
 		//Do stage transition if full reload
 		stage.trans = StageTrans_NextSong;
 		Trans_Start();
@@ -1488,6 +1491,8 @@ static boolean Stage_NextLoad(void)
 	}
 	else
 	{
+		if (movie.startmovie == true)
+    	gameloop = GameLoop_Movie;
 		//Get stage definition
 		stage.stage_def = &stage_defs[stage.stage_id = stage.stage_def->next_stage];
 		
@@ -2095,6 +2100,9 @@ void Stage_Tick(void)
 					}
 					else
 					{
+						if (movie.select == 4)
+						gameloop = GameLoop_Movie;
+						else
 						stage.trans = StageTrans_Menu;
 						Trans_Start();
 					}
