@@ -970,12 +970,12 @@ void Menu_Tick(void)
 				const char *text;
 			} menu_options[] = {
 				//{StageId_4_4, 0xFFFC96D7, "TEST"},
-				{StageId_1_1,StageId_1_1Chara, 0xFF9271FD, "NYEH HEH HEH"},
-				{StageId_1_2,StageId_1_2Chara, 0xFF9271FD, "BONELY ONE"},
-				{StageId_1_3,StageId_1_3Chara, 0xFF9271FD, "NOT ENOUGH"},
-				{StageId_1_4,StageId_1_4, 0xFF9271FD, "NO MORE DEALS"},
-				{StageId_3_1,StageId_3_1, 0xFF941653, "EEEECHROME"},
-				{StageId_3_2,StageId_3_2, 0xFF941653, "PARASITE SANS"},
+				{StageId_1_1,StageId_1_1Chara, 0xFF0010, "NYEH HEH HEH"},
+				{StageId_1_2,StageId_1_2Chara, 0xAFB3E6, "BONELY ONE"},
+				{StageId_1_3,StageId_1_3Chara, 0xAFB3E6, "NOT ENOUGH"},
+				{StageId_1_4,StageId_1_4, 0x221C3E, "NO MORE DEALS"},
+				{StageId_3_1,StageId_3_1, 0xB38FD5, "EEEECHROME"},
+				{StageId_3_2,StageId_3_2, 0xAFB3E6, "PARASITE SANS"},
 			};
 			
 			//Initialize page

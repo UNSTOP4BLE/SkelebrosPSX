@@ -100,7 +100,7 @@ static const CharFrame char_sans_frame[] = {
 	{sans_ArcMain_Downb, {  0,   0, 105, 120}, { 44, 120}}, //6 down 1
 	{sans_ArcMain_Downb, {105,   0, 106, 119}, { 45, 119}}, //7 down 2
 	{sans_ArcMain_Downb, {  0, 120, 106, 115}, { 45, 115}}, //6 down 1
-	{sans_ArcMain_Downb, {107, 120, 104, 115}, { 44, 155}}, //7 down 2
+	{sans_ArcMain_Downb, {107, 120, 104, 115}, { 44, 115}}, //7 down 2
 	
 	{sans_ArcMain_Upb0, {  0,   0,  90, 139}, { 48, 139}}, //8 up 1
 	{sans_ArcMain_Upb0, { 90,   0,  90, 140}, { 48, 140}}, //9 up 2
