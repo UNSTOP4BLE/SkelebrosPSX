@@ -124,7 +124,7 @@ static const CharFrame char_sans_frame[] = {
 };
 
 static const Animation char_sans_anim[CharAnim_Max] = {
-	{3, (const u8[]){ 0, 0, 1, 2, 3, 4, 5, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
+	{3, (const u8[]){ 0, 1, 2, 3, 4, 5, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Special
 	{2, (const u8[]){ 6, 7, 8, 9, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt
@@ -137,7 +137,7 @@ static const Animation char_sans_anim[CharAnim_Max] = {
 };
 
 static const Animation char_sans_animb[CharAnim_Max] = {
-	{3, (const u8[]){ 22, 23, 24, 25, 26, 27, ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
+	{3, (const u8[]){ 22, 23, 24, 25, 26, 27,  ASCR_CHGANI, CharAnim_Idle}}, //CharAnim_Idle
 	{2, (const u8[]){ 44, 45, 46, 47, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,  48, 48, 49, 50, 51, 51, ASCR_BACK, 0}}, //CharAnim_Special
 	{2, (const u8[]){ 28, 29, 30, 31, ASCR_BACK, 0}},         //CharAnim_Left
 	{0, (const u8[]){ASCR_CHGANI, CharAnim_Idle}},   //CharAnim_LeftAlt

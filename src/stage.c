@@ -251,20 +251,20 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
 		 5, //SHIT
 	};
 	this->score += score_inc[hit_type];
-	this->min_accuracy += 1;
+	this->min_accuracy += 4;
 	this->refresh_score = true;
 
 	if (hit_type == 3)
-	this->max_accuracy += 4;
+	this->max_accuracy += 10;
 
 	else if (hit_type == 2)
-	this->max_accuracy += 3;
+	this->max_accuracy += 8;
 
 	else if (hit_type == 1)
-	this->max_accuracy += 2;
+	this->max_accuracy += 6;
 
 	else
-	this->max_accuracy += 1;
+	this->max_accuracy += 4;
 	this->refresh_accuracy = true;
 	
 	//Restore vocals and health
@@ -303,7 +303,7 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
 
 static void Stage_MissNote(PlayerState *this)
 {
-	this->max_accuracy += 1;
+	this->max_accuracy += 7;
 	this->refresh_accuracy = true;
 	this->miss += 1;
 	this->refresh_miss = true;
@@ -828,7 +828,7 @@ static void Stage_DrawHealth(s16 health, Gfx_Tex i, s8 ox, s16 swap_icon, s16 sw
 		src.h << FIXED_SHIFT
 	};
 	if (stage.downscroll)
-		dst.y = -dst.y - dst.h;
+		dst.y = FIXED_DEC(-122,1);;
 	
 	//shake icons
 	dst.y += stage.noteshakey;
@@ -2298,7 +2298,7 @@ void Stage_Tick(void)
 				RECT score_src = {80, 224, 34, 9};
 				RECT_FIXED score_dst = {FIXED_DEC(-150,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(34,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
-					score_dst.y = -score_dst.y - score_dst.h;
+					score_dst.y = FIXED_DEC(-78,1);
 
 				//shake score
 				score_dst.y += stage.noteshakey;
@@ -2351,7 +2351,7 @@ void Stage_Tick(void)
 				RECT score_src = {169, 246, 36, 9};
 				RECT_FIXED score_dst = {FIXED_DEC(-60,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
-					score_dst.y = -score_dst.y - score_dst.h;
+					score_dst.y = FIXED_DEC(-78,1);
 
 				//shake miss
 				score_dst.y += stage.noteshakey;
@@ -2416,7 +2416,7 @@ void Stage_Tick(void)
 				RECT score_src = {205, 246, 51, 9};
 				RECT_FIXED score_dst = {FIXED_DEC(39,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(51,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
-					score_dst.y = -score_dst.y - score_dst.h;
+					score_dst.y = FIXED_DEC(-78,1);
 				
 				//shake accurate
 				score_dst.y += stage.noteshakey;
@@ -2497,7 +2497,7 @@ void Stage_Tick(void)
 				RECT score_src = {205, 246, 51, 9};
 				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-100,1) : FIXED_DEC(40,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(51,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
-					score_dst.y = -score_dst.y - score_dst.h;
+					score_dst.y = FIXED_DEC(-98,1);
 				//shake accurate
 				score_dst.y += stage.noteshakey;
 				score_dst.x += stage.noteshakex;
@@ -2563,7 +2563,7 @@ void Stage_Tick(void)
 				RECT miss_src = {169, 246, 36, 9};
 				RECT_FIXED miss_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-50,1) : FIXED_DEC(100,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(36,1), FIXED_DEC(9,1)};
 				if (stage.downscroll)
-					miss_dst.y = -miss_dst.y - miss_dst.h;
+					miss_dst.y = FIXED_DEC(-108,1);
 				
 				RECT slash_src = {163, 223, 3, 13};
 				RECT_FIXED slash_dst = {miss_dst.x  - FIXED_DEC(4,1), miss_dst.y - FIXED_DEC(2,1), FIXED_DEC(3,1), FIXED_DEC(13,1)};
@@ -2623,7 +2623,7 @@ void Stage_Tick(void)
 				RECT score_src = {80, 224, 40, 10};
 				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-134,1) : FIXED_DEC(14,1), (SCREEN_HEIGHT2 - 22) << FIXED_SHIFT, FIXED_DEC(40,1), FIXED_DEC(10,1)};
 				if (stage.downscroll)
-					score_dst.y = -score_dst.y - score_dst.h;
+					score_dst.y = FIXED_DEC(-108,1);
 				
 				//stage score
 				score_dst.x += stage.noteshakex;
@@ -2679,7 +2679,7 @@ void Stage_Tick(void)
 				RECT health_back = {0, healthtopy + 8, 256, 8};
 				RECT_FIXED health_dst = {FIXED_DEC(-128,1), (SCREEN_HEIGHT2 - 37) << FIXED_SHIFT, 0, FIXED_DEC(8,1)};
 				if (stage.downscroll)
-					health_dst.y = -health_dst.y - health_dst.h;
+					health_dst.y = -health_dst.y - health_dst.h - FIXED_DEC(5,1);
 				
 				//shake hud
 				health_dst.y += stage.noteshakey;

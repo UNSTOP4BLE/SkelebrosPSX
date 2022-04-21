@@ -51,8 +51,8 @@ static u8 malloc_heap[0x180000];
 //Entry point
 int main(int argc, char **argv)
 {
-	//botplay
-	stage.botplay = 1;
+	//ghost tap
+	stage.ghost = 1;
 
 	//camera
 	stage.movecamera = 1;
