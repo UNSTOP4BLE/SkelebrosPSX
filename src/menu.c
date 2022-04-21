@@ -861,6 +861,8 @@ void Menu_Tick(void)
 					
 					if (menu.page_param.stage.diff != StageDiff_Chara)	
 					movie.startmovie = true;
+					else
+			    	movie.startmovie = false;
 
 					menu.trans_time = FIXED_UNIT;
 				}
