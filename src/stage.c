@@ -1392,10 +1392,12 @@ void Stage_Load(StageId id, StageDiff difficulty, boolean story)
 	else
 	    Gfx_LoadTex(&stage.tex_hud1, IO_Read("\\STAGE\\HUD1.TIM;1"), GFX_LOADTEX_FREE);
 
-	if ((id == StageId_1_1Chara) || (id == StageId_1_2Chara) || (id == StageId_1_3Chara))
+	if (id >= StageId_1_1Chara && id <= StageId_1_3Chara)
         Gfx_LoadTex(&stage.tex_bf, IO_Read("\\STAGE\\CHARAP.TIM;1"), GFX_LOADTEX_FREE);
     else
+	{
         Gfx_LoadTex(&stage.tex_bf, IO_Read("\\STAGE\\BF.TIM;1"), GFX_LOADTEX_FREE);
+	}
 	
 	
 	//Load stage background
@@ -1775,19 +1777,19 @@ void Stage_Tick(void)
 				stage.state = StageState_Dead;
 
 			//nohud when bad time
-			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 687 && stage.song_step <= 703) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 687 && stage.song_step <= 703))
+			if ((stage.stage_id == StageId_1_3 || stage.stage_id == StageId_1_3Chara) && stage.song_step >= 687 && stage.song_step <= 703)
 				nohud = 1;
 			else
 				nohud = 0;
 
 			//do da susi black and white swap
-			if ((stage.stage_id == StageId_1_3 && stage.song_step >= 640 && stage.song_step <= 1163) || (stage.stage_id == StageId_1_3Chara && stage.song_step >= 640 && stage.song_step <= 1163))
+			if ((stage.stage_id == StageId_1_3 || stage.stage_id == StageId_1_3Chara) && stage.song_step >= 640 && stage.song_step <= 1163)
 				stage.utswap = 1;
 			else 
 				stage.utswap = 0;
 
 			//note shakie
-			if ((stage.stage_id == StageId_1_2 && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_2Chara && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_4 && stage.song_step >= 1090 && stage.song_step <= 1344))
+			if (((stage.stage_id == StageId_1_2 || stage.stage_id == StageId_1_2Chara) && stage.song_step >= 128 && stage.song_step <= 240) || (stage.stage_id == StageId_1_4 && stage.song_step >= 1090 && stage.song_step <= 1344))
 				noteshake = 1;
 			else
 				noteshake = 0;
@@ -1802,7 +1804,7 @@ void Stage_Tick(void)
 			}
 
 			//draw white fla thingie
-			if ((stage.stage_id == StageId_1_1 && stage.song_step == 895) || (stage.stage_id == StageId_1_1Chara && stage.song_step == 895))
+			if ((stage.stage_id == StageId_1_1 || stage.stage_id == StageId_1_1Chara) && stage.song_step == 895)
 			{
 				white = FIXED_DEC(255,1);
 				whitespd = FIXED_DEC(120,1);
@@ -2157,7 +2159,7 @@ void Stage_Tick(void)
 				boolean is_bump_step = (stage.song_step & 0xF) == 0;
 				
 				//papyrus bumps
-				if ((stage.stage_id == StageId_1_1  && stage.song_step >= 643 && stage.song_step <= 830) || (stage.stage_id == StageId_1_1Chara && stage.song_step >= 643 && stage.song_step <= 830))
+				if ((stage.stage_id == StageId_1_1 || stage.stage_id == StageId_1_1Chara) && stage.song_step >= 643 && stage.song_step <= 830)
 					is_bump_step = (stage.song_step & 0x3) == 0;
 				
 				//Bump screen

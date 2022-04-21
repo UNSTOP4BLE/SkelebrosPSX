@@ -43,12 +43,10 @@ void Movie_Tick(void)
             PlayMovie();
             PlayStr(320, 240, 0, 0, &StrFile[0]);
             break;
-        
             case 1:
             PlayMovie();
             PlayStr(320, 240, 0, 0, &StrFile[1]);
             break;
-
             case 2:
             PlayMovie();
             PlayStr(320, 240, 0, 0, &StrFile[2]);
